@@ -9,6 +9,7 @@ public class InventoryPopup : Popup
     public Transform detailsContainer;
     public TextMeshProUGUI txtDetailItemName;
     public TextMeshProUGUI txtDetailItemDescription;
+    public TextMeshProUGUI txtPlayerGoldAmount;
 
     // for going throug the inventory slots up and down
     GridLayoutGroup panelLayout;
@@ -72,7 +73,7 @@ public class InventoryPopup : Popup
     }
     public void InitializeInventoryUI()
     {
-        // foreach (InventorySlot inSlot in inventorySlots)
+        txtPlayerGoldAmount.text = inventory.GetGoldAmount().ToString();
         for (int i = 0; i < lstInventorySlots.Length; i++)
         {
             lstInventorySlots[i].EmptySlot();

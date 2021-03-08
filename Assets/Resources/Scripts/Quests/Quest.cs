@@ -6,6 +6,13 @@ using System;
 
 public enum QuestType { MAINQUEST = 0, SIDEQUEST = 1 }
 [Serializable]
+public struct QuestRewards
+{
+    public int iGoldAmount;
+    public Item rewardItem;
+    public string sMessage;
+}
+[Serializable]
 public class Quest
 {
     const string sQuestUpdated = "Quest Updated...";
@@ -16,13 +23,13 @@ public class Quest
 
     [UniqueID]
     public string sQuestID;
+    [Tooltip("Only check the box if the quest is not given my any npc (if its auto add quest).")]
+    public bool bSelfAssignedQuest;
+    public bool bQuestInAnyOrder;
     public string sQuestTitle;
     [TextArea(2, 4)]
     public string sQuestDescription;
     public QuestType eQuestType;
-    [Tooltip("Only check the box if the quest is not given my any npc (if its auto add quest).")]
-    public bool bSelfAssignedQuest;
-    public bool bQuestInAnyOrder;
     // public QuestGoal qGoal;
    
     private bool bAllGoalsCompleted = false;
@@ -33,7 +40,7 @@ public class Quest
     [SerializeField]
     private bool bIsCompleted;
 
-    public string sRewards; //TODO: Replace this with type of reward such as GOLD, EXP, ITEMS. Make it a array to choose a number of rewards.\\
+    public QuestRewards qRewards;
     [SerializeField]
     public UnityEvent activateNextQuestUponCompletion;
     PlayerController player;
@@ -66,12 +73,32 @@ public class Quest
     {
         if (bAllGoalsCompleted)
         {
-            PopupUIManager.Instance.msgBoxPopup.ShowMessageAfterDialog(sQuestCompleted + " \n" + sRewards, fMsgTime);
-            Debug.Log(sRewards);
+            // TODO: bSelfAssignedQuest rewards to player and show in meesage popup
+            AssignRewardsToPlayer(qRewards);
+            PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(sQuestCompleted + " \n" /* write rewards description here */, fMsgTime);
+           // Debug.Log($" You received {qRewards.iGoldAmount} gold. + You Received {qRewards.rewardItem.sItemName} + {qRewards.sMessage}" );
             RemoveQuest();
             if(activateNextQuestUponCompletion != null)
             {
                 activateNextQuestUponCompletion.Invoke();
+            }
+        }
+    }
+    public void AssignRewardsToPlayer(QuestRewards _reward)
+    {
+        if(_reward.iGoldAmount > 0)
+        {
+            player.GetInventory().SetGoldAmount(_reward.iGoldAmount);
+        }
+        if (_reward.rewardItem)
+        {
+            if (!player.GetInventory().IsFull())
+                player.GetInventory().AddItem(_reward.rewardItem);
+            else
+            {
+                Vector3 _itemDropPosition = player.transform.position + new Vector3(UnityEngine.Random.Range(-1f, 1f), 1.5f, UnityEngine.Random.Range(-1f, 1f));
+                ItemContainer _newDroppedItem = GameObject.Instantiate(_reward.rewardItem.GetItemPrefab(), _itemDropPosition, Quaternion.identity);
+                _newDroppedItem.SetItem(_reward.rewardItem);
             }
         }
     }
@@ -235,7 +262,7 @@ public class Quest
         {
             if (!QuestManager.Instance.dictMainQuests.ContainsKey(sQuestID))
             {
-                PopupUIManager.Instance.msgBoxPopup.ShowMessageAfterDialog(sMainQuestAdded, fMsgTime);
+                PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(sMainQuestAdded, fMsgTime);
                 QuestManager.Instance.dictMainQuests.Add(sQuestID, this);
             }
         }
@@ -243,7 +270,7 @@ public class Quest
         {
             if (!QuestManager.Instance.dictSideQuests.ContainsKey(sQuestID))
             {
-                PopupUIManager.Instance.msgBoxPopup.ShowMessageAfterDialog(sSideQuestAdded, fMsgTime);
+                PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(sSideQuestAdded, fMsgTime);
                 QuestManager.Instance.dictSideQuests.Add(sQuestID, this);
             }
         }
@@ -266,7 +293,7 @@ public class Quest
         {
             CheckQuestProgress();
             if(!IsCompleted()) // meaning if an goal is completed then show updated text
-                    PopupUIManager.Instance.msgBoxPopup.ShowMessageAfterDialog(sQuestUpdated, fMsgTime);
+                    PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(sQuestUpdated, fMsgTime);
         }
         else
         {
@@ -275,7 +302,7 @@ public class Quest
                 if (!qGoals[i].GetIsActive())
                 {
                     if(i != 0)
-                        PopupUIManager.Instance.msgBoxPopup.ShowMessageAfterDialog(sQuestUpdated, fMsgTime); // To not show update text when new quest is just added
+                        PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(sQuestUpdated, fMsgTime); // To not show update text when new quest is just added
                     qGoals[i].SetIsActive(true);
                     qGoals[i].InitializeGoal(sQuestID);
                     break;

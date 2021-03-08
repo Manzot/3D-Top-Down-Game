@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Water v2 Still
+  m_Shader: {fileID: -6465566751694194690, guid: c3cdf01bbb3788a4a9ea289b0aae3f31,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - Vector1_17CD7537: -55.69
+    - Vector1_52F02CD2: 0.3
+    - Vector1_59AFC453: 0.6
+    - Vector1_619D7234: 1.67
+    - Vector1_6B50CE6C: 0.7
+    - Vector1_87054960: 0.5
+    - Vector1_8F186F78: 8
+    - Vector1_A0A0159C: 1
+    - Vector1_A353F342: 2
+    - Vector1_D331A5C9: 4
+    m_Colors:
+    - Color_29D13A67: {r: 0.10453009, g: 0.35703647, b: 0.8207547, a: 0.38431373}
+    - Color_36D32484: {r: 0.08962262, g: 0.6595813, b: 1, a: 0.09803922}
+    - Color_94DAF3E4: {r: 0.6907262, g: 0.732865, b: 0.735849, a: 0.38431373}
+    - Vector2_7E74ECE1: {r: 0.06, g: 0.06, b: 0, a: 0}
+    - Vector2_8ED2000B: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - Vector2_B7E03239: {r: 0.2, g: 0.2, b: 0, a: 0}

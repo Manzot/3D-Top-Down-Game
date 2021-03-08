@@ -28,12 +28,11 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     public float fMaxHitPoints;
     [HideInInspector]
     public float fCurrentHitPoints;
-
     public float fMaxStamina;
     [HideInInspector]
     public float fCurrentStamina;
     float fStaminaTimeCounter = 0;
-    bool bStaminaUsed;
+    
 
     public float fSpeed;
     public float fJumpForce;
@@ -43,6 +42,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     Vector3 lastFacinDirection;
     Vector3 movementVector;
 
+    private bool bStaminaUsed;
     private bool bIsAlive;
     private bool bIsSprinting;
     private bool bCanSprint = true;
@@ -637,6 +637,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         anim.ResetTrigger("attack1");
         bIsAttacking = _bIsAttacking;
     }
+  
     public Animator GetAnimator()
     {
         return anim;
@@ -649,7 +650,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         _playerSaveData.fCurrentStamina = instance.fCurrentStamina;
         _playerSaveData.tPosition = new float[3] { instance.transform.position.x, instance.transform.position.y, instance.transform.position.z };
         _playerSaveData.tRotation = new float[3] { lastFacinDirection.x, lastFacinDirection.y, lastFacinDirection.z };
-        _playerSaveData.playerInventory = instance.playerInventory.GetInventory();
+        _playerSaveData.playerInventory = instance.playerInventory.SaveInventoryStats();
         //_playerSaveData.tRotation = new float[3] { transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z};
 
         _saveData.playerSaveData = _playerSaveData;
@@ -666,7 +667,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         instance.lastFacinDirection = new Vector3(structPlayerSaveData.tRotation[0], structPlayerSaveData.tRotation[1], structPlayerSaveData.tRotation[2]); // 0 = x, 1 = y, 2 = z
 
         instance.playerInventory = new Inventory(structPlayerSaveData.playerInventory.iInventorySize);
-        instance.playerInventory.LoadInventory(structPlayerSaveData.playerInventory);
+        instance.playerInventory.LoadInventoryStats(structPlayerSaveData.playerInventory);
         PopupUIManager.Instance.inventoryPopup.UpdateInventoryUI(instance.playerInventory);
         instance.EquipItems();
 

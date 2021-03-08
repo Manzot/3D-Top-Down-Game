@@ -116,7 +116,7 @@ public class DialogBoxPopup : Popup
     public string MsgBoxPopup(string _sMessage)
     {
         // TODO: here select reward text from npc's quest
-        PopupUIManager.Instance.msgBoxPopup.ShowTextMessage(_sMessage);
+        PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(_sMessage);
         return "";
     }
     public string ShowResponsePopup()

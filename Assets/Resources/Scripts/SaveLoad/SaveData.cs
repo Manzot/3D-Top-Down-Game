@@ -34,6 +34,7 @@ public struct structGameSavePlayer
 public struct structInventory
 {
     public int iInventorySize;
+    public int iGoldAmount;
     public List<structItem> itemsLst;
 }
 [Serializable]

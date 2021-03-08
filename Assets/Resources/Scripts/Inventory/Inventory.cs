@@ -7,6 +7,7 @@ public class Inventory
     public int iInventorySize = 20;
     public List<Item> lstItems;
 
+    int iGoldAmount = 0;
     structInventory structInventory;
 
     public Inventory(int _iInventoryStartSize)
@@ -17,6 +18,14 @@ public class Inventory
         iInventorySize = structInventory.iInventorySize;
     }
 
+    public void SetGoldAmount(int _iAmountToAddOrRemove)
+    {
+        iGoldAmount += _iAmountToAddOrRemove;
+    }
+    public int GetGoldAmount()
+    {
+        return iGoldAmount;
+    }
     public void AddItem(Item _item)
     {
         if(lstItems.Count < iInventorySize)
@@ -97,19 +106,20 @@ public class Inventory
     {
         lstItems[_iNumber] = new Item(_item);
     }
-    public structInventory GetInventory()
+    public structInventory SaveInventoryStats()
     {
         structInventory.itemsLst = new List<structItem>();
-
+        structInventory.iGoldAmount = iGoldAmount;
         for (int i = 0; i < lstItems.Count; i++)
         {
             structInventory.itemsLst.Add(lstItems[i].GetItemStruct());
         }
         return structInventory;
     }
-    public void LoadInventory(structInventory _structInventory)
+    public void LoadInventoryStats(structInventory _structInventory)
     {
         structInventory = _structInventory;
+        iGoldAmount = structInventory.iGoldAmount;
         iInventorySize = structInventory.iInventorySize;
 
         lstItems = new List<Item>();
@@ -125,6 +135,9 @@ public class Inventory
                 lstItems.Add(_newItem);
             }
         }
-
+    }
+    public bool IsFull()
+    {
+        return lstItems.Count >= iInventorySize;
     }
 }

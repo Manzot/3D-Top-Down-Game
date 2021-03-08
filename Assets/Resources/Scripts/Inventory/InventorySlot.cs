@@ -52,7 +52,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         {
             if(item.eType == ItemType.QuestItem)
             {
-                PopupUIManager.Instance.msgBoxPopup.ShowTextMessage("Can't use a Quest Item..");
+                PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Can't use a Quest Item..");
             }
         }
     }
@@ -114,9 +114,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         else
         {
             if(item.bIsEquipable)
-                PopupUIManager.Instance.msgBoxPopup.ShowTextMessage("Can't use this action right now..... ");
+                PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Can't use this action right now..... ");
             else
-                PopupUIManager.Instance.msgBoxPopup.ShowTextMessage("Can't use this item right now..... ");
+                PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Can't use this item right now..... ");
 
         }
         inventoryPopup.SetItemMenuOpenBool(false);
@@ -137,7 +137,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 if (item.bIsEquipped)
                 {
                     _bDropItem = false;
-                    PopupUIManager.Instance.msgBoxPopup.ShowTextMessage("Cannot Discard Equipped Item.", 1);
+                    PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Cannot Discard Equipped Item.", 1);
                 }
                 else
                     item.SetItemQuantity(0);

@@ -57,12 +57,12 @@ public class PauseMenuPopup : Popup
     {
         GameController.Instance.SaveGame();
         close();
-        PopupUIManager.Instance.msgBoxPopup.ShowTextMessage("Game Saved....");
+        PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Game Saved....");
     }
     public void LoadGameButton()
     {
         GameController.Instance.LoadGame();
-        PopupUIManager.Instance.msgBoxPopup.ShowTextMessage("Game Loaded....");
+        PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Game Loaded....");
     }
     public void OptionsButton()
     {

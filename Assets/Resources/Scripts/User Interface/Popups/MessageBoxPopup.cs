@@ -8,7 +8,7 @@ public class MessageBoxPopup : Popup
     public float fTimeToShow;
     Queue<string> msgList = new Queue<string>();
 
-    public void ShowMessageAfterDialog(string _message, float _fTimeToShow = 2, float _bgScale = 1f) // Its normally for the quests...
+    public void ShowMessagePopup(string _message, float _fTimeToShow = 2, float _bgScale = 1f) // Its normally for the quests...
     {
         StartCoroutine(MessagePopup(_message, _fTimeToShow, _bgScale));
     }
@@ -22,11 +22,17 @@ public class MessageBoxPopup : Popup
         msgList.Enqueue(_message);
         fBgScale += _bgScale / 1.5f;
         yield return new WaitForSeconds(0.5f);
-        ShowTextMessage(_message, _fTimeToShow, fBgScale);
+        ShowTextMessages(_message, _fTimeToShow, fBgScale);
        // StopCoroutine(MessagePopup());
     }
     float fBgScale = 0;
-    public void ShowTextMessage(string _message,  float _fTimeToShow = 2, float _bgScale = 1f)
+    public void ShowMessageDirectly(string _message, float _fTimeToShow = 2, float _bgScale = 1f)
+    {
+        open();
+        txtMessage.text += _message;
+        StartCoroutine(DisablePopupAfter(_fTimeToShow));
+    }
+    public void ShowTextMessages(string _message,  float _fTimeToShow = 2, float _bgScale = 1f)
     {
         open();
         if (_bgScale < 1)

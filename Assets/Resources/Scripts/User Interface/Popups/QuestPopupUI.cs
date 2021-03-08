@@ -149,7 +149,7 @@ public class QuestPopupUI : Popup
     public void SetQuestDetails()
     {
         txtQuestDescription.text = selectedQuestElement.myQuest.sQuestDescription;
-        txtQuestRewards.text = selectedQuestElement.myQuest.sRewards;
+     // TODO: add rewards description here   txtQuestRewards.text = selectedQuestElement.myQuest.sRewards;
 
         if (lstObjectiveElements == null)
         {
