@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Cinemachine.CinemachineVirtualCamera camera;
+    Cinemachine.CinemachineVirtualCamera thisCamera;
     // Start is called before the first frame update
     void Start()
     {
-        camera = GetComponent<Cinemachine.CinemachineVirtualCamera>();
-        camera.Follow = PlayerController.Instance.gameObject.transform;
+        thisCamera = GetComponent<Cinemachine.CinemachineVirtualCamera>();
+        thisCamera.Follow = PlayerController.Instance.gameObject.transform;
     }
 }

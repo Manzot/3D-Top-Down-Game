@@ -33,6 +33,7 @@ public class Item: ScriptableObject
 
     public Item(Item _item)
     {
+        ScriptableObject.CreateInstance<Item>();
         sID = _item.sID;
         iQuantity = _item.iQuantity;
         sItemName = _item.sItemName;

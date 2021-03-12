@@ -176,7 +176,6 @@ public class Movement : MonoBehaviour
 
     IEnumerator GetRandomDirection()
     {
-        Debug.Log("I run");
         randomPosition = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));// Random.insideUnitSphere * 100;
         CheckWalkingArea();
         if ((randomPosition - startPosition).sqrMagnitude <= fMaxWalkingDistance) // if the random vector is out of walking area then reassign the vector

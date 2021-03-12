@@ -21,7 +21,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     bool bMerchantSlot;
     public void UpdateSlot(Item _item)
     {
-        item = new Item(_item);
+        item = ScriptableObject.CreateInstance<Item>();// new Item(_item);
 
         icon.gameObject.SetActive(true);
         icon.sprite = item.GetSprite();

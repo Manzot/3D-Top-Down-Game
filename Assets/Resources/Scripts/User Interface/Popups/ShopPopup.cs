@@ -45,6 +45,7 @@ public class ShopPopup : Popup
     public void open(Inventory _merchantInventory)
     {
         base.open();
+        ClickPlayerInventory();
         GameController.inPlayMode = false;
         playerGoldTxt.text = player.GetInventory().GetGoldAmount().ToString();
         InitializePlayerInventoryUI(player.GetInventory());
@@ -160,7 +161,6 @@ public class ShopPopup : Popup
     bool bSwitchToMerchant = false;
     public override void MenuKeysInput()
     {
-        Debug.Log(iSelectedSlot);
         if (Input.GetAxisRaw("Horizontal") < 0f && Input.anyKeyDown) // going left
         {
             if (bSwitchToMerchant)
@@ -168,10 +168,12 @@ public class ShopPopup : Popup
                 if (iSelectedSlot == 0 || iSelectedSlot % iWidthMerchant == 0)
                 {
                     bSwitchToMerchant = false;
-                    SetSelected(playerInventorySlotsLst[0]);
+                    ClickPlayerInventory();
                 }
                 else if (iSelectedSlot > 0)
+                {
                     SetSelected(merchantInventorySlotsLst[iSelectedSlot - 1]);
+                }
                
             }
             else
@@ -179,7 +181,7 @@ public class ShopPopup : Popup
                 if (iSelectedSlot == 0 || iSelectedSlot % iWidthPlayer == 0)
                 {
                     bSwitchToMerchant = true;
-                    SetSelected(merchantInventorySlotsLst[0]);
+                    ClickMerchantInventory();
                 }
                 else if (iSelectedSlot > 0)
                 {
@@ -195,18 +197,22 @@ public class ShopPopup : Popup
                 if ((iSelectedSlot + 1) % iWidthMerchant == 0)
                 {
                     bSwitchToMerchant = false;
-                    SetSelected(playerInventorySlotsLst[0]);
+                    ClickPlayerInventory();
                 }
                 else if (iSelectedSlot >= 0)
-                    SetSelected(merchantInventorySlotsLst[iSelectedSlot + 1]);
-
+                {
+                    if(merchantInventorySlotsLst[iSelectedSlot + 1].gameObject.activeSelf)
+                    {
+                        SetSelected(merchantInventorySlotsLst[iSelectedSlot + 1]);
+                    }
+                }
             }
             else
             {
                 if ((iSelectedSlot + 1) % iWidthPlayer == 0)
                 {
                     bSwitchToMerchant = true;
-                    SetSelected(merchantInventorySlotsLst[0]);
+                    ClickMerchantInventory();
                 }
                 else if (iSelectedSlot >= 0)
                 {
@@ -219,8 +225,11 @@ public class ShopPopup : Popup
             // int _iSlotsInOneRow = (int)panelRectTransform.rect.width / ((int)panelLayout.cellSize.x + (int)panelLayout.spacing.x);
             if (bSwitchToMerchant)
             {
-                if (iSelectedSlot < iWidthMerchant * (iHeightMerchant - 1))
-                    SetSelected(merchantInventorySlotsLst[iSelectedSlot + iWidthMerchant]);
+                if (merchantInventorySlotsLst[iSelectedSlot + 1].gameObject.activeSelf)
+                {
+                     if (iSelectedSlot < iWidthMerchant * (iHeightMerchant - 1))
+                        SetSelected(merchantInventorySlotsLst[iSelectedSlot + iWidthMerchant]);
+                }
             }
             else
             {
@@ -251,7 +260,7 @@ public class ShopPopup : Popup
             }
         }
     }
-      public void SetSelected(InventorySlot _iSlot)
+    public void SetSelected(InventorySlot _iSlot)
     {
         if (selectedSlot != null)
             selectedSlot.SetSelectedElement(false);
@@ -284,8 +293,45 @@ public class ShopPopup : Popup
         if (selectedSlot)
         {
             selectedSlot.SetSelectedElement(true);
+            if (selectedSlot.GetItem())
+            {
+                itemDescriptionTxt.text = selectedSlot.GetItem().sItemDescription;
+                if(bSwitchToMerchant)
+                    itemPriceTxt.text = "Item Cost: " + selectedSlot.GetItem().iPrice.ToString();
+                else
+                {
+                    int _itemSalePrice = (int)(selectedSlot.GetItem().iPrice / fItemDeductionAmount);
+                    if (_itemSalePrice <= 0)
+                        _itemSalePrice = 1;
+
+                    itemPriceTxt.text = "Sells For: " + _itemSalePrice.ToString();
+                }
+
+            }
         }
-        
+
+    }
+    public void ClickPlayerInventory()
+    {
+        merchantInventoryButton.SetSelectedElement(false);
+        playerInventoryButton.SetSelectedElement(true);
+        SetSelected(playerInventorySlotsLst[0]);
+    }
+    public void ClickMerchantInventory()
+    {
+        playerInventoryButton.SetSelectedElement(false);
+        merchantInventoryButton.SetSelectedElement(true);
+        SetSelected(merchantInventorySlotsLst[0]);
+    }
+    public void ActivatePlayerSideButton()
+    {
+        merchantInventoryButton.SetSelectedElement(false);
+        playerInventoryButton.SetSelectedElement(true);
+    }
+    public void ActivateMerchantSideButton()
+    {
+        playerInventoryButton.SetSelectedElement(false);
+        merchantInventoryButton.SetSelectedElement(true);
     }
     public void SetItemMenuOpenBool(bool _setBool)
     {

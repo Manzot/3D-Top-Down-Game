@@ -318,7 +318,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         rbody.velocity = new Vector3(0, 0, 0);
         anim.SetTrigger("idle");
         anim.SetFloat("moveVelocity", 0f);
-        anim.SetBool("isShielding", false);
+       // anim.SetBool("isShielding", false);
     }
     public void CheckGrounded()
     {
@@ -358,6 +358,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                 bIsInteracting = true;
                 DisablePlayerMoveActions();
                 _collidedNPC.LookAtTarget(transform);
+                transform.LookAt(_collidedNPC.transform);
                 GameController.inPlayMode = false;
             }
         }
@@ -649,9 +650,9 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         _playerSaveData.fCurrentHitPoints = instance.fCurrentHitPoints;
         _playerSaveData.fCurrentStamina = instance.fCurrentStamina;
         _playerSaveData.tPosition = new float[3] { instance.transform.position.x, instance.transform.position.y, instance.transform.position.z };
-        _playerSaveData.tRotation = new float[3] { lastFacinDirection.x, lastFacinDirection.y, lastFacinDirection.z };
+        _playerSaveData.tRotation = new float[3] { instance.transform.rotation.eulerAngles.x, instance.transform.rotation.eulerAngles.y, instance.transform.rotation.eulerAngles.z};
+       // _playerSaveData.tRotation = new float[3] { lastFacinDirection.x, lastFacinDirection.y, lastFacinDirection.z };
         _playerSaveData.playerInventory = instance.playerInventory.SaveInventoryStats();
-        //_playerSaveData.tRotation = new float[3] { transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z};
 
         _saveData.playerSaveData = _playerSaveData;
     }
@@ -665,7 +666,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
 
         instance.transform.position = new Vector3(structPlayerSaveData.tPosition[0], structPlayerSaveData.tPosition[1], structPlayerSaveData.tPosition[2]); // 0 = x, 1 = y, 2 = z
         instance.lastFacinDirection = new Vector3(structPlayerSaveData.tRotation[0], structPlayerSaveData.tRotation[1], structPlayerSaveData.tRotation[2]); // 0 = x, 1 = y, 2 = z
-
+        instance.transform.rotation = Quaternion.Euler(instance.lastFacinDirection);
         instance.playerInventory = new Inventory(structPlayerSaveData.playerInventory.iInventorySize);
         instance.playerInventory.LoadInventoryStats(structPlayerSaveData.playerInventory);
         PopupUIManager.Instance.inventoryPopup.UpdateInventoryUI(instance.playerInventory);

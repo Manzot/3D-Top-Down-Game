@@ -153,33 +153,43 @@ public class QuestManager: MonoBehaviour, ISaveable
 
 	public Quest GetQuestByID(Quest _questToFind)
 	{
-		if (_questToFind.eQuestType == QuestType.MAINQUEST)
-		{
-			foreach (var _quest in dictMainQuests)
-			{
-				if (_quest.Value.sQuestID == _questToFind.sQuestID)
-				{
-					return _quest.Value;
-				}
-			}
-		}
-		else
-		{
-			foreach (var _quest in dictSideQuests)
-			{
-				if (_quest.Value.sQuestID == _questToFind.sQuestID)
-				{
-					return _quest.Value;
-				}
-			}
-		}
+		//if (_questToFind.eQuestType == QuestType.MAINQUEST)
+		//{
+		//	foreach (var _quest in dictMainQuests)
+		//	{
+		//		if (_quest.Value.sQuestID == _questToFind.sQuestID)
+		//		{
+		//			return _quest.Value;
+		//		}
+		//	}
+		//}
+		//else
+		//{
+		//	foreach (var _quest in dictSideQuests)
+		//	{
+		//		if (_quest.Value.sQuestID == _questToFind.sQuestID)
+		//		{
+		//			return _quest.Value;
+		//		}
+		//	}
+		//}
 
         foreach (var _quest in dictAllQuests)
         {
 			if (_quest.Value.sQuestID == _questToFind.sQuestID)
 			{
-				if(!_quest.Value.IsActive())
-					return _quest.Value;
+                if (!_quest.Value.IsActive())
+                {
+					if (_quest.Value.startIfCompletedThisQuest)
+					{
+						if (_quest.Value.startIfCompletedThisQuest.quest.IsCompleted())
+							return _quest.Value;
+						else
+							return null;
+					}
+					else
+						return _quest.Value;
+                }
 			}
 		}
 		return null;

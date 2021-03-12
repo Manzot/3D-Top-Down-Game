@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Scorpion : Enemy
 {
-    private bool bRotateAnims = true;
+    //private bool bRotateAnims = true;
     float fSTUN_TIME = 0f; // this is extra time after the animation
 
     void Start()

@@ -589,7 +589,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &36751851 stripped
 Light:
@@ -626,7 +626,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &38832112
 MonoBehaviour:
@@ -2386,7 +2386,7 @@ RectTransform:
   - {fileID: 614940352}
   - {fileID: 6132357177065382033}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3114,7 +3114,7 @@ Transform:
   m_Children:
   - {fileID: 948762769}
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &203723731
 PrefabInstance:
@@ -3307,7 +3307,7 @@ Transform:
   m_Children:
   - {fileID: 401339376}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &216879215
 GameObject:
@@ -3923,6 +3923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest:
+    startIfCompletedThisQuest: {fileID: 0}
     sQuestID: 3bc8197e-29bd-4a1d-82cd-15152c33d453
     bSelfAssignedQuest: 0
     bQuestInAnyOrder: 0
@@ -5676,7 +5677,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &326269856
 GameObject:
@@ -5974,7 +5975,7 @@ Transform:
   - {fileID: 855418134}
   - {fileID: 905974851}
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &343194342
 GameObject:
@@ -6182,7 +6183,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &351638495
 GameObject:
@@ -7489,7 +7490,7 @@ Transform:
   - {fileID: 3297534996326641332}
   - {fileID: 906613211280518482}
   m_Father: {fileID: 0}
-  m_RootOrder: 36
+  m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &423743998
 PrefabInstance:
@@ -8129,7 +8130,7 @@ Transform:
   - {fileID: 1644694733}
   - {fileID: 1560379752}
   m_Father: {fileID: 0}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &458211426
 GameObject:
@@ -9198,7 +9199,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &521689272
 GameObject:
@@ -9535,6 +9536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest:
+    startIfCompletedThisQuest: {fileID: 0}
     sQuestID: fdcc6f05-ecf2-45f3-9121-9572140691ef
     bSelfAssignedQuest: 0
     bQuestInAnyOrder: 1
@@ -10490,6 +10492,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Merchant Inv
       objectReference: {fileID: 0}
+    - target: {fileID: 5677181520723165533, guid: 2c31eb60452eedc43a29135bd7fcae5d,
+        type: 3}
+      propertyPath: clickAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677181520723165533, guid: 2c31eb60452eedc43a29135bd7fcae5d,
+        type: 3}
+      propertyPath: clickAction.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677181520723165533, guid: 2c31eb60452eedc43a29135bd7fcae5d,
+        type: 3}
+      propertyPath: clickAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2284303548375618385}
+    - target: {fileID: 5677181520723165533, guid: 2c31eb60452eedc43a29135bd7fcae5d,
+        type: 3}
+      propertyPath: clickAction.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677181520723165533, guid: 2c31eb60452eedc43a29135bd7fcae5d,
+        type: 3}
+      propertyPath: clickAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickMerchantInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 5677181521674712603, guid: 2c31eb60452eedc43a29135bd7fcae5d,
         type: 3}
       propertyPath: m_text
@@ -10675,7 +10702,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &606356999
 GameObject:
@@ -11429,7 +11456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &659949037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12485,7 +12512,7 @@ Transform:
   m_Children:
   - {fileID: 1383920266}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &709288096 stripped
 GameObject:
@@ -13181,6 +13208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest:
+    startIfCompletedThisQuest: {fileID: 1137816288}
     sQuestID: 560b6a01-14b9-45b5-b58a-6aa5231659bd
     bSelfAssignedQuest: 0
     bQuestInAnyOrder: 0
@@ -13307,8 +13335,7 @@ MonoBehaviour:
   sNpcName: NPC-
   npcBehaviour: 0
   sRandomDialogs:
-  - sDialogLines:
-    - hihihihihi, lalallllllalaalala
+  - sDialogLines: []
   merchantInventoryLst: []
 --- !u!54 &755438616
 Rigidbody:
@@ -13395,6 +13422,75 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &772763580
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 80.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 38.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673622455, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540857387673783191, guid: 19733e9f226cb484da2a78534abf28f5,
+        type: 3}
+      propertyPath: m_Name
+      value: Spike
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19733e9f226cb484da2a78534abf28f5, type: 3}
 --- !u!1 &778167364
 GameObject:
   m_ObjectHideFlags: 0
@@ -14400,7 +14496,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &809714472
 PrefabInstance:
@@ -17186,7 +17282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 308, y: -37}
+  m_AnchoredPosition: {x: 179, y: -37}
   m_SizeDelta: {x: 326.208, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &942708340
@@ -17208,7 +17304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 'Price: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17277,10 +17373,10 @@ MonoBehaviour:
   m_margin: {x: -0.043314002, y: 0, z: 0.66476965, w: -0.4453845}
   m_textInfo:
     textComponent: {fileID: 942708340}
-    characterCount: 1
+    characterCount: 8
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -17571,7 +17667,7 @@ Transform:
   - {fileID: 795487595}
   - {fileID: 286940965}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &982610616
 PrefabInstance:
@@ -18527,7 +18623,7 @@ Transform:
   - {fileID: 380697514}
   - {fileID: 1104728185}
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1029644741
 GameObject:
@@ -18654,7 +18750,7 @@ RectTransform:
   m_Children:
   - {fileID: 480575117}
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -19105,7 +19201,7 @@ Transform:
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1042269760
 MeshCollider:
@@ -20261,6 +20357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest:
+    startIfCompletedThisQuest: {fileID: 0}
     sQuestID: 0447c36c-dce4-46c7-a214-a2ed25ec86cf
     bSelfAssignedQuest: 1
     bQuestInAnyOrder: 0
@@ -20390,7 +20487,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1141407676
 BoxCollider:
@@ -21501,7 +21598,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1181533776
 GameObject:
@@ -22290,6 +22387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeQuest:
+    startIfCompletedThisQuest: {fileID: 0}
     sQuestID: 
     bSelfAssignedQuest: 0
     bQuestInAnyOrder: 0
@@ -22327,7 +22425,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1226437051
 PrefabInstance:
@@ -23471,6 +23569,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Inv
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677181520723165533, guid: 2c31eb60452eedc43a29135bd7fcae5d,
+        type: 3}
+      propertyPath: clickAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2284303548375618385}
+    - target: {fileID: 5677181520723165533, guid: 2c31eb60452eedc43a29135bd7fcae5d,
+        type: 3}
+      propertyPath: clickAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickPlayerInventory
       objectReference: {fileID: 0}
     - target: {fileID: 5677181521674712603, guid: 2c31eb60452eedc43a29135bd7fcae5d,
         type: 3}
@@ -25554,7 +25662,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1407250259
 PrefabInstance:
@@ -27614,7 +27722,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1528624849
 GameObject:
@@ -27773,7 +27881,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1531219834
 PrefabInstance:
@@ -28648,7 +28756,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1563360006
 MonoBehaviour:
@@ -30366,7 +30474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1692695818
 PrefabInstance:
@@ -30800,7 +30908,7 @@ PrefabInstance:
     - target: {fileID: 2016155963780243008, guid: 805b26f937cfafa4ca90e90185336518,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2016155963780243008, guid: 805b26f937cfafa4ca90e90185336518,
         type: 3}
@@ -32014,7 +32122,7 @@ Transform:
   - {fileID: 1562286206}
   - {fileID: 1859375930}
   m_Father: {fileID: 0}
-  m_RootOrder: 37
+  m_RootOrder: 38
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1799149739
 PrefabInstance:
@@ -37506,7 +37614,7 @@ Transform:
   m_Children:
   - {fileID: 876992013}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1987792548
 GameObject:
@@ -38036,7 +38144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2023608456
 GameObject:
@@ -39501,7 +39609,7 @@ Transform:
   - {fileID: 81701247}
   - {fileID: 1156618183}
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2126243365
 PrefabInstance:
@@ -39821,7 +39929,7 @@ Transform:
   - {fileID: 2012510688}
   - {fileID: 1772001841}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140723156
 GameObject:
@@ -40472,7 +40580,6 @@ MonoBehaviour:
     - Be Careful out there.
   - sDialogLines:
     - If you find me some steel I can make you a way better sword.
-    - You must use your sword and shield wisely.
   merchantInventoryLst: []
 --- !u!1 &10397451637416863
 GameObject:
@@ -52249,7 +52356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.1, y: -33.8}
+  m_AnchoredPosition: {x: -20, y: -33.8}
   m_SizeDelta: {x: 466.46307, y: 131.5026}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2284303547203211048
@@ -52337,7 +52444,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0.06752696, y: -0.005342024, z: -0.61424553, w: -1.0006868}
+  m_margin: {x: 0.06752696, y: -0.005342024, z: -2.8970408, w: -1.0006868}
   m_textInfo:
     textComponent: {fileID: 2284303547203211048}
     characterCount: 0
@@ -59306,7 +59413,7 @@ PrefabInstance:
     - target: {fileID: 4185601837462471057, guid: a9f723d960da7414cb6e567593b126fa,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4185601837462471057, guid: a9f723d960da7414cb6e567593b126fa,
         type: 3}
@@ -63287,7 +63394,7 @@ PrefabInstance:
     - target: {fileID: 7334448684759623403, guid: 0be8da676cf61a0419a90842f118efc4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7334448684759623403, guid: 0be8da676cf61a0419a90842f118efc4,
         type: 3}
@@ -63406,7 +63513,7 @@ PrefabInstance:
     - target: {fileID: 7431874349765985422, guid: 17722c219195daf43a5c0a7c6c5eed17,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7431874349765985422, guid: 17722c219195daf43a5c0a7c6c5eed17,
         type: 3}
@@ -63812,7 +63919,7 @@ Transform:
   - {fileID: 7933318094899060268}
   - {fileID: 7933318094899060294}
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &7933318094899060226
 Transform:
@@ -67765,7 +67872,6 @@ GameObject:
   - component: {fileID: 8559273267925832720}
   - component: {fileID: 8559273267925832724}
   - component: {fileID: 8559273267925832726}
-  - component: {fileID: 8559273267925832728}
   m_Layer: 0
   m_Name: Craftman
   m_TagString: Untagged
@@ -67903,41 +68009,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8559273267925832728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8559273267925832719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d43c8e646e523d4485d5cc20f31a60b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quest:
-    sQuestID: 33f0e944-99cb-4c46-b6ca-9160479e1d3a
-    bSelfAssignedQuest: 0
-    bQuestInAnyOrder: 0
-    sQuestTitle: 
-    sQuestDescription: 
-    eQuestType: 0
-    qGoals: []
-    bIsActive: 0
-    bIsCompleted: 0
-    qRewards:
-      iGoldAmount: 0
-      rewardItem: {fileID: 0}
-      sMessage: 
-    activateNextQuestUponCompletion:
-      m_PersistentCalls:
-        m_Calls: []
-  sQuestStartDialogLines:
-  - fck off start
-  sQuestInProgressDialogLines:
-  - fck off progress
-  sQuestEndDialogLines:
-  - fck off finished
 --- !u!1 &8559273267925832729
 GameObject:
   m_ObjectHideFlags: 0
@@ -68550,7 +68621,7 @@ PrefabInstance:
     - target: {fileID: 8625903261180356003, guid: 144f521482a95ea4cbb4bb35b351dce6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8625903261180356003, guid: 144f521482a95ea4cbb4bb35b351dce6,
         type: 3}

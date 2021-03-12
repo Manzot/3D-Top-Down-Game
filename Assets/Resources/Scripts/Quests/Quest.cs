@@ -21,9 +21,10 @@ public class Quest
     const string sQuestCompleted = "Quest Completed...";
     const float fMsgTime = 2f;
 
+    public AddNewQuest startIfCompletedThisQuest;
     [UniqueID]
     public string sQuestID;
-    [Tooltip("Only check the box if the quest is not given my any npc (if its auto add quest).")]
+    [Tooltip("Only check the box if the quest is not given by any npc (if its auto add quest).")]
     public bool bSelfAssignedQuest;
     public bool bQuestInAnyOrder;
     public string sQuestTitle;

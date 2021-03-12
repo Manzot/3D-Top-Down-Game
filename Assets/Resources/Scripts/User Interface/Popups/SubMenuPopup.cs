@@ -43,11 +43,12 @@ public class SubMenuPopup : Popup
     {
         base.open();
         iSelectedElement = 0;
-        Debug.Log("I am opened");
         containerAll.gameObject.SetActive(true);
     }
     public override void close()
     {
+        PopupUIManager.Instance.inventoryPopup.SetItemMenuOpenBool(false);
+        PopupUIManager.Instance.shopPopup.SetItemMenuOpenBool(false);
         base.close();
         containerAll.gameObject.SetActive(false);
     }
