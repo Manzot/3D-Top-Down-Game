@@ -23,12 +23,14 @@ public class QuestPopupUI : Popup
     public override void open()
     {
         base.open();
+        GameController.inPlayMode = false;
         UpdateQuestsUI();
         PopupUIManager.Instance.menuBarPopup.open();
     }
     public override void close()
     {
         base.close();
+        GameController.inPlayMode = true;
         PopupUIManager.Instance.menuBarPopup.close();
     }
     public void Start()

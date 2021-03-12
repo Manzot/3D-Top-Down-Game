@@ -21,10 +21,17 @@ public class MapPopup : Popup
     {
         base.open();
         player = PlayerController.Instance;
+        GameController.inPlayMode = false;
         SetPlayerLocation();
 
         zoomSlider.onValueChanged.AddListener(delegate { ChangeMapScale(); });
-       
+        PopupUIManager.Instance.menuBarPopup.open();
+
+    }
+    public override void close()
+    {
+        base.close();
+        GameController.inPlayMode = true;
     }
     void ChangeMapScale()
     {

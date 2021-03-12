@@ -20,7 +20,7 @@ public class Item: ScriptableObject
     public float fEffectValue;
     [Tooltip("Only Applicable for Weapons")]
     public float fWeaponKnockback;
-    public float fPrice;
+    public int iPrice;
     public Sprite itemIcon;
     public bool bIsStackable;
     public int iQuantity = 1;
@@ -40,7 +40,7 @@ public class Item: ScriptableObject
         eType = _item.eType;
         fEffectValue = _item.fEffectValue;
         fWeaponKnockback = _item.fWeaponKnockback;
-        fPrice = _item.fPrice;
+        iPrice = _item.iPrice;
         itemIcon = _item.itemIcon;
         bIsStackable = _item.bIsStackable;
         iStackLimit = _item.iStackLimit;

@@ -73,16 +73,31 @@ public class Quest
     {
         if (bAllGoalsCompleted)
         {
-            // TODO: bSelfAssignedQuest rewards to player and show in meesage popup
             AssignRewardsToPlayer(qRewards);
-            PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(sQuestCompleted + " \n" /* write rewards description here */, fMsgTime);
-           // Debug.Log($" You received {qRewards.iGoldAmount} gold. + You Received {qRewards.rewardItem.sItemName} + {qRewards.sMessage}" );
+            PopupUIManager.Instance.msgBoxPopup.ShowMessagePopup(sQuestCompleted + " \n" + SetRewardsMessage(qRewards), fMsgTime, 2f);
+
             RemoveQuest();
             if(activateNextQuestUponCompletion != null)
             {
                 activateNextQuestUponCompletion.Invoke();
             }
         }
+    }
+    public string SetRewardsMessage(QuestRewards _rewards)
+    {
+        string _sToReturn = "";
+        if (_rewards.iGoldAmount > 0)
+        {
+            _sToReturn += "You Got " + _rewards.iGoldAmount + " Gold \n";
+        }
+        if (_rewards.rewardItem)
+        {
+            _sToReturn += "You Got " + _rewards.rewardItem.sItemName + " \n";
+        }
+        if (!String.IsNullOrEmpty(_rewards.sMessage))
+            _sToReturn += _rewards.sMessage;
+
+        return _sToReturn;
     }
     public void AssignRewardsToPlayer(QuestRewards _reward)
     {

@@ -35,12 +35,14 @@ public class PauseMenuPopup : Popup
     public override void open()
     {
         base.open();
+        GameController.inPlayMode = false;
         SetSelected(lstButtonsElement[0]);
         PopupUIManager.Instance.menuBarPopup.open();
     }
     public override void close()
     {
         base.close();
+        GameController.inPlayMode = true;
         PopupUIManager.Instance.menuBarPopup.close();
     }
     public void ResumeButton()

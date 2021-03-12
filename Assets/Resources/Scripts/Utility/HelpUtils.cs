@@ -8,7 +8,7 @@ public static class HelpUtils
 {
     public static bool CheckAheadForColi(Transform _transform, float _distance)
     {
-        return Physics.Raycast(_transform.position + new Vector3(0, 0.3f, 0), _transform.forward, _distance);
+        return Physics.Raycast(_transform.position + new Vector3(0, 0.2f, 0), _transform.forward, _distance);
     }
     public static bool CheckAheadForColi(Transform _transform, float _distance, string _layerName)
     {

@@ -18,7 +18,7 @@ public class DialogBoxPopup : Popup
     public RectTransform responsePopupPosition;
 
     private static bool dialogInProgress;
-    NPCEntity questNPC;
+    NPC activeNPC;
 
     private void Update()
     {
@@ -93,9 +93,18 @@ public class DialogBoxPopup : Popup
 
     public void CheckForSpecialFunction()
     {
-        if(questNPC.GetQuest() != null)
+        if(activeNPC.npcBehaviour == NPCBehaviour.MERCHANT)
         {
-            if(questNPC.GetQuest().eQuestType == QuestType.SIDEQUEST)
+            if (sDialogLines[iDialogLineNumber].Contains("&shop"))
+            {
+                sDialogLines[iDialogLineNumber] = sDialogLines[iDialogLineNumber].Replace("&shop", ShowResponsePopup());
+                bResponseFound = true;
+            }
+        }
+
+        if(activeNPC.GetQuest() != null)
+        {
+            if(activeNPC.GetQuest().eQuestType == QuestType.SIDEQUEST)
             {
                 if (sDialogLines[iDialogLineNumber].Contains("&response"))
                 {
@@ -123,7 +132,10 @@ public class DialogBoxPopup : Popup
     {
         List<structSubMenu> _lstSubMenu = new List<structSubMenu>();
         structSubMenu _subMenu = new structSubMenu();
-        _subMenu.sName = "Yes";
+        if (activeNPC.npcBehaviour == NPCBehaviour.MERCHANT)
+            _subMenu.sName = "Buy / Sell";
+        else
+            _subMenu.sName = "Yes";
         _subMenu.action = delegate () { ResponseYES(); };
         _lstSubMenu.Add(_subMenu);
 
@@ -140,9 +152,19 @@ public class DialogBoxPopup : Popup
     }
     void ResponseYES()
     {
-        questNPC.ActivateQuest();
-        if(iDialogLineNumber < sDialogLines.Length - 1)
+        if (activeNPC.npcBehaviour == NPCBehaviour.MERCHANT)
+        {
             NextLine();
+            activeNPC.OpenShop();
+            iDialogLineNumber = -1;
+            StopAllCoroutines();
+        }
+        else
+        {
+            activeNPC.ActivateQuest();
+            if(iDialogLineNumber < sDialogLines.Length - 1)
+                NextLine();
+        }
         bResponseSelecting = false;
     }
     void ResponseNO()
@@ -155,9 +177,9 @@ public class DialogBoxPopup : Popup
 
         bResponseSelecting = false;
     }
-    public void SetQuestNPC(NPCEntity _npc)
+    public void SetQuestNPC(NPC _npc)
     {
-        questNPC = _npc;
+        activeNPC = _npc;
     }
     public bool GetDialogInProgress()
     {

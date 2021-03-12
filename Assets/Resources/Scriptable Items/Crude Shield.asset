@@ -19,7 +19,7 @@ MonoBehaviour:
   eType: 5
   fEffectValue: 500
   fWeaponKnockback: 0
-  fPrice: 10
+  iPrice: 10
   itemIcon: {fileID: 21300000, guid: f7b92aa4b6595a341a2a98bde62bca06, type: 3}
   bIsStackable: 0
   iQuantity: 1

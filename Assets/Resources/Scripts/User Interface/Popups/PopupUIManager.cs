@@ -12,6 +12,7 @@ public class PopupUIManager : MonoBehaviour
 	public QuestPopupUI questPopupUI;
 	public MenuBarPopup menuBarPopup;
 	public MapPopup mapPopup;
+	public ShopPopup shopPopup;
 
 	bool bDialogBoxActive;
 

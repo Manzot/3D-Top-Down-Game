@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuBarPopup : Popup
 {
@@ -9,8 +10,15 @@ public class MenuBarPopup : Popup
     PauseMenuPopup pauseMenuPopup;
     SubMenuPopup subMenuPopup;
     MapPopup mapPopup;
+    ShopPopup shopPopup;
     List<Popup> lstPopup;
 
+    public ButtonElement questButton;
+    public ButtonElement inventoryButton;
+    public ButtonElement mapButton;
+    public ButtonElement systemMenuButton;
+
+    ButtonElement selectedButtonElement;
     private void Start()
     {
         open();
@@ -25,26 +33,33 @@ public class MenuBarPopup : Popup
         lstPopup.Add(subMenuPopup);
         mapPopup = PopupUIManager.Instance.mapPopup;
         lstPopup.Add(mapPopup);
+        shopPopup = PopupUIManager.Instance.shopPopup;
+        lstPopup.Add(shopPopup);
         close();
 
     }
+
     public override void open()
     {
         base.open();
         GameController.bGamePaused = true;
         GameController.inPlayMode = false;
         Time.timeScale = 0f;
+      //  selectedButtonElement = null;
     }
     public override void close()
     {
         GameController.bGamePaused = false;
         GameController.inPlayMode = true;
         Time.timeScale = 1f;
+       // selectedButtonElement = null;
         base.close();
     }
     public void OpenInventoryUI()
     {
         CloseAllPopups();
+
+        SetSelectedButton(inventoryButton);
         if (GameController.inPlayMode)
         {
             GameController.inPlayMode = false;
@@ -55,6 +70,8 @@ public class MenuBarPopup : Popup
     public void OpenPauseMenuUI()
     {
         CloseAllPopups();
+
+        SetSelectedButton(systemMenuButton);
         if (GameController.inPlayMode)
         {
             GameController.inPlayMode = false;
@@ -63,6 +80,9 @@ public class MenuBarPopup : Popup
     }
     public void OpenMapUI()
     {
+        CloseAllPopups();
+
+        SetSelectedButton(mapButton);
         if (GameController.inPlayMode)
         {
             GameController.inPlayMode = false;
@@ -72,6 +92,8 @@ public class MenuBarPopup : Popup
     public void OpenQuestUI()
     {
         CloseAllPopups();
+
+        SetSelectedButton(questButton);
         if (GameController.inPlayMode)
         {
             GameController.inPlayMode = false;
@@ -84,5 +106,17 @@ public class MenuBarPopup : Popup
         {
             lstPopup[i].close();
         }
+      //  if(selectedButtonElement != null)
+           // selectedButtonElement.SetSelectedElement(false);
+    }
+    public void SetSelectedButton(ButtonElement _selectedBtn)
+    {
+        if(selectedButtonElement != null)
+        {
+            selectedButtonElement.SetSelectedElement(false);
+        }
+
+        selectedButtonElement = _selectedBtn;
+        selectedButtonElement.SetSelectedElement(true);
     }
 }

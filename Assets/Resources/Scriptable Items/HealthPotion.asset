@@ -20,7 +20,8 @@ MonoBehaviour:
     Effect: 20'
   eType: 0
   fEffectValue: 20
-  fPrice: 10
+  fWeaponKnockback: 0
+  iPrice: 5
   itemIcon: {fileID: 21300000, guid: dd29ecb199426084ebe85c57d31aa18c, type: 3}
   bIsStackable: 1
   iQuantity: 1

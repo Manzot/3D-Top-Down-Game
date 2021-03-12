@@ -7,7 +7,6 @@ public class Scorpion : Enemy
     private bool bRotateAnims = true;
     float fSTUN_TIME = 0f; // this is extra time after the animation
 
-    public Transform[] travelPoints;
     void Start()
     {
         base.Initialize();
@@ -24,7 +23,7 @@ public class Scorpion : Enemy
 
         if (bIsAlive)
         {
-            if(bIsGrounded)
+           // if(bIsGrounded)
             {
                 if (!bTargetFound)
                 {
@@ -33,6 +32,7 @@ public class Scorpion : Enemy
                 else
                 {
                     CheckTargetInRange(fAttackRange, fFollowRange);
+                    CheckWalkingArea(startPosition);
                 }
             }
             CalculateInvulnerability(fSTUN_TIME);
@@ -43,19 +43,15 @@ public class Scorpion : Enemy
         base.FixedRefresh();
         if (bIsAlive)
         {
-            if (bIsGrounded)
+          //  if (bIsGrounded)
             {
-                if (!bTargetFound)
+                if (bTargetFound)
                 {
-                    MoveRandomly();
-                }
-                else
-                {
-                    if (!bCanAttack)
+                    if (!bInAttackRange)
                     {
-                        if (bCanFollow)
+                        if (bCanFollow && !bIsAttacking)
                         {
-                            FollowTarget(targetPlayer.transform.position);
+                            moveScr.FollowTarget(targetPlayer.transform.position);
                         }
                     }
                     else
@@ -71,10 +67,10 @@ public class Scorpion : Enemy
         if(fAttackWaitTimeCounter <= 0)
         {
             bCanFollow = false;
-            anim.SetTrigger("StabAttack");
             bIsAttacking = true;
-            bCanRotate = false;
-            StartCoroutine(HelpUtils.ChangeBoolAfter((bool b) => { bIsAttacking = false; fAttackWaitTimeCounter = fAttackWaitTime; bCanFollow = true; bCanRotate = true; }, false, anim.GetCurrentAnimatorStateInfo(0).length + 0.5f));
+            anim.SetTrigger("StabAttack");
+           // bCanRotate = false;
+            StartCoroutine(HelpUtils.ChangeBoolAfter((bool b) => { bIsAttacking = false; fAttackWaitTimeCounter = fAttackWaitTime; bCanFollow = true; /*bCanRotate = true;*/ }, false, fAttackWaitTime));
             fAttackWaitTimeCounter = fAttackWaitTime;
             //bCanRotate = true;
         }
@@ -83,9 +79,9 @@ public class Scorpion : Enemy
     {
         if (bIsAlive)
         {
-            float f = bIsMoving ? 1 : 0;
-            anim.SetFloat("isWalking", f);
-            anim.SetBool("canAttack", bCanAttack);
+            //float f = bIsMoving ? 1 : 0;
+            anim.SetBool("isMoving", moveScr.IsMoving());
+            anim.SetBool("canAttack", bInAttackRange);
 
             if (bIsHit)
             {
@@ -93,22 +89,22 @@ public class Scorpion : Enemy
                 bIsHit = false;
             }
 
-            if (bCanRotate)
-            {
-                if (bRotateAnims)
-                {
-                    anim.SetTrigger("tRotating");
+            //if (bCanRotate)
+            //{
+            //    if (bRotateAnims)
+            //    {
+            //        anim.SetTrigger("tRotating");
 
-                    bRotateAnims = false;
+            //        bRotateAnims = false;
 
-                    if (bCanFollow)
-                        bCanRotate = false;
-                }
-            }
-            else
-            {
-                bRotateAnims = true;
-            }
+            //        if (bCanFollow)
+            //            bCanRotate = false;
+            //    }
+            //}
+            //else
+            //{
+            //    bRotateAnims = true;
+            //}
         }
         else
         {

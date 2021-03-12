@@ -14,12 +14,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public RectTransform tMenuPosition;
     private Item item;
     private bool bSelected;
-    private InventoryPopup inventoryPopup;
+   // private InventoryPopup inventoryPopup;
     int iSlotNumber;
-    private void Start()
-    {
-        inventoryPopup = PopupUIManager.Instance.inventoryPopup;
-    }
+
+    bool bShopSlot;
+    bool bMerchantSlot;
     public void UpdateSlot(Item _item)
     {
         item = new Item(_item);
@@ -45,60 +44,118 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             quanintyText.text = item.iQuantity.ToString();
         }
     }
+    public void UpdateSlot(Item _item, bool _bShopSlot, bool _bIsMerchants)
+    {
+        bShopSlot = _bShopSlot;
+        bMerchantSlot = _bIsMerchants;
+
+        item = new Item(_item);
+
+        icon.gameObject.SetActive(true);
+        icon.sprite = item.GetSprite();
+
+        equippedText.text = "";
+        quanintyText.text = "";
+
+        if (item.bIsEquipable)
+        {
+            if (item.bIsEquipped)
+                equippedText.text = "E";
+        }
+        if (item.eType == ItemType.QuestItem)
+        {
+            equippedText.text = "Q";
+        }
+
+        if (item.iQuantity > 1)
+        {
+            quanintyText.text = item.iQuantity.ToString();
+        }
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
         OpenItemMenu();
-        if(item != null)
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        PopupUIManager.Instance.inventoryPopup.SetSelected(this);
+    }
+    public void OpenItemMenu()
+    {
+        if (item != null)
         {
-            if(item.eType == ItemType.QuestItem)
+            if (item.eType != ItemType.QuestItem)
+            {
+                if (bShopSlot) 
+                {
+                    PopupUIManager.Instance.shopPopup.SetItemMenuOpenBool(true);
+                    List<structSubMenu> _lstSubMenu = new List<structSubMenu>();
+                    structSubMenu _subMenu = new structSubMenu();
+                    if (bMerchantSlot)
+                    {
+                        _subMenu.sName = "Buy";
+                        _subMenu.action = delegate () { ClickBuy(); };
+                    }
+                    else
+                    {
+                        _subMenu.sName = "Sell";
+                        _subMenu.action = delegate () { ClickSell(); };
+                    }
+                    _lstSubMenu.Add(_subMenu);
+
+                    _subMenu = new structSubMenu();
+                    _subMenu.sName = "Cancel";
+                    _subMenu.action = delegate () { ClickCancel(); };
+                    _lstSubMenu.Add(_subMenu);
+
+                    PopupUIManager.Instance.subMenuPopup.openMenu(_lstSubMenu, tMenuPosition.position);
+                }
+                else
+                {
+                    PopupUIManager.Instance.inventoryPopup.SetItemMenuOpenBool(true);
+                    List<structSubMenu> _lstSubMenu = new List<structSubMenu>();
+                    structSubMenu _subMenu = new structSubMenu();
+                    _subMenu.sName = "Use";
+                    if (item.bIsEquipable)
+                    {
+                        _subMenu.sName = "Equip";
+
+                        if (item.bIsEquipped)
+                        {
+                            _subMenu.sName = "Unequip";
+                        }
+                    }
+                    _subMenu.action = delegate () { ClickUse(); };
+                    _lstSubMenu.Add(_subMenu);
+
+                    _subMenu = new structSubMenu();
+                    _subMenu.sName = "Discard";
+                    _subMenu.action = delegate () { ClickDiscard(); };
+                    _lstSubMenu.Add(_subMenu);
+
+                    if (item.bIsStackable)
+                    {
+                        _subMenu = new structSubMenu();
+                        _subMenu.sName = "Discard All";
+                        _subMenu.action = delegate () { ClickDiscardAll(); };
+                        _lstSubMenu.Add(_subMenu);
+                    }
+
+                    _subMenu = new structSubMenu();
+                    _subMenu.sName = "Cancel";
+                    _subMenu.action = delegate () { ClickCancel(); };
+                    _lstSubMenu.Add(_subMenu);
+
+                    PopupUIManager.Instance.subMenuPopup.openMenu(_lstSubMenu, tMenuPosition.position);
+                }
+                
+            }
+            else
             {
                 PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Can't use a Quest Item..");
             }
         }
-    }
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        inventoryPopup.SetSelected(this);
-    }
-    public void OpenItemMenu()
-    {
-        if(item != null && item.eType != ItemType.QuestItem)
-        {
-            inventoryPopup.SetItemMenuOpenBool(true);
-            List<structSubMenu> _lstSubMenu = new List<structSubMenu>();
-            structSubMenu _subMenu = new structSubMenu();
-            _subMenu.sName = "Use";
-            if (item.bIsEquipable)
-            {
-                _subMenu.sName = "Equip";
-
-                if (item.bIsEquipped)
-                {
-                    _subMenu.sName = "Unequip";
-                }
-            }
-            _subMenu.action = delegate () { ClickUse(); };
-            _lstSubMenu.Add(_subMenu);
-
-            _subMenu = new structSubMenu();
-            _subMenu.sName = "Discard";
-            _subMenu.action = delegate () { ClickDiscard(); };
-            _lstSubMenu.Add(_subMenu);
-
-            if (item.bIsStackable)
-            {
-                _subMenu = new structSubMenu();
-                _subMenu.sName = "Discard All";
-                _subMenu.action = delegate () { ClickDiscardAll(); };
-                _lstSubMenu.Add(_subMenu);
-            }
-
-            _subMenu = new structSubMenu();
-            _subMenu.sName = "Cancel";
-            _subMenu.action = delegate () { ClickCancel(); };
-            _lstSubMenu.Add(_subMenu);
-            PopupUIManager.Instance.subMenuPopup.openMenu(_lstSubMenu, tMenuPosition.position);
-        }
+          
     }
     public void ClickUse()
     {
@@ -119,7 +176,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Can't use this item right now..... ");
 
         }
-        inventoryPopup.SetItemMenuOpenBool(false);
+        PopupUIManager.Instance.inventoryPopup.SetItemMenuOpenBool(false);
     }
     public void ClickDiscard()
     {
@@ -154,7 +211,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
         UpdatePlayerIventory(item);
 
-        inventoryPopup.SetItemMenuOpenBool(false);
+        PopupUIManager.Instance.inventoryPopup.SetItemMenuOpenBool(false);
     }
     public void ClickDiscardAll()
     {
@@ -170,11 +227,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         item.SetItemQuantity(0); // that will make it equal to 0
 
         UpdatePlayerIventory(item);
-        inventoryPopup.SetItemMenuOpenBool(false);
+        PopupUIManager.Instance.inventoryPopup.SetItemMenuOpenBool(false);
     }
     public void ClickCancel()
     {
-        inventoryPopup.SetItemMenuOpenBool(false);
+        PopupUIManager.Instance.inventoryPopup.SetItemMenuOpenBool(false);
+        PopupUIManager.Instance.shopPopup.SetItemMenuOpenBool(false);
     }
     public void UpdatePlayerIventory(Item _item) // It Removes or equip/unequip the item and updates player inventory
     {
@@ -231,22 +289,36 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     }
     void SetItemDetails()
     {
-        if(inventoryPopup != null)
+        if (PopupUIManager.Instance.inventoryPopup != null)
         {
             if (item != null)
             {
-                inventoryPopup.txtDetailItemName.text = item.sItemName;
-                inventoryPopup.txtDetailItemDescription.text = item.sItemDescription;
+                PopupUIManager.Instance.inventoryPopup.txtDetailItemName.text = item.sItemName;
+                PopupUIManager.Instance.inventoryPopup.txtDetailItemDescription.text = item.sItemDescription;
             }
             else
             {
-                inventoryPopup.txtDetailItemName.text = "No Item Selected";
-                inventoryPopup.txtDetailItemDescription.text = "";
+                PopupUIManager.Instance.inventoryPopup.txtDetailItemName.text = "No Item Selected";
+                PopupUIManager.Instance.inventoryPopup.txtDetailItemDescription.text = "";
             }
         }
     }
     public void SetSlotNumber(int _number)
     {
         iSlotNumber = _number;
+    }
+    public Item GetItem()
+    {
+        if (item)
+            return item;
+        return null;
+    }
+    public void ClickBuy()
+    {
+        PopupUIManager.Instance.shopPopup.BuyItem(item);
+    }
+    public void ClickSell()
+    {
+        PopupUIManager.Instance.shopPopup.SellItem(item, iSlotNumber);
     }
 }

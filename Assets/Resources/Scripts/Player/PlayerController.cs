@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     const float fNPC_DISTANCE_CHECK = 0.8f;
     const float fDISTANCE_TO_GROUND = 0.25f;
     const float fINVULNERABILITY_TIME = 0.5f;
-    const float fSTUN_TIME = 0.4f;
+    const float fSTUN_TIME = 0.5f;
     const float fSPRINT_STAMINA_COST = 10f; // is multipleid by deltaTime
     const float fATTACK_STAMINA_COST = 5f;
     const float fSHIELD_STAMINA_COST = 10f;
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     public UnityEvent OnReciveDamageUI;
     public UnityEvent OnStaminaChangeUI;
 
-    public Inventory playerInventory;
+    private Inventory playerInventory;
     public int iStartInventorySize;
 
     PlayerEquipmentManager pEquimentManager;
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
             {
                 Debug.Log(_collider.gameObject.name);
                 ItemContainer _itemContainer = _collider.transform.GetComponent<ItemContainer>();
-                NPCEntity _npc = _collider.transform.GetComponent<NPCEntity>();
+                NPC _npc = _collider.transform.GetComponent<NPC>();
                
                 if (_itemContainer)
                 {
@@ -349,11 +349,11 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
             }
         }
     }
-    public void CheckForNPC(NPCEntity _collidedNPC)
+    public void CheckForNPC(NPC _collidedNPC)
     {
         if (!bIsInteracting)
         {
-            if (_collidedNPC.SetDialogWithQuest())
+            if (_collidedNPC.SetDialog())
             {
                 bIsInteracting = true;
                 DisablePlayerMoveActions();

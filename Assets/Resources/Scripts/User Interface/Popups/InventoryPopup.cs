@@ -53,6 +53,7 @@ public class InventoryPopup : Popup
     {
         //TODO: On loading game without opening inventory, the items stack do not load properly
         base.open();
+        GameController.inPlayMode = false;
         SetItemMenuOpenBool(false);
         if(lstInventorySlots != null) 
         {
@@ -63,6 +64,7 @@ public class InventoryPopup : Popup
     public override void close()
     {
         base.close();
+        GameController.inPlayMode = true;
         PopupUIManager.Instance.menuBarPopup.close();
     }
 

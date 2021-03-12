@@ -29,8 +29,16 @@ public class MessageBoxPopup : Popup
     public void ShowMessageDirectly(string _message, float _fTimeToShow = 2, float _bgScale = 1f)
     {
         open();
-        txtMessage.text += _message;
+        txtMessage.text = _message;
         StartCoroutine(DisablePopupAfter(_fTimeToShow));
+    }
+    public override void open()
+    {
+        base.open();
+    }
+    public override void close()
+    {
+        base.close();
     }
     public void ShowTextMessages(string _message,  float _fTimeToShow = 2, float _bgScale = 1f)
     {
