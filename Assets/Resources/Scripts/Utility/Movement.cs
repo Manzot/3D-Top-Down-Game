@@ -110,6 +110,19 @@ public class Movement : MonoBehaviour
             }
         }
     }// TODO: Add Moving Area
+    public void RotateRandomlyOnSpot()
+    {
+        if (!bCanMove)
+        {
+            StopAllCoroutines();
+            StartCoroutine(GetRandomDirection());
+            bCanMove = true;
+        }
+        else
+        {
+            LookTowards(randomPosition, fROTATE_SPEED);
+        }
+    }
     public void Patrol()
     {
         if (bIsMoving)
@@ -207,6 +220,7 @@ public class Movement : MonoBehaviour
         Vector3 _movePos = (_target - transform.position).normalized;
         rbody.MovePosition(transform.position + _movePos * fSpeed * Time.fixedDeltaTime);
     }
+    
     public void LookTowards(Vector3 _target, float _rotationSpeed)
     {
         Vector3 _directionToPlayer = (_target - transform.position).normalized;

@@ -387,7 +387,8 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
             {
                 if (playerInventory.lstItems.Count < playerInventory.iInventorySize)
                 {
-                    Item _newItem = new Item(_collidedItemContainer.item);
+                    Item _newItem = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+                    _newItem.SetItem(_collidedItemContainer.item);
                     playerInventory.AddItem(_newItem);
                     _collidedItemContainer.DestroySelf();
                 }
@@ -401,7 +402,8 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         {
             if (playerInventory.lstItems.Count < playerInventory.iInventorySize)
             {
-                Item _newItem = new Item(_collidedItemContainer.item);
+                Item _newItem = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+                _newItem.SetItem(_collidedItemContainer.item);
                 playerInventory.AddItem(_newItem);
                 _collidedItemContainer.DestroySelf();
             }

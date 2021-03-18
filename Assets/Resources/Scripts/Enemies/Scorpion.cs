@@ -5,6 +5,9 @@ using UnityEngine;
 public class Scorpion : Enemy
 {
     //private bool bRotateAnims = true;
+    // Material Dissolve Variables
+    private Material rndMaterial;
+    float fMatDissolveAlpha = -0.8f;
     float fSTUN_TIME = 0f; // this is extra time after the animation
 
     void Start()
@@ -12,6 +15,7 @@ public class Scorpion : Enemy
         base.Initialize();
         fAttackRange = 2.5f;
         fFollowRange = 120f;
+        rndMaterial = GetComponentInChildren<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -23,19 +27,20 @@ public class Scorpion : Enemy
 
         if (bIsAlive)
         {
-           // if(bIsGrounded)
+            if (!bTargetFound)
             {
-                if (!bTargetFound)
-                {
-                    FindingTarget();
-                }
-                else
-                {
-                    CheckTargetInRange(fAttackRange, fFollowRange);
-                    CheckWalkingArea(startPosition);
-                }
+                FindingTarget();
+            }
+            else
+            {
+                CheckTargetInRange(fAttackRange, fFollowRange);
+                CheckWalkingArea(startPosition);
             }
             CalculateInvulnerability(fSTUN_TIME);
+        }
+        else
+        {
+             DissolveOnDeath(0.6f);
         }
     }
     private void FixedUpdate()
@@ -43,21 +48,18 @@ public class Scorpion : Enemy
         base.FixedRefresh();
         if (bIsAlive)
         {
-          //  if (bIsGrounded)
+            if (bTargetFound)
             {
-                if (bTargetFound)
+                if (!bInAttackRange)
                 {
-                    if (!bInAttackRange)
+                    if (bCanFollow && !bIsAttacking)
                     {
-                        if (bCanFollow && !bIsAttacking)
-                        {
-                            moveScr.FollowTarget(targetPlayer.transform.position);
-                        }
+                        moveScr.FollowTarget(targetPlayer.transform.position);
                     }
-                    else
-                    {
-                        AttackMove();
-                    }
+                }
+                else
+                {
+                    AttackMove();
                 }
             }
         }
@@ -112,5 +114,9 @@ public class Scorpion : Enemy
         }
 
     }
-  
+    void DissolveOnDeath(float _fDissolveSpeed)
+    {
+        fMatDissolveAlpha += _fDissolveSpeed * Time.deltaTime;
+        rndMaterial.SetFloat("_alpha", fMatDissolveAlpha);
+    }
 }

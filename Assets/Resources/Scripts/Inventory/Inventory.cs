@@ -97,14 +97,16 @@ public class Inventory
         {
             if (lstItems[i].sID == _item.sID)
             {
-                lstItems[i] = new Item(_item);
+                lstItems[i] = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+                lstItems[i].SetItem(_item);
                 break;
             }
         }
     }
     public void UpdateItemInSlot(Item _item, int _iNumber)
     {
-        lstItems[_iNumber] = new Item(_item);
+        lstItems[_iNumber] = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+        lstItems[_iNumber].SetItem(_item);
     }
     public structInventory SaveInventoryStats()
     {
@@ -128,7 +130,8 @@ public class Inventory
 
         for (int i = 0; i < _savedItemsLst.Count; i++)
         {
-            Item _newItem = new Item(ItemDatabaseManager.Instance.GetItemByID(_savedItemsLst[i].sID));
+            Item _newItem = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+            _newItem.SetItem(ItemDatabaseManager.Instance.GetItemByID(_savedItemsLst[i].sID));// new Item(ItemDatabaseManager.Instance.GetItemByID(_savedItemsLst[i].sID));
             if(_newItem != null)
             {
                 _newItem.SetItemVariables(_savedItemsLst[i]);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 public class ShopPopup : Popup
 {
     const float fItemDeductionAmount = 2f;
@@ -45,7 +46,7 @@ public class ShopPopup : Popup
     public void open(Inventory _merchantInventory)
     {
         base.open();
-        ClickPlayerInventory();
+        playerInventoryButton.SetSelectedElement(true);
         GameController.inPlayMode = false;
         playerGoldTxt.text = player.GetInventory().GetGoldAmount().ToString();
         InitializePlayerInventoryUI(player.GetInventory());
@@ -64,7 +65,8 @@ public class ShopPopup : Popup
         {
             if(!player.GetInventory().IsFull())
             {
-                Item _itemToAdd = new Item(_item);
+                Item _itemToAdd = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+                _itemToAdd.SetItem(_item);
                 player.GetInventory().AddItem(_itemToAdd);
                 player.GetInventory().SetGoldAmount(-_itemToAdd.iPrice);
                 InitializePlayerInventoryUI(player.GetInventory());
@@ -260,7 +262,7 @@ public class ShopPopup : Popup
             }
         }
     }
-    public void SetSelected(InventorySlot _iSlot)
+    public void SetSelected(InventorySlot _iSlot, bool _bOnPointerEnter = false)
     {
         if (selectedSlot != null)
             selectedSlot.SetSelectedElement(false);
@@ -293,20 +295,40 @@ public class ShopPopup : Popup
         if (selectedSlot)
         {
             selectedSlot.SetSelectedElement(true);
+            
             if (selectedSlot.GetItem())
             {
-                itemDescriptionTxt.text = selectedSlot.GetItem().sItemDescription;
-                if(bSwitchToMerchant)
-                    itemPriceTxt.text = "Item Cost: " + selectedSlot.GetItem().iPrice.ToString();
+                if (!_bOnPointerEnter)
+                {
+                    itemDescriptionTxt.text = selectedSlot.GetItem().sItemDescription;
+                    if(bSwitchToMerchant)
+                        itemPriceTxt.text = "Item Cost: " + selectedSlot.GetItem().iPrice.ToString();
+                    else
+                    {
+                        int _itemSalePrice = (int)(selectedSlot.GetItem().iPrice / fItemDeductionAmount);
+                        if (_itemSalePrice <= 0)
+                            _itemSalePrice = 1;
+
+                        itemPriceTxt.text = "Sells For: " + _itemSalePrice.ToString();
+                    }
+                }
                 else
                 {
-                    int _itemSalePrice = (int)(selectedSlot.GetItem().iPrice / fItemDeductionAmount);
-                    if (_itemSalePrice <= 0)
-                        _itemSalePrice = 1;
+                    if(merchantInventorySlotsLst.Contains(selectedSlot))
+                    {
+                        itemPriceTxt.text = "Item Cost: " + selectedSlot.GetItem().iPrice.ToString();
+                        ActivateMerchantSideButton();
+                    }
+                    else
+                    {
+                        int _itemSalePrice = (int)(selectedSlot.GetItem().iPrice / fItemDeductionAmount);
+                        if (_itemSalePrice <= 0)
+                            _itemSalePrice = 1;
 
-                    itemPriceTxt.text = "Sells For: " + _itemSalePrice.ToString();
+                        itemPriceTxt.text = "Sells For: " + _itemSalePrice.ToString();
+                        ActivatePlayerSideButton();
+                    }
                 }
-
             }
         }
 

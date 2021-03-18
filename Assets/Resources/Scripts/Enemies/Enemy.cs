@@ -36,9 +36,6 @@ public class Enemy : MonoBehaviour, IHittable
     public float fOnCollisionKnockBackForce = 5f;
     public Vector3 tHeadOffset = new Vector3(0, 0.5f, 0);
     protected Vector3 startPosition;
-    // Material Dissolve Variables
-    private Material rndMaterial;
-    float fMatDissolveAlpha = -0.8f;
 
     protected Movement moveScr;
     Collider maxTravelAreaCol;
@@ -48,24 +45,19 @@ public class Enemy : MonoBehaviour, IHittable
         rbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         moveScr = GetComponent<Movement>();
+
         fCurrentHitPoints = fMaxHitPoints;
         if (!targetPlayer)
             targetPlayer = PlayerController.Instance;
         fAttackWaitTimeCounter = 0;
         bIsAlive = true;
-
         startPosition = transform.position;
         // Just Randomiaing the stats a bit
-
-        rndMaterial = GetComponentInChildren<Renderer>().material;
     }
     public void Refresh()
     {
        // bIsGrounded = Grounded(transform, 0.4f);
-        if (!bIsAlive)
-        {
-            DissolveOnDeath(0.6f);
-        }
+       
     }
     public void FixedRefresh()
     {
@@ -113,6 +105,22 @@ public class Enemy : MonoBehaviour, IHittable
             }
         }
     }
+    public void FindingTarget(float _fVisionRadius, float _fVisionDistance)
+    {
+        RaycastHit _hit;
+        if (Physics.BoxCast(transform.position, transform.localScale * _fVisionRadius, transform.forward, out _hit, Quaternion.identity, _fVisionDistance))
+        {
+            if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                bTargetFound = true;
+                bCanFollow = true;
+                //moveScr.SetMovementActive(false);
+                //bFollowingPath = false;
+            }
+        }
+        else
+            bTargetFound = false;
+    }
     public void CalculateInvulnerability(float _fStunTime)
     {
         if (bIsInvulnerable)
@@ -128,7 +136,7 @@ public class Enemy : MonoBehaviour, IHittable
             }
         }
     }
-    public void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange)
+    public virtual void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange)
     {
         fAttackWaitTimeCounter -= Time.deltaTime;
         // Out of Range
@@ -228,11 +236,7 @@ public class Enemy : MonoBehaviour, IHittable
         }
         StartCoroutine(HelpUtils.WaitForSeconds(delegate { gameObject.SetActive(false); }, 4f));
     }// MAKING IT KINEMETIC ON DEATH, AND REMOVING COLLIDERS
-    void DissolveOnDeath(float _fDissolveSpeed)
-    {
-        fMatDissolveAlpha += _fDissolveSpeed * Time.deltaTime;
-        rndMaterial.SetFloat("_alpha", fMatDissolveAlpha);
-    }
+
     public bool IsInvulnerable()
     {
         return bIsInvulnerable;

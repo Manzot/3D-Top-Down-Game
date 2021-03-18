@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    float fDIST_TO_PLAYER = 650f;
+    float fDIST_TO_PLAYER = 850f;
     const float fFirstEnemyRespawnTime = 40f;
     const float fOtherEnemiesRespawnTime = 20f;
 

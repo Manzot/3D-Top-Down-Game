@@ -22,6 +22,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void UpdateSlot(Item _item)
     {
         item = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+        item.SetItem(_item);
 
         icon.gameObject.SetActive(true);
         icon.sprite = item.GetSprite();
@@ -49,7 +50,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         bShopSlot = _bShopSlot;
         bMerchantSlot = _bIsMerchants;
 
-        item = new Item(_item);
+        item = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+        item.SetItem(_item);
 
         icon.gameObject.SetActive(true);
         icon.sprite = item.GetSprite();
@@ -78,7 +80,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        PopupUIManager.Instance.inventoryPopup.SetSelected(this);
+        if (PopupUIManager.Instance.inventoryPopup.container.gameObject.activeSelf)
+            PopupUIManager.Instance.inventoryPopup.SetSelected(this);
+        if(PopupUIManager.Instance.shopPopup.container.gameObject.activeSelf)
+            PopupUIManager.Instance.shopPopup.SetSelected(this, true);
     }
     public void OpenItemMenu()
     {

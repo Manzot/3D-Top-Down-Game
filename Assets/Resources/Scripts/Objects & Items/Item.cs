@@ -31,9 +31,8 @@ public class Item: ScriptableObject
 
     public GameObject prefabItem;
 
-    public Item(Item _item)
+    public void SetItem(Item _item)
     {
-        ScriptableObject.CreateInstance<Item>();
         sID = _item.sID;
         iQuantity = _item.iQuantity;
         sItemName = _item.sItemName;
@@ -53,6 +52,28 @@ public class Item: ScriptableObject
         structThisItem.sID = sID;
         structThisItem.iQuantity = iQuantity;
         structThisItem.bEquipped = bIsEquipped;
+    }
+    public Item()
+    {
+        //sID = _item.sID;
+        //iQuantity = _item.iQuantity;
+        //sItemName = _item.sItemName;
+        //sItemDescription = _item.sItemDescription;
+        //eType = _item.eType;
+        //fEffectValue = _item.fEffectValue;
+        //fWeaponKnockback = _item.fWeaponKnockback;
+        //iPrice = _item.iPrice;
+        //itemIcon = _item.itemIcon;
+        //bIsStackable = _item.bIsStackable;
+        //iStackLimit = _item.iStackLimit;
+        //prefabItem = _item.prefabItem;
+        //bIsEquipable = _item.bIsEquipable;
+        //bIsEquipped = _item.bIsEquipped;
+
+        //structThisItem = new structItem();
+        //structThisItem.sID = sID;
+        //structThisItem.iQuantity = iQuantity;
+        //structThisItem.bEquipped = bIsEquipped;
     }
     public void SetItemVariables(structItem _structItem)
     {

@@ -35,7 +35,8 @@ public class ItemContainer : MonoBehaviour
     }
     public void SetItem(Item _item)
     {
-        item = new Item(_item);
+        item = ScriptableObject.CreateInstance<Item>();// new Item(_item);
+        item.SetItem(_item);
         item.SetItemQuantity(1); // to make the amount 1
     }
     public void DestroySelf()
