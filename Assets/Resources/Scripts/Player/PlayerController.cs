@@ -13,14 +13,14 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     const float fHEAD_OFFSET = 1f;
     const float fNPC_DISTANCE_CHECK = 0.8f;
     const float fDISTANCE_TO_GROUND = 0.25f;
-    const float fINVULNERABILITY_TIME = 0.5f;
+    const float fINVULNERABILITY_TIME = 2f;
     const float fSTUN_TIME = 0.5f;
     const float fSPRINT_STAMINA_COST = 10f; // is multipleid by deltaTime
     const float fATTACK_STAMINA_COST = 5f;
     const float fSHIELD_STAMINA_COST = 10f;
     const float fSTAMINA_RECOVER_START_TIME = 0.1f;
     const float fSTAMINA_RECOVERY_RATE = 25f; // is multipleid by deltaTime
-    const float fSPEED_DIVISION = 0.7f;
+    const float fSPEED_DIVISION = 0.6f;
 
     Rigidbody rbody;
     Animator anim;
@@ -47,13 +47,14 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     private bool bIsSprinting;
     private bool bCanSprint = true;
     private bool bIsShielding;
-    private bool bEquipPrimaryWeapon;
+    private bool bPrimaryWeaponEquipped;
     private bool bIsAttacking;
     private bool bIsInteracting;
     private bool bIsInvulnerable;
     private bool bIsStun;
     private bool bIsOnSlope;
     private bool bIsGrounded;
+    private bool bCanAttack;
    
     //Keys Input
     private bool bJumpPressed;
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         bIsAlive = true;
         playerInventory = new Inventory(iStartInventorySize);
         pEquimentManager = GetComponent<PlayerEquipmentManager>();
+        bCanSprint = true;
        // hightlightMat = rend.materials[1];
     }
     private void Start()
@@ -100,22 +102,24 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     {
         if (GameController.inPlayMode)
         {
-            if (bIsAlive && !bIsStun)
+            if (bIsAlive)
             {
                 PlayerAnimations();
-                PlayerInputs();
-                CheckGrounded();
-                StaminaCheck();
-                UseShield();
-                SwordAttacks();
-                DrawSheathPrimaryWeapon();
-
-                if (bIsGrounded)
+                if (!bIsStun)
                 {
-                    CheckAheadForColliders();
-                    CheckOnSlope();
-                }
+                    PlayerInputs();
+                    CheckGrounded();
+                    StaminaCheck();
+                    UseShield();
+                    SwordAttacks();
+                    DrawSheathPrimaryWeapon();
 
+                    if (bIsGrounded)
+                    {
+                        CheckAheadForColliders();
+                        CheckOnSlope(); // this controlling players y velocity for now
+                    }
+                }
             }
         }
     }
@@ -125,7 +129,6 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         {
             if (bIsAlive && !bIsStun)
             {
-
                 if (bIsGrounded)
                 {
                     Jump();
@@ -138,76 +141,73 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     }
     void DirectionalMovement()
     {
-        if (horizontal != 0 || vertical != 0)
+        //if (bMovementEnabled)
         {
-            if (bSprintPressed)
+            if (horizontal != 0 || vertical != 0)
             {
-                if (!bIsShielding && bCanSprint)
+                if (bSprintPressed && !bIsAttacking)
                 {
-                    if (fCurrentStamina > fSPRINT_STAMINA_COST * Time.deltaTime)
+                    if (!bIsShielding && bCanSprint)
                     {
-                        fCurrentStamina -= fSPRINT_STAMINA_COST * Time.deltaTime;
-                        bIsSprinting = true;
+                        if (fCurrentStamina > fSPRINT_STAMINA_COST * Time.deltaTime)
+                        {
+                            fCurrentStamina -= fSPRINT_STAMINA_COST * Time.deltaTime;
+                            bIsSprinting = true;
+                        }
+                        else
+                        {
+                            bIsSprinting = false;
+                            bCanSprint = false;
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    if (fCurrentStamina > 5f)
                     {
-                        bIsSprinting = false;
-                        bCanSprint = false;
+                        bCanSprint = true;
                     }
+                    bIsSprinting = false;
                 }
-            }
-            else
-            {
-                if (fCurrentStamina > 5f)
-                {
-                    bCanSprint = true;
-                }
-                bIsSprinting = false;
-            }
 
-            lastFacinDirection = new Vector3(horizontal, 0, vertical);
+                lastFacinDirection = new Vector3(horizontal, 0, vertical);
 
-            if (!bIsAttacking)
-            {
-                if (lastFacinDirection != Vector3.zero)
-                {
-                    transform.forward = lastFacinDirection;
-                }
-            }
-
-            //It is for keeping the direction while shielding
-            //if (!bIsShielding)
-            //{
-            //    if (Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f)
-            //        lastFacinDirection = new Vector3(horizontal, 0f, vertical);
-            //}
-            ////// mOVEMENT cONTROLLER //////////////////////////
-
-            movementVector = new Vector3(horizontal, 0, vertical).normalized;
-
-            if (movementVector != Vector3.zero)
-            {
                 if (!bIsAttacking)
                 {
-                    if (bIsSprinting)
+                    if (lastFacinDirection != Vector3.zero)
                     {
-                        rbody.velocity = (movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody); //rbody.AddForce(movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime, ForceMode.VelocityChange); ////;
+                        transform.forward = lastFacinDirection;
                     }
-                    else if (bIsShielding)
+                }
+
+                //It is for keeping the direction while shielding
+                //if (!bIsShielding)
+                //{
+                //    if (Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f)
+                //        lastFacinDirection = new Vector3(horizontal, 0f, vertical);
+                //}
+                ////// mOVEMENT cONTROLLER //////////////////////////
+
+                movementVector = new Vector3(horizontal, 0, vertical).normalized;
+
+                if (movementVector != Vector3.zero)
+                {
+                    if (bIsSprinting)
+                        rbody.velocity = (movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody); //rbody.AddForce(movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime, ForceMode.VelocityChange); ////;
+                    else if (bIsShielding || bIsAttacking)
                         rbody.velocity = (movementVector * fSPEED_DIVISION * fSpeed * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody); //rbody.AddForce(movementVector * fSpeed * fSPEED_DIVISION * Time.fixedDeltaTime, ForceMode.VelocityChange); ////
                     else
                         rbody.velocity = (movementVector * fSpeed * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody);// rbody.AddForce(movementVector * fSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
-                }
-                else
-                    rbody.velocity = Vector3.zero;
+
                     //rbody.MovePosition(transform.position + movementVector * fSpeed * Time.fixedDeltaTime);
-            }
+                }
                 ///////////////////////////////////////////////////
-        }
-        else
-        {
-            rbody.velocity = HelpUtils.VectorZeroWithY(rbody);
-            bIsSprinting = false;
+            }
+            else
+            {
+                rbody.velocity = HelpUtils.VectorZeroWithY(rbody);
+                bIsSprinting = false;
+            }
         }
     }
     void UseShield()
@@ -235,69 +235,89 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     }
     void DrawSheathPrimaryWeapon()
     {
-        if (pEquimentManager.primaryWeapon != null)
+        if (bAttackPressed)
         {
-            if (!bEquipPrimaryWeapon)
+            if (pEquimentManager.primaryWeapon != null)
             {
-                if (bAttackPressed)
+                if (!bPrimaryWeaponEquipped)
                 {
-                    bEquipPrimaryWeapon = true;
+                   // if (bAttackPressed)
+                    {
+                        bPrimaryWeaponEquipped = true;
+                    }
                 }
             }
-            else
+        }
+        else if (bSheathWeaponPressed)
+        {
+            if (bPrimaryWeaponEquipped)
             {
-                if (bSheathWeaponPressed)
-                {
-                    SheathWeapon();
-                }
+                SheathWeapon();
             }
         }
     }
     void SheathWeapon(bool _bIsRemoved = false)
     {
         //anim.SetBool("weapon_equipped", bDrawPrimaryWeapon);
-        bEquipPrimaryWeapon = _bIsRemoved;
+        bPrimaryWeaponEquipped = _bIsRemoved;
 
-        bEquipPrimaryWeapon = false;
+        bPrimaryWeaponEquipped = false;
         bIsAttacking = false;
         iAttackCombo = -1;
     }
     void SwordAttacks()
     {
-        if (bEquipPrimaryWeapon)
+        if (bPrimaryWeaponEquipped)
         {
             if (bAttackPressed)
             {
                 iAttackCombo++;
                 if (iAttackCombo >= 0 && !bIsAttacking && fCurrentStamina > fATTACK_STAMINA_COST)
                 {
+                    bIsAttacking = true;
+                    bSprintPressed = false;
+                    fWaitTime = 0;
                     fCurrentStamina -= fATTACK_STAMINA_COST;
                     anim.SetTrigger("attack1");
-                    iAttackCombo = -1;
-                   // HelpUtils.WaitForSeconds(delegate { bIsAttacking = false; }, anim.GetCurrentAnimatorStateInfo(0).length);
                 }
 
             }
+            if(iAttackCombo >= 0)
+                WaitForAttack();
+        }
+    }
+    float fWaitTime = 0;
+    void WaitForAttack()
+    {
+        fWaitTime += Time.deltaTime;
+        if(fWaitTime >= 0.4f)
+        {
+            bIsAttacking = false;
+            fWaitTime = 0;
+            iAttackCombo = -1;
         }
     }
     public void Jump()
     {
-        if (bJumpPressed && fCurrentStamina > 11f)
+        if (bJumpPressed)
         {
-            if (bIsOnSlope) // when on slope 
+            if(fCurrentStamina > 11f)
             {
-                if(rbody.velocity != Vector3.zero)
-                    rbody.AddForce(new Vector3(0, fJumpForce * 2f, 0), ForceMode.Impulse); // on slope increaing jump force
-                else
-                    rbody.AddForce(new Vector3(0, fJumpForce, 0), ForceMode.Impulse);
+                if (bIsOnSlope) // when on slope 
+                {
+                    if (rbody.velocity != Vector3.zero)
+                        rbody.AddForce(new Vector3(0, fJumpForce * 2f, 0), ForceMode.Impulse); // on slope increaing jump force
+                    else
+                        rbody.AddForce(new Vector3(0, fJumpForce, 0), ForceMode.Impulse);
 
-                bJumpPressed = false;
-            }
-            else // normal jumping on ground
-            {
-                if(rbody.velocity.y <= 0 && rbody.velocity.y >= -0.1f)
-                    rbody.AddForce(new Vector3(0, fJumpForce, 0), ForceMode.Impulse);
-                bJumpPressed = false;
+                    bJumpPressed = false;
+                }
+                else // normal jumping on ground
+                {
+                    if (rbody.velocity.y <= 0 && rbody.velocity.y >= -0.1f)
+                        rbody.AddForce(new Vector3(0, fJumpForce, 0), ForceMode.Impulse);
+                    bJumpPressed = false;
+                }
             }
             fCurrentStamina -= 10f;
         }
@@ -358,7 +378,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                 bIsInteracting = true;
                 DisablePlayerMoveActions();
                 _collidedNPC.LookAtTarget(transform);
-                transform.LookAt(_collidedNPC.transform);
+                StartCoroutine(HelpUtils.RotateTowardsTarget(transform, _collidedNPC.transform));
                 GameController.inPlayMode = false;
             }
         }
@@ -460,7 +480,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
             else if(_damage > 0)
                 anim.SetTrigger("isHit");
             OnReciveDamageUI.Invoke();
-            StartCoroutine(HelpUtils.ChangeBoolAfter((bool b) => { bIsInvulnerable = b; SetIsAttacking(b); }, false, fINVULNERABILITY_TIME));
+            StartCoroutine(HelpUtils.ChangeBoolAfter((bool b) => { bIsInvulnerable = b; bIsAttacking = b; }, false, fINVULNERABILITY_TIME));
         }
     }
     public void Die()
@@ -558,25 +578,35 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     /// Bools Getter And Setters
     public void PlayerInputs()
     {
-        if (bIsGrounded)
+       // if (!bIsAttacking)
         {
-            horizontal = Input.GetAxis("Horizontal");
-            vertical = Input.GetAxis("Vertical");
-        }
-        bSheathWeaponPressed = Input.GetKeyDown(KeyCode.T);
-        bSprintPressed = Input.GetButton("Sprint");
-        bShieldPressed = Input.GetButton("Shield");
-        bAttackPressed = Input.GetButtonDown("Attack");
-        bInteractPressed = Input.GetButtonDown("Interact");
+            if (bIsGrounded && !bIsAttacking)
+            {
+                horizontal = Input.GetAxis("Horizontal");
+                vertical = Input.GetAxis("Vertical");
+            }
+            bSheathWeaponPressed = Input.GetKeyDown(KeyCode.T);
+            if (Input.GetButtonDown("Sprint"))
+            {
+                bSprintPressed = true;
+            }
+            if (Input.GetButtonUp("Sprint"))
+            {
+                bSprintPressed = false;
+            }
+            bShieldPressed = Input.GetButton("Shield");
+            bAttackPressed = Input.GetButtonDown("Attack");
+            bInteractPressed = Input.GetButtonDown("Interact");
         
-        if(Input.GetKeyDown(KeyCode.Space))
-            bJumpPressed = true;
+            if(Input.GetKeyDown(KeyCode.Space))
+                bJumpPressed = true;
+        }
     }
     public void PlayerAnimations()
     {
         anim.SetBool("isSprinting", bIsSprinting);
         anim.SetBool("shield_equipped", bIsShielding);
-        anim.SetBool("weapon_equipped", bEquipPrimaryWeapon);
+        anim.SetBool("weapon_equipped", bPrimaryWeaponEquipped);
         anim.SetFloat("moveVelocity", rbody.velocity.sqrMagnitude);
     }
     public bool IsInteracting()
@@ -601,7 +631,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     }
     public bool PrimaryWeaponEquipped()
     {
-        return bEquipPrimaryWeapon;
+        return bPrimaryWeaponEquipped;
     }
     public void SetPrimaryWeaponEquipped(Item _swordToEquip)
     {
@@ -637,7 +667,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     }
     public void SetIsAttacking(bool _bIsAttacking)
     {
-        anim.ResetTrigger("attack1");
+       // anim.ResetTrigger("attack1");
         bIsAttacking = _bIsAttacking;
     }
   

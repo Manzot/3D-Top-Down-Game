@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MovementType {IDLE, PATROLLING, MOVE_RANDOM }
+public enum MovementType {IDLE, PATROLLING, MOVE_RANDOM, CIRCULAR_MOTION }
 public class Movement : MonoBehaviour
 {
     const float fDISTANCE_TO_GROUND = 0.2f;
@@ -10,11 +10,11 @@ public class Movement : MonoBehaviour
     const float fROTATE_SPEED = 240f;
 
     Rigidbody rbody;
-    Animator anim;
     public MovementType movementType;
     public float fSpeed;
     public float fWalkTime;
     public float fWaitTime;
+    public float fRandomizeDirAfter;
 
     private bool bCanMove;
     private bool bIsMoving;
@@ -27,8 +27,11 @@ public class Movement : MonoBehaviour
     private Vector3 lastDirection;
 
     public Transform[] tPatrolPoints;
+
     public bool bReverseDirection; // it is to enable or disable reverse direction
     public bool bRandomizePoints;
+
+    public float fRotateSpeed = 60f;
 
     private bool bDirReversing; // it is actually reversing direction if the npc reaches the end point
     private int iPatrolPos = 0;
@@ -41,14 +44,16 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody>();
         startPosition = transform.position;
+       
         bActive = true;
+        SetKinemetic();
 
         fWaitTime += Random.Range(-0.5f, 1f);
         fWalkTime += Random.Range(-0.5f, 1f);
         fSpeed += Random.Range(-0.5f, 1f);
+        fChangeDirectionTime = Random.Range(1f, fRandomizeDirAfter);
     }
     private void OnEnable()
     {
@@ -70,58 +75,118 @@ public class Movement : MonoBehaviour
                 case MovementType.PATROLLING:
                     Patrol();
                     break;
+                case MovementType.CIRCULAR_MOTION:
+                    CircularMotion(bReverseDirection);
+                    break;
             }
         }
     }
 
+    public void SetKinemetic()
+    {
+        if (movementType == MovementType.IDLE)
+            rbody.isKinematic = true;
+        else
+        {
+            rbody.isKinematic = false;
+        }
+    }
     public void Idle()
     {
         rbody.velocity = Vector3.zero;
     }
     public void MoveRandomly()
     {
-        if (bOutOfWalkingArea)
-            rbody.MovePosition(transform.position + transform.forward * fSpeed * Time.fixedDeltaTime);
-
-        if (!bCanMove)
+        if (CheckWalkingArea())
         {
-            StopAllCoroutines();
-            StartCoroutine(GetRandomDirection());
-            bCanMove = true;
+            FollowTarget(startPosition);
         }
         else
         {
-            if (bIsMoving)
+            if (!bCanMove)
             {
-                if (HelpUtils.CheckAheadForColi(transform, fDISTANCE_TO_COLIS))
+                StopAllCoroutines();
+                StartCoroutine(GetRandomDirection());
+                bCanMove = true;
+            }
+            else
+            {
+                if (bIsMoving)
                 {
-                    bIsMoving = false;
-                    StartCoroutine(HelpUtils.WaitForSeconds(delegate { bCanMove = false; }, fWaitTime / 2)); ;
+                    if (HelpUtils.CheckAheadForColi(transform, fDISTANCE_TO_COLIS))
+                    {
+                        bIsMoving = false;
+                    }
+
+                    rbody.MovePosition(transform.position + transform.forward * fSpeed * Time.fixedDeltaTime);
                 }
-                
+                else
+                {
+                    if (bCanRotate)
+                    {
+                        LookTowards(randomPosition, fROTATE_SPEED);
+                    }
+                }
+            }
+        }
+       
+    }// TODO: Add Moving Area
+
+    private float fWaitCounter = 0;
+    private float fWalkCounter = 0;
+    private float fChangeDirectionCounter = 0;
+    private float fChangeDirectionTime = 0;
+    public void CircularMotion(bool _bInverseDirection)
+    {
+        if (CheckWalkingArea(4))
+        {
+            LookTowards(startPosition, fROTATE_SPEED);
+            rbody.MovePosition(transform.position + transform.forward * fSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            fWalkCounter += Time.deltaTime;
+            if(fWalkCounter < fWalkTime)
+            {
+                bIsMoving = true;
+
+                if (bRandomizePoints)
+                {
+                    fChangeDirectionCounter += Time.deltaTime;
+                    if(fChangeDirectionCounter > fChangeDirectionTime)
+                    {
+                        fChangeDirectionCounter = 0;
+                        bReverseDirection = !bReverseDirection;
+                        fChangeDirectionTime = Random.Range(1, fRandomizeDirAfter);
+                    }
+                    //StartCoroutine(HelpUtils.WaitForSeconds(delegate { bReverseDirection = !bReverseDirection; }, Random.Range(1f, fRandomizeDirAfter)));
+                }
+                RotateInCircle(bReverseDirection);
                 rbody.MovePosition(transform.position + transform.forward * fSpeed * Time.fixedDeltaTime);
             }
             else
             {
-                if (bCanRotate)
+                bIsMoving = false;
+                fWaitCounter += Time.deltaTime;
+                if(fWaitCounter > fWaitTime)
                 {
-                   LookTowards(randomPosition, fROTATE_SPEED);
+                    fWaitCounter = 0;
+                    fWalkCounter = 0;
                 }
+
             }
         }
-    }// TODO: Add Moving Area
-    public void RotateRandomlyOnSpot()
+    }
+    private void RotateInCircle(bool _bReverseDirection)
     {
-        if (!bCanMove)
-        {
-            StopAllCoroutines();
-            StartCoroutine(GetRandomDirection());
-            bCanMove = true;
-        }
+        Vector3 newAngle = transform.eulerAngles;
+
+        if(_bReverseDirection)
+            newAngle.y += fRotateSpeed * 1 * Time.deltaTime;
         else
-        {
-            LookTowards(randomPosition, fROTATE_SPEED);
-        }
+            newAngle.y += fRotateSpeed * -1 * Time.deltaTime;
+
+        transform.eulerAngles = newAngle;
     }
     public void Patrol()
     {
@@ -209,7 +274,7 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(fWaitTime / 3);
         bCanMove = false;
     }
-    public void FollowTarget(Vector3 _target)
+    public void FollowTarget(Vector3 _target, float _fRotSpeed = fROTATE_SPEED)
     {
         bIsMoving = true;
         LookTowards(_target, fROTATE_SPEED);
@@ -227,17 +292,20 @@ public class Movement : MonoBehaviour
         _directionToPlayer.y = 0;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(_directionToPlayer), _rotationSpeed * Time.fixedDeltaTime);
     }
-    public void CheckWalkingArea()
+    public bool CheckWalkingArea(float _fWalkingAreaMinDivider = 3)
     {
       //  if (movementType != MovementType.PATROLLING)
         {
             if ((transform.position - startPosition).sqrMagnitude > fMaxWalkingDistance)
             {
-                bOutOfWalkingArea = true;
                 randomPosition = startPosition;
+                bOutOfWalkingArea = true;
+                return bOutOfWalkingArea;
             }
-            else
+            else if((transform.position - startPosition).sqrMagnitude < fMaxWalkingDistance - (fMaxWalkingDistance / _fWalkingAreaMinDivider))
                 bOutOfWalkingArea = false;
+
+            return bOutOfWalkingArea;
         }
     }
     public bool IsMoving()
@@ -250,6 +318,13 @@ public class Movement : MonoBehaviour
     }
     public void SetMovementActive(bool _bToSet)
     {
+        ResetBools();
         bActive = _bToSet;
+    }
+    public void ResetBools()
+    {
+        StopAllCoroutines();
+        bCanMove = false;
+        bIsMoving = false;
     }
 }

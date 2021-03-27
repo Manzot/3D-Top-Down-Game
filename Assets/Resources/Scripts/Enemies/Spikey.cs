@@ -1,58 +1,69 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Spikey : Enemy
 {
-    const float fCLOSE_RANGE = 7f;
+    const float fCLOSE_RANGE = 5f;
 
-    public float fVisionRadius;
-    public float fVisionDistance;
+    private float fVisionRadius = 2.2f;
+    private float fVisionDistance = 4f;
     public float fTackleSpeed = 6f;
     float fSpinAttackMaxTime = 3f;
-    float fSTUN_TIME = 0f; // this is extra time after the animation
-    
+    float fSTUN_TIME = 2f; // this is extra time after the animation
+    private bool bSpeedingUp;
+    private bool bIsHidden;
+
+    public VisualEffect vfxEffect;
     private void Start()
     {
         base.Initialize();
-        fAttackRange = 20f;
-        fFollowRange = 120f;
+        fAttackRange = 31f;
+        fFollowRange = 80f;
+        bIsInvulnerable = true;
+        rndrMaterial = GetComponentInChildren<Renderer>().material;
+        vfxEffect.Stop();
     }
     public void Update()
     {
         base.Refresh();
-
         SetAnimations();
 
         if (bIsAlive)
         {
-            if (!bTargetFound)
+            if (bIsInvulnerable)
             {
-                FindingTarget(fVisionRadius, fVisionDistance);
-            }
-            else
-            {
-                if (!bIsAttacking)
+                if (!bTargetFound)
+                    FindingTarget(fVisionRadius, fVisionDistance);
+                else
                 {
-                    CheckTargetInRange(fAttackRange, fFollowRange);
-                    CheckWalkingArea(startPosition);
+                    if (!bIsAttacking)
+                    {
+                        CheckTargetInRange(fAttackRange, fFollowRange);
+                        CheckWalkingArea(startPosition);
+
+                        if(!bIsHidden && bInAttackRange)
+                            AttackMove();
+
+                        if (!bIsHidden)
+                            fAttackWaitTimeCounter -= Time.deltaTime;
+                    }
                 }
             }
-            CalculateInvulnerability(fSTUN_TIME);
         }
         else
         {
-          //  DissolveOnDeath(0.6f);
+            DissolveOnDeath(0.6f);
         }
-        
-        Debug.Log(bTargetFound);
     }
     private void FixedUpdate()
     {
         base.FixedRefresh();
+
         if (bIsAlive)
         {
-            if (bTargetFound)
+            if (bTargetFound && bIsInvulnerable && !bIsHidden)
             {
                 if (!bInAttackRange)
                 {
@@ -60,76 +71,57 @@ public class Spikey : Enemy
                     {
                         moveScr.FollowTarget(targetPlayer.transform.position);
                     }
-                }
-                else
+                } 
+                if (bIsAttacking)
                 {
-                    if (!bIsAttacking)
-                    {
-                        AttackMove();
-                    }
-                    else
-                        Tackle(attackPos, fTackleSpeed);
+                    Tackle(attackDirection, fTackleSpeed);
+                    CollisionCheck();
                 }
             }
         }
     }
-    // Add function to make a random chance to hide under shell and look around;
-    // if too close to player either stab attack or hide undear shell
-    // if in between noraml attack range and very close range, then try to maintain some distancne to start spinning attack
-    // if at normal attack range, then use spinning attack
 
-
-    public void HideUnderShell()
-    {
-        moveScr.SetMovementActive(false);
-        // set anim to hide and seek
-    }
-    // Move Towards Player at fast speed
-    // Upon hitting get knocked up for few seconds
-    // Upon not hitting, stop spinning after few seconds
-    Vector3 attackPos;
+    Vector3 attackDirection;
     public void SpinningAttack()
     {
-        StopAllCoroutines();
+        rotateAngle = transform.forward;
+        StartCoroutine(HelpUtils.WaitForSeconds(delegate { vfxEffect.Play(); rotateAngle = attackDirection; }, 0.6f));
         anim.SetBool("spinAttack", true);
-        attackPos = (targetPlayer.transform.position - transform.position).normalized;
+        attackDirection = (targetPlayer.transform.position - transform.position).normalized;      
     }
 
     public void AttackMove()
     {
-        if (fAttackWaitTimeCounter <= 0)
+        if (fAttackWaitTimeCounter < 0)
         {
             bCanFollow = false;
             bIsAttacking = true;
             SpinningAttack();
-            StartCoroutine(HelpUtils.WaitForSeconds(delegate {
-                anim.SetBool("spinAttack", false);
-                bIsAttacking = false; 
-                bCanFollow = true; 
-                fAttackWaitTimeCounter = fAttackWaitTime; 
-            },
-            fSpinAttackMaxTime));
-
+           // StopAllCoroutines();
+            StartCoroutine(StopAttackAfter(fSpinAttackMaxTime));
             fAttackWaitTimeCounter = fAttackWaitTime;
         }
     }
     public override void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange)
     {
-        fAttackWaitTimeCounter -= Time.deltaTime;
         float _fDistance = (transform.position - targetPlayer.transform.position).sqrMagnitude;
 
         if (_fDistance >= _fTargetFollowRange)
         {
-            if (!bIsInvulnerable && bTargetFound)
+            if (bTargetFound)
             {
                 ResetBools();
             }
         }
         else if (_fDistance <= _fAttackRange && _fDistance >= fCLOSE_RANGE)
         {
+            if (bIsHidden)
+            {
+                bIsHidden = false;
+            }
             bCanFollow = false;
             moveScr.SetIsMoving(false);
-            if (!bIsInvulnerable)
+           // if (!bIsInvulnerable)
             {
                 if (fAttackWaitTimeCounter <= 0)
                 {
@@ -147,11 +139,15 @@ public class Spikey : Enemy
                 }
             }
         }
-        else if(_fDistance < fCLOSE_RANGE)
+        else if(_fDistance < fCLOSE_RANGE) // when too close to player
         {
             if (!bIsAttacking)
             {
-                // Shell Itself
+                fAttackWaitTimeCounter = fAttackWaitTime;
+                anim.SetTrigger("hide");
+                moveScr.LookTowards(targetPlayer.transform.position, fROTATE_SPEED);
+                bIsHidden = true;
+                bInAttackRange = false;
             }
         }
         else
@@ -165,21 +161,100 @@ public class Spikey : Enemy
         if (bIsAlive)
         {
             anim.SetBool("isMoving", moveScr.IsMoving());
-
-            if (bIsHit)
-            {
-                anim.SetTrigger("isHit");
-                bIsHit = false;
-            }
+            anim.SetBool("hide", bIsHidden);
         }
         else
         {
             anim.SetTrigger("isDead");
         }
-
     }
+    Vector3 rotateAngle = new Vector3(0,0,0);
     public void Tackle(Vector3 _direction, float _fTackleSpeed)
     {
-        rbody.MovePosition(transform.position + _direction * _fTackleSpeed * Time.fixedDeltaTime);
+        rotateAngle = Quaternion.AngleAxis(30, Vector3.up) * rotateAngle;
+        //rotateAngle.y += fROTATE_SPEED * 3 * Time.deltaTime;
+
+        if (bSpeedingUp)
+            rbody.MovePosition(transform.position + _direction * _fTackleSpeed * Time.fixedDeltaTime);
+        else
+            rbody.MovePosition(transform.position + _direction * 2 * Time.fixedDeltaTime);
+
+        //vfxEffect.gameObject.SetActive(true);
+        
     }
+    public void CollisionCheck()
+    {
+        if (HelpUtils.CheckAheadForColi(transform.position, rotateAngle, 0.7f, true))
+        {
+            if(bSpeedingUp)
+                KnockedUpsideDown();
+        }
+    }
+    public void KnockedUpsideDown()
+    {
+        vfxEffect.Stop();
+        anim.SetBool("getKnockedUp", true);
+        bIsInvulnerable = false;
+        bInAttackRange = false;
+        StartCoroutine(DoKnockupReset(fSTUN_TIME));
+    }
+    public override void ApplyKnockback(Vector3 _sourcePosition, float _pushForce)
+    {
+        if (!bTargetFound)
+        {
+            bTargetFound = true;
+            moveScr.SetMovementActive(false);
+        }
+
+        Vector3 pushForce = transform.position - _sourcePosition;
+        pushForce.y = 0;
+        rbody.AddForce(pushForce.normalized * (_pushForce / 2) - Physics.gravity * 0.2f, ForceMode.Impulse);
+    }
+    public override void ApplyDamage(float _damage)
+    {
+        if (!bIsInvulnerable && !bIsHit)
+        {
+            fCurrentHitPoints -= _damage;
+        }
+        if (fCurrentHitPoints <= 0)
+        {
+            Die();
+        }
+    }
+    IEnumerator DoKnockupReset(float _fTimeToWait)
+    {
+        bIsHit = false;
+        yield return new WaitForSeconds(_fTimeToWait);
+        bIsAttacking = false;
+        bSpeedingUp = false;
+        bIsHit = true;
+        bIsHidden = true;
+
+        anim.SetBool("spinAttack", bIsAttacking);
+        anim.SetBool("getKnockedUp", false); // sida ho jve
+
+        yield return new WaitForSeconds(_fTimeToWait);
+        bIsInvulnerable = true;
+        bIsHidden = false;
+    }
+    IEnumerator StopAttackAfter(float _fTimeToWait)
+    {
+        bInAttackRange = false;
+        yield return new WaitForSeconds(_fTimeToWait);
+        vfxEffect.Stop();
+        bIsAttacking = false;
+        bSpeedingUp = false;
+        anim.SetBool("spinAttack", bIsAttacking);
+    }
+    public void SetSpeedUpBool(int _bToSet)
+    {
+        bSpeedingUp = _bToSet == 0 ? false : true;
+    }
+
+    void DissolveOnDeath(float _fDissolveSpeed)
+    {
+        fMatDissolveAlpha += _fDissolveSpeed * Time.deltaTime;
+        rndrMaterial.SetFloat("_alpha", fMatDissolveAlpha);
+    }
+
 }

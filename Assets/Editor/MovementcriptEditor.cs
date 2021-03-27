@@ -52,6 +52,17 @@ public class MovementcriptEditor : Editor
                     script.bReverseDirection = EditorGUILayout.Toggle("Reverse Direction At End", script.bReverseDirection);
                     script.bRandomizePoints = EditorGUILayout.Toggle("Randomize Points", script.bRandomizePoints);
                     break;
+                case MovementType.CIRCULAR_MOTION:
+                    script.bReverseDirection = EditorGUILayout.Toggle("Reverse Direction", script.bReverseDirection);
+                    script.bRandomizePoints = EditorGUILayout.Toggle("Randomize Directions", script.bRandomizePoints);
+                    script.fRandomizeDirAfter = EditorGUILayout.FloatField("Randomize After (Range from 1 to )", script.fRandomizeDirAfter);
+                    script.fRotateSpeed = EditorGUILayout.FloatField("Rotate Speed", script.fRotateSpeed);
+                 //   EditorGUIUtility.labelWidth = 60f;
+                    script.fWalkTime = EditorGUILayout.FloatField("Walk Time", script.fWalkTime);
+                  //  EditorGUIUtility.labelWidth = 60f;
+                    script.fWaitTime = EditorGUILayout.FloatField("Wait Time", script.fWaitTime);
+                    script.fMaxWalkingDistance = EditorGUILayout.FloatField("Max Walking Distance", script.fMaxWalkingDistance);
+                    break;
             }
         }
 

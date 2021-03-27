@@ -1,86 +1,236 @@
 fileFormatVersion: 2
 guid: 11ff083abe23bee4392526abb35a13fd
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Rig
-    100002: RigHub
-    100004: RigHubGizmo
-    100006: RigLArm1
-    100008: RigLArm2
-    100010: RigLArmPalm
-    100012: RigLBLeg1
-    100014: RigLBLeg2
-    100016: RigLBLegAnkle
-    100018: RigLBLegPlatform
-    100020: RigLEye01
-    100022: RigLEye02
-    100024: RigLEye03
-    100026: RigLFLeg1
-    100028: RigLFLeg2
-    100030: RigLFLegAnkle
-    100032: RigLFLegPlatform
-    100034: RigRArm1
-    100036: RigRArm2
-    100038: RigRArmPalm
-    100040: RigRBLeg1
-    100042: RigRBLeg2
-    100044: RigRBLegAnkle
-    100046: RigRBLegPlatform
-    100048: RigREye01
-    100050: RigREye02
-    100052: RigREye03
-    100054: RigRFLeg1
-    100056: RigRFLeg2
-    100058: RigRFLegAnkle
-    100060: RigRFLegPlatform
-    100062: RigShell
-    100064: RigShellGizmo
-    100066: Spike
-    100068: //RootNode
-    400000: Rig
-    400002: RigHub
-    400004: RigHubGizmo
-    400006: RigLArm1
-    400008: RigLArm2
-    400010: RigLArmPalm
-    400012: RigLBLeg1
-    400014: RigLBLeg2
-    400016: RigLBLegAnkle
-    400018: RigLBLegPlatform
-    400020: RigLEye01
-    400022: RigLEye02
-    400024: RigLEye03
-    400026: RigLFLeg1
-    400028: RigLFLeg2
-    400030: RigLFLegAnkle
-    400032: RigLFLegPlatform
-    400034: RigRArm1
-    400036: RigRArm2
-    400038: RigRArmPalm
-    400040: RigRBLeg1
-    400042: RigRBLeg2
-    400044: RigRBLegAnkle
-    400046: RigRBLegPlatform
-    400048: RigREye01
-    400050: RigREye02
-    400052: RigREye03
-    400054: RigRFLeg1
-    400056: RigRFLeg2
-    400058: RigRFLegAnkle
-    400060: RigRFLegPlatform
-    400062: RigShell
-    400064: RigShellGizmo
-    400066: Spike
-    400068: //RootNode
-    2100000: 01 - Default
-    4300000: Spike
-    7400000: Take 001
-    9500000: //RootNode
-    13700000: Spike
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Rig
+  - first:
+      1: 100002
+    second: RigHub
+  - first:
+      1: 100004
+    second: RigHubGizmo
+  - first:
+      1: 100006
+    second: RigLArm1
+  - first:
+      1: 100008
+    second: RigLArm2
+  - first:
+      1: 100010
+    second: RigLArmPalm
+  - first:
+      1: 100012
+    second: RigLBLeg1
+  - first:
+      1: 100014
+    second: RigLBLeg2
+  - first:
+      1: 100016
+    second: RigLBLegAnkle
+  - first:
+      1: 100018
+    second: RigLBLegPlatform
+  - first:
+      1: 100020
+    second: RigLEye01
+  - first:
+      1: 100022
+    second: RigLEye02
+  - first:
+      1: 100024
+    second: RigLEye03
+  - first:
+      1: 100026
+    second: RigLFLeg1
+  - first:
+      1: 100028
+    second: RigLFLeg2
+  - first:
+      1: 100030
+    second: RigLFLegAnkle
+  - first:
+      1: 100032
+    second: RigLFLegPlatform
+  - first:
+      1: 100034
+    second: RigRArm1
+  - first:
+      1: 100036
+    second: RigRArm2
+  - first:
+      1: 100038
+    second: RigRArmPalm
+  - first:
+      1: 100040
+    second: RigRBLeg1
+  - first:
+      1: 100042
+    second: RigRBLeg2
+  - first:
+      1: 100044
+    second: RigRBLegAnkle
+  - first:
+      1: 100046
+    second: RigRBLegPlatform
+  - first:
+      1: 100048
+    second: RigREye01
+  - first:
+      1: 100050
+    second: RigREye02
+  - first:
+      1: 100052
+    second: RigREye03
+  - first:
+      1: 100054
+    second: RigRFLeg1
+  - first:
+      1: 100056
+    second: RigRFLeg2
+  - first:
+      1: 100058
+    second: RigRFLegAnkle
+  - first:
+      1: 100060
+    second: RigRFLegPlatform
+  - first:
+      1: 100062
+    second: RigShell
+  - first:
+      1: 100064
+    second: RigShellGizmo
+  - first:
+      1: 100066
+    second: Spike
+  - first:
+      1: 100068
+    second: //RootNode
+  - first:
+      4: 400000
+    second: Rig
+  - first:
+      4: 400002
+    second: RigHub
+  - first:
+      4: 400004
+    second: RigHubGizmo
+  - first:
+      4: 400006
+    second: RigLArm1
+  - first:
+      4: 400008
+    second: RigLArm2
+  - first:
+      4: 400010
+    second: RigLArmPalm
+  - first:
+      4: 400012
+    second: RigLBLeg1
+  - first:
+      4: 400014
+    second: RigLBLeg2
+  - first:
+      4: 400016
+    second: RigLBLegAnkle
+  - first:
+      4: 400018
+    second: RigLBLegPlatform
+  - first:
+      4: 400020
+    second: RigLEye01
+  - first:
+      4: 400022
+    second: RigLEye02
+  - first:
+      4: 400024
+    second: RigLEye03
+  - first:
+      4: 400026
+    second: RigLFLeg1
+  - first:
+      4: 400028
+    second: RigLFLeg2
+  - first:
+      4: 400030
+    second: RigLFLegAnkle
+  - first:
+      4: 400032
+    second: RigLFLegPlatform
+  - first:
+      4: 400034
+    second: RigRArm1
+  - first:
+      4: 400036
+    second: RigRArm2
+  - first:
+      4: 400038
+    second: RigRArmPalm
+  - first:
+      4: 400040
+    second: RigRBLeg1
+  - first:
+      4: 400042
+    second: RigRBLeg2
+  - first:
+      4: 400044
+    second: RigRBLegAnkle
+  - first:
+      4: 400046
+    second: RigRBLegPlatform
+  - first:
+      4: 400048
+    second: RigREye01
+  - first:
+      4: 400050
+    second: RigREye02
+  - first:
+      4: 400052
+    second: RigREye03
+  - first:
+      4: 400054
+    second: RigRFLeg1
+  - first:
+      4: 400056
+    second: RigRFLeg2
+  - first:
+      4: 400058
+    second: RigRFLegAnkle
+  - first:
+      4: 400060
+    second: RigRFLegPlatform
+  - first:
+      4: 400062
+    second: RigShell
+  - first:
+      4: 400064
+    second: RigShellGizmo
+  - first:
+      4: 400066
+    second: Spike
+  - first:
+      4: 400068
+    second: //RootNode
+  - first:
+      21: 2100000
+    second: 01 - Default
+  - first:
+      43: 4300000
+    second: Spike
+  - first:
+      74: 7400000
+    second: Hide and Look Around
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Spike
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -105,7 +255,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Hide and Look Around
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -113,25 +292,28 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -140,10 +322,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -153,13 +335,16 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -112,10 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fDamage: 10
-  bIsProjectileAttack: 0
-  bIsTypeOfEnemy: 0
-  bIsPlayer: 0
-  bAttackCompleted: 0
   fKnockForce: 4
   attackCollider: {fileID: -2139571206542183487}
   particleEffectPrefab: {fileID: 5197014519659287536, guid: b864dc263467e1f4799c3ecae74ed1a1,
@@ -159,11 +155,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2558655935486412976}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3443426, y: 0.7632475, z: 0.17090967}
-  m_Center: {x: 0.010134034, y: -0.45755792, z: -0.00045959651}
+  m_Size: {x: 0.4316723, y: 0.92749095, z: 0.5174786}
+  m_Center: {x: 0.09000133, y: -0.5396788, z: -0.112262726}
 --- !u!1001 &5243864780506181648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -350,7 +346,7 @@ PrefabInstance:
     - target: {fileID: 2752069758180883683, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.132
+      value: 0.016
       objectReference: {fileID: 0}
     - target: {fileID: 2752069758180883683, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
         type: 3}
@@ -391,6 +387,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: TrailModule.textureMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: TrailModule.lifetime.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: TrailModule.minVertexDistance
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416673034651832915, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3866260418187417499, guid: 6413c67f05ad3dc4d83dbe74eac449b5,
         type: 3}

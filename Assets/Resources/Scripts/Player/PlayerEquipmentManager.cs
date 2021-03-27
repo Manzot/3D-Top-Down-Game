@@ -23,6 +23,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     public GameObject playerHair;
     public GameObject playerBody;
     public Material highLightMaterial;
+    public GameObject slash;
     // Assigned Weapons and Equipment SFX
     // public GameObject trialEffectContainer;
     //GameObject swish1;
@@ -34,6 +35,8 @@ public class PlayerEquipmentManager : MonoBehaviour
     Material defaultHeadMaterial;
     Material defaultHairMaterial;
     Material defaultBodyMaterial;
+    
+    
 
     ParticleSystem trialEffectPrimaryWeapon;
     //public GameObject swordSlashParticles;
@@ -80,28 +83,30 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public void EnableSlashParticles()
     {
-        //trialEffectAnimator.SetBool("slash_1b", player.IsAttacking());
-        trialEffectPrimaryWeapon.transform.parent = primaryWeapon.transform;
-        trialEffectPrimaryWeapon.transform.localPosition = new Vector3(0, -0.14f, 0);
-        trialEffectPrimaryWeapon.transform.localRotation = Quaternion.Euler( Vector3.zero);
-        trialEffectPrimaryWeapon.Play();
+        slash.SetActive(true);
+        StartCoroutine(HelpUtils.WaitForSeconds(delegate { slash.SetActive(false); }, 0.4f));
+        //trialEffectPrimaryWeapon.transform.parent = primaryWeapon.transform;
+        //trialEffectPrimaryWeapon.transform.localPosition = new Vector3(0, -0.14f, 0);
+        //trialEffectPrimaryWeapon.transform.localRotation = Quaternion.Euler( Vector3.zero);
+        //trialEffectPrimaryWeapon.Play();
     }
     public void DisableSlashParticles()
     {
-        //trialEffectAnimator.SetBool("slash_1b", player.IsAttacking());
-        trialEffectPrimaryWeapon.Stop();
-        trialEffectPrimaryWeapon.transform.parent = null;// trialEffectContainer.transform;
+       // slash.SetActive(false);
+        // trialEffectPrimaryWeapon.Stop();
+        //trialEffectPrimaryWeapon.Clear();
+        //  trialEffectPrimaryWeapon.transform.parent = null;// trialEffectContainer.transform;
     }
     public void SetAttackBool(int _bSetAttack)
     {
         if(_bSetAttack == 1)
         {
-            player.SetIsAttacking(true);
+            //player.SetIsAttacking(true);
             primaryWeapon.WeaponColiSetActive(true);
         }
         else
         {
-            player.SetIsAttacking(false);
+           // player.SetIsAttacking(false);
             primaryWeapon.WeaponColiSetActive(false);
         }
     }

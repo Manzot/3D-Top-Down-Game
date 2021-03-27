@@ -34508,14 +34508,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.4
+  - time: 0.43333334
     functionName: DisableSlashParticles
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.43333334
+  - time: 0.46666667
     functionName: SetAttackBool
     data: 
     objectReferenceParameter: {fileID: 0}

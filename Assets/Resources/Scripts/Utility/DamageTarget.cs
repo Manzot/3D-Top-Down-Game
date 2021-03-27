@@ -7,10 +7,10 @@ public class DamageTarget : MonoBehaviour, ICanDamage
     public enum DamagerType { Weapon, Projectile, Enemy, Player }
     public float fDamage;
     //public Collider dmgColi;
-    public bool bIsProjectileAttack;
-    public bool bIsTypeOfEnemy;
-    public bool bIsPlayer;
-    public bool bAttackCompleted;
+    private bool bIsProjectileAttack;
+    private bool bIsTypeOfEnemy;
+    private bool bIsPlayer;
+    private bool bAttackCompleted;
     public float fKnockForce = 8f;
 
     public Collider attackCollider;
@@ -34,7 +34,6 @@ public class DamageTarget : MonoBehaviour, ICanDamage
             startPos = transform.position;
 
         attackCollider.isTrigger = true;
-
 
         maxHitTargets = new Collider[4];
         maxParticleEffects = new GameObject[4];

@@ -39,7 +39,8 @@ public class Enemy : MonoBehaviour, IHittable
 
     protected Movement moveScr;
     Collider maxTravelAreaCol;
-
+    protected Material rndrMaterial;
+    protected float fMatDissolveAlpha = -1f;
     public void Initialize()
     {
         rbody = GetComponent<Rigidbody>();
@@ -114,12 +115,9 @@ public class Enemy : MonoBehaviour, IHittable
             {
                 bTargetFound = true;
                 bCanFollow = true;
-                //moveScr.SetMovementActive(false);
-                //bFollowingPath = false;
+                moveScr.SetMovementActive(false);
             }
         }
-        else
-            bTargetFound = false;
     }
     public void CalculateInvulnerability(float _fStunTime)
     {
@@ -180,24 +178,23 @@ public class Enemy : MonoBehaviour, IHittable
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Damages and Health Effects
-    public void ApplyKnockback(Vector3 _sourcePosition, float _pushForce)
+    public virtual void ApplyKnockback(Vector3 _sourcePosition, float _pushForce)
     {
         if (!bIsInvulnerable)
         {
+            bTargetFound = true;
+            moveScr.SetMovementActive(false);
             Vector3 pushForce = transform.position - _sourcePosition;
             pushForce.y = 0;
-            //transform.forward = -pushForce.normalized;
             rbody.AddForce(pushForce.normalized * _pushForce - Physics.gravity * 0.2f, ForceMode.Impulse);
         }
     }
-    public void ApplyDamage(float _damage)
+    public virtual void ApplyDamage(float _damage)
     {
         if (!bIsInvulnerable)
         {
-            // Knockback(targetPlayer.transform.position, fPUSHBACKFORCE);
             bIsInvulnerable = true;
             bIsHit = true;
-           // bTargetFound = true;
             bCanFollow = false;
             fCurrentHitPoints -= _damage;
         }
@@ -213,8 +210,9 @@ public class Enemy : MonoBehaviour, IHittable
     public void Die()
     {
         bIsAlive = false;
+        if (moveScr)
+            moveScr.SetMovementActive(false);
         StartCoroutine(HelpUtils.WaitForSeconds(OnDeathStuff, 1f));
-        //Destroy(gameObject, 4f);
     }
     public void DestroyEnemy()
     {
@@ -256,10 +254,11 @@ public class Enemy : MonoBehaviour, IHittable
     public void ResetBools()
     {
         StopAllCoroutines();
+        bIsAttacking = false;
         bInAttackRange = false;
         bCanFollow = false;
         bTargetFound = false;
-        if(moveScr)
+        if (moveScr)
             moveScr.SetMovementActive(true);
     }
     public void CheckWalkingArea(Vector3 _targetPosition) // Walk Area Check 

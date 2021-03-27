@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5589734439774651956}
   - component: {fileID: 5589734439778076180}
   - component: {fileID: 5589734439776945364}
-  m_Layer: 0
-  m_Name: Pine_tree (1)
+  m_Layer: 15
+  m_Name: Pine_tree_Sway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

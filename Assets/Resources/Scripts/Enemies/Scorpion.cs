@@ -6,8 +6,7 @@ public class Scorpion : Enemy
 {
     //private bool bRotateAnims = true;
     // Material Dissolve Variables
-    private Material rndMaterial;
-    float fMatDissolveAlpha = -0.8f;
+   
     float fSTUN_TIME = 0f; // this is extra time after the animation
 
     void Start()
@@ -15,7 +14,7 @@ public class Scorpion : Enemy
         base.Initialize();
         fAttackRange = 2.5f;
         fFollowRange = 120f;
-        rndMaterial = GetComponentInChildren<Renderer>().material;
+        rndrMaterial = GetComponentInChildren<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -90,23 +89,6 @@ public class Scorpion : Enemy
                 anim.SetTrigger("isHit");
                 bIsHit = false;
             }
-
-            //if (bCanRotate)
-            //{
-            //    if (bRotateAnims)
-            //    {
-            //        anim.SetTrigger("tRotating");
-
-            //        bRotateAnims = false;
-
-            //        if (bCanFollow)
-            //            bCanRotate = false;
-            //    }
-            //}
-            //else
-            //{
-            //    bRotateAnims = true;
-            //}
         }
         else
         {
@@ -117,6 +99,6 @@ public class Scorpion : Enemy
     void DissolveOnDeath(float _fDissolveSpeed)
     {
         fMatDissolveAlpha += _fDissolveSpeed * Time.deltaTime;
-        rndMaterial.SetFloat("_alpha", fMatDissolveAlpha);
+        rndrMaterial.SetFloat("_alpha", fMatDissolveAlpha);
     }
 }

@@ -27,11 +27,18 @@ public class NPC : MonoBehaviour
     private Inventory merchantInventory;
 
     Movement moveScr;
-
-    void Start()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody>();
+
+        rbody.isKinematic = true;
+        rbody.mass = 1000;
+        rbody.drag = 10;
+        rbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+    }
+    void Start()
+    {
         moveScr = GetComponent<Movement>();
 
         assignedQuestGoals = GetComponentsInChildren<NPCAssignedQuestDialog>();
@@ -48,7 +55,6 @@ public class NPC : MonoBehaviour
         AddQuestsIfAny();
 
         gameObject.layer = LayerMask.NameToLayer("Npc");
-        rbody.isKinematic = true;
         // Starting Idle Animation at random time
         AnimatorStateInfo _animState = anim.GetCurrentAnimatorStateInfo(0);
         anim.Play(_animState.fullPathHash, -1, Random.Range(0f, 1f));
