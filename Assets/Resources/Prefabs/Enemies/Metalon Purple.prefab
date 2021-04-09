@@ -738,7 +738,7 @@ GameObject:
   - component: {fileID: 2016155963780243019}
   - component: {fileID: 5980041937321770117}
   - component: {fileID: 1921199360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Metalon Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -857,10 +857,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fDamage: 10
-  bIsProjectileAttack: 0
-  bIsTypeOfEnemy: 1
-  bIsPlayer: 0
-  bAttackCompleted: 0
   fKnockForce: 4
   attackCollider: {fileID: 2016155963506862487}
   particleEffectPrefab: {fileID: 0}
@@ -880,9 +876,11 @@ MonoBehaviour:
   fSpeed: 2
   fWalkTime: 1
   fWaitTime: 2
+  fRandomizeDirAfter: 0
   tPatrolPoints: []
   bReverseDirection: 0
   bRandomizePoints: 0
+  fRotateSpeed: 60
   fMaxWalkingDistance: 60
 --- !u!114 &1921199360
 MonoBehaviour:

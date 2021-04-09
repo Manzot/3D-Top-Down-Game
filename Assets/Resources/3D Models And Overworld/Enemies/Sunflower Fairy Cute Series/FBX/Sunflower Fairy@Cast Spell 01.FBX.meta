@@ -1,126 +1,356 @@
 fileFormatVersion: 2
 guid: 2f8e361002595b7458d2d2bef774adc6
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Dummy001
-    100002: Rig
-    100004: RigFeelerL1
-    100006: RigFeelerL1Gizmo
-    100008: RigFeelerL2
-    100010: RigFeelerL2Gizmo
-    100012: RigFeelerL3
-    100014: RigFeelerL3Gizmo
-    100016: RigFeelerL4
-    100018: RigFeelerL4Gizmo
-    100020: RigFeelerR1
-    100022: RigFeelerR1Gizmo
-    100024: RigFeelerR2
-    100026: RigFeelerR2Gizmo
-    100028: RigFeelerR3
-    100030: RigFeelerR3Gizmo
-    100032: RigFeelerR4
-    100034: RigFeelerR4Gizmo
-    100036: RigHead
-    100038: RigHead 1
-    100040: RigLArm1
-    100042: RigLArm1Gizmo
-    100044: RigLArm2
-    100046: RigLArm2Gizmo
-    100048: RigLArmFinger1
-    100050: RigLArmPalm
-    100052: RigLArmPalmGizmo
-    100054: RigLLeg1
-    100056: RigLLeg2
-    100058: RigLLegAnkle
-    100060: RigLLegPlatform
-    100062: RigNeck
-    100064: RigPelvis
-    100066: RigPelvisGizmo
-    100068: RigRArm1
-    100070: RigRArm1Gizmo
-    100072: RigRArm2
-    100074: RigRArm2Gizmo
-    100076: RigRArmFinger1
-    100078: RigRArmPalm
-    100080: RigRArmPalmGizmo
-    100082: RigRibcage
-    100084: RigRibcageGizmo
-    100086: RigRLeg1
-    100088: RigRLeg2
-    100090: RigRLegAnkle
-    100092: RigRLegPlatform
-    100094: RigSpine1
-    100096: RigSpine2
-    100098: RigWingL
-    100100: RigWingLGizmo
-    100102: RigWingR
-    100104: RigWingRGizmo
-    100106: Sunflower Fairy
-    100108: //RootNode
-    400000: Dummy001
-    400002: Rig
-    400004: RigFeelerL1
-    400006: RigFeelerL1Gizmo
-    400008: RigFeelerL2
-    400010: RigFeelerL2Gizmo
-    400012: RigFeelerL3
-    400014: RigFeelerL3Gizmo
-    400016: RigFeelerL4
-    400018: RigFeelerL4Gizmo
-    400020: RigFeelerR1
-    400022: RigFeelerR1Gizmo
-    400024: RigFeelerR2
-    400026: RigFeelerR2Gizmo
-    400028: RigFeelerR3
-    400030: RigFeelerR3Gizmo
-    400032: RigFeelerR4
-    400034: RigFeelerR4Gizmo
-    400036: RigHead
-    400038: RigHead 1
-    400040: RigLArm1
-    400042: RigLArm1Gizmo
-    400044: RigLArm2
-    400046: RigLArm2Gizmo
-    400048: RigLArmFinger1
-    400050: RigLArmPalm
-    400052: RigLArmPalmGizmo
-    400054: RigLLeg1
-    400056: RigLLeg2
-    400058: RigLLegAnkle
-    400060: RigLLegPlatform
-    400062: RigNeck
-    400064: RigPelvis
-    400066: RigPelvisGizmo
-    400068: RigRArm1
-    400070: RigRArm1Gizmo
-    400072: RigRArm2
-    400074: RigRArm2Gizmo
-    400076: RigRArmFinger1
-    400078: RigRArmPalm
-    400080: RigRArmPalmGizmo
-    400082: RigRibcage
-    400084: RigRibcageGizmo
-    400086: RigRLeg1
-    400088: RigRLeg2
-    400090: RigRLegAnkle
-    400092: RigRLegPlatform
-    400094: RigSpine1
-    400096: RigSpine2
-    400098: RigWingL
-    400100: RigWingLGizmo
-    400102: RigWingR
-    400104: RigWingRGizmo
-    400106: Sunflower Fairy
-    400108: //RootNode
-    2100000: 'Material #27'
-    4300000: Sunflower Fairy
-    7400000: Take 001
-    9500000: //RootNode
-    13700000: Sunflower Fairy
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Dummy001
+  - first:
+      1: 100002
+    second: Rig
+  - first:
+      1: 100004
+    second: RigFeelerL1
+  - first:
+      1: 100006
+    second: RigFeelerL1Gizmo
+  - first:
+      1: 100008
+    second: RigFeelerL2
+  - first:
+      1: 100010
+    second: RigFeelerL2Gizmo
+  - first:
+      1: 100012
+    second: RigFeelerL3
+  - first:
+      1: 100014
+    second: RigFeelerL3Gizmo
+  - first:
+      1: 100016
+    second: RigFeelerL4
+  - first:
+      1: 100018
+    second: RigFeelerL4Gizmo
+  - first:
+      1: 100020
+    second: RigFeelerR1
+  - first:
+      1: 100022
+    second: RigFeelerR1Gizmo
+  - first:
+      1: 100024
+    second: RigFeelerR2
+  - first:
+      1: 100026
+    second: RigFeelerR2Gizmo
+  - first:
+      1: 100028
+    second: RigFeelerR3
+  - first:
+      1: 100030
+    second: RigFeelerR3Gizmo
+  - first:
+      1: 100032
+    second: RigFeelerR4
+  - first:
+      1: 100034
+    second: RigFeelerR4Gizmo
+  - first:
+      1: 100036
+    second: RigHead
+  - first:
+      1: 100038
+    second: RigHead 1
+  - first:
+      1: 100040
+    second: RigLArm1
+  - first:
+      1: 100042
+    second: RigLArm1Gizmo
+  - first:
+      1: 100044
+    second: RigLArm2
+  - first:
+      1: 100046
+    second: RigLArm2Gizmo
+  - first:
+      1: 100048
+    second: RigLArmFinger1
+  - first:
+      1: 100050
+    second: RigLArmPalm
+  - first:
+      1: 100052
+    second: RigLArmPalmGizmo
+  - first:
+      1: 100054
+    second: RigLLeg1
+  - first:
+      1: 100056
+    second: RigLLeg2
+  - first:
+      1: 100058
+    second: RigLLegAnkle
+  - first:
+      1: 100060
+    second: RigLLegPlatform
+  - first:
+      1: 100062
+    second: RigNeck
+  - first:
+      1: 100064
+    second: RigPelvis
+  - first:
+      1: 100066
+    second: RigPelvisGizmo
+  - first:
+      1: 100068
+    second: RigRArm1
+  - first:
+      1: 100070
+    second: RigRArm1Gizmo
+  - first:
+      1: 100072
+    second: RigRArm2
+  - first:
+      1: 100074
+    second: RigRArm2Gizmo
+  - first:
+      1: 100076
+    second: RigRArmFinger1
+  - first:
+      1: 100078
+    second: RigRArmPalm
+  - first:
+      1: 100080
+    second: RigRArmPalmGizmo
+  - first:
+      1: 100082
+    second: RigRibcage
+  - first:
+      1: 100084
+    second: RigRibcageGizmo
+  - first:
+      1: 100086
+    second: RigRLeg1
+  - first:
+      1: 100088
+    second: RigRLeg2
+  - first:
+      1: 100090
+    second: RigRLegAnkle
+  - first:
+      1: 100092
+    second: RigRLegPlatform
+  - first:
+      1: 100094
+    second: RigSpine1
+  - first:
+      1: 100096
+    second: RigSpine2
+  - first:
+      1: 100098
+    second: RigWingL
+  - first:
+      1: 100100
+    second: RigWingLGizmo
+  - first:
+      1: 100102
+    second: RigWingR
+  - first:
+      1: 100104
+    second: RigWingRGizmo
+  - first:
+      1: 100106
+    second: Sunflower Fairy
+  - first:
+      1: 100108
+    second: //RootNode
+  - first:
+      4: 400000
+    second: Dummy001
+  - first:
+      4: 400002
+    second: Rig
+  - first:
+      4: 400004
+    second: RigFeelerL1
+  - first:
+      4: 400006
+    second: RigFeelerL1Gizmo
+  - first:
+      4: 400008
+    second: RigFeelerL2
+  - first:
+      4: 400010
+    second: RigFeelerL2Gizmo
+  - first:
+      4: 400012
+    second: RigFeelerL3
+  - first:
+      4: 400014
+    second: RigFeelerL3Gizmo
+  - first:
+      4: 400016
+    second: RigFeelerL4
+  - first:
+      4: 400018
+    second: RigFeelerL4Gizmo
+  - first:
+      4: 400020
+    second: RigFeelerR1
+  - first:
+      4: 400022
+    second: RigFeelerR1Gizmo
+  - first:
+      4: 400024
+    second: RigFeelerR2
+  - first:
+      4: 400026
+    second: RigFeelerR2Gizmo
+  - first:
+      4: 400028
+    second: RigFeelerR3
+  - first:
+      4: 400030
+    second: RigFeelerR3Gizmo
+  - first:
+      4: 400032
+    second: RigFeelerR4
+  - first:
+      4: 400034
+    second: RigFeelerR4Gizmo
+  - first:
+      4: 400036
+    second: RigHead
+  - first:
+      4: 400038
+    second: RigHead 1
+  - first:
+      4: 400040
+    second: RigLArm1
+  - first:
+      4: 400042
+    second: RigLArm1Gizmo
+  - first:
+      4: 400044
+    second: RigLArm2
+  - first:
+      4: 400046
+    second: RigLArm2Gizmo
+  - first:
+      4: 400048
+    second: RigLArmFinger1
+  - first:
+      4: 400050
+    second: RigLArmPalm
+  - first:
+      4: 400052
+    second: RigLArmPalmGizmo
+  - first:
+      4: 400054
+    second: RigLLeg1
+  - first:
+      4: 400056
+    second: RigLLeg2
+  - first:
+      4: 400058
+    second: RigLLegAnkle
+  - first:
+      4: 400060
+    second: RigLLegPlatform
+  - first:
+      4: 400062
+    second: RigNeck
+  - first:
+      4: 400064
+    second: RigPelvis
+  - first:
+      4: 400066
+    second: RigPelvisGizmo
+  - first:
+      4: 400068
+    second: RigRArm1
+  - first:
+      4: 400070
+    second: RigRArm1Gizmo
+  - first:
+      4: 400072
+    second: RigRArm2
+  - first:
+      4: 400074
+    second: RigRArm2Gizmo
+  - first:
+      4: 400076
+    second: RigRArmFinger1
+  - first:
+      4: 400078
+    second: RigRArmPalm
+  - first:
+      4: 400080
+    second: RigRArmPalmGizmo
+  - first:
+      4: 400082
+    second: RigRibcage
+  - first:
+      4: 400084
+    second: RigRibcageGizmo
+  - first:
+      4: 400086
+    second: RigRLeg1
+  - first:
+      4: 400088
+    second: RigRLeg2
+  - first:
+      4: 400090
+    second: RigRLegAnkle
+  - first:
+      4: 400092
+    second: RigRLegPlatform
+  - first:
+      4: 400094
+    second: RigSpine1
+  - first:
+      4: 400096
+    second: RigSpine2
+  - first:
+      4: 400098
+    second: RigWingL
+  - first:
+      4: 400100
+    second: RigWingLGizmo
+  - first:
+      4: 400102
+    second: RigWingR
+  - first:
+      4: 400104
+    second: RigWingRGizmo
+  - first:
+      4: 400106
+    second: Sunflower Fairy
+  - first:
+      4: 400108
+    second: //RootNode
+  - first:
+      21: 2100000
+    second: Material #27
+  - first:
+      43: 4300000
+    second: Sunflower Fairy
+  - first:
+      74: 7400000
+    second: Cast Spell 01
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Sunflower Fairy
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -145,7 +375,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Cast Spell 01
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -153,25 +412,28 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -180,10 +442,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -193,13 +455,16 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

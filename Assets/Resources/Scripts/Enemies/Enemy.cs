@@ -124,6 +124,7 @@ public class Enemy : MonoBehaviour, IHittable
         if (bIsInvulnerable)
         {
             fInvulnerableCounter += Time.deltaTime;
+
             if (fInvulnerableCounter >= anim.GetCurrentAnimatorStateInfo(0).length + _fStunTime)
             {
                 bIsInvulnerable = false;
@@ -134,39 +135,37 @@ public class Enemy : MonoBehaviour, IHittable
             }
         }
     }
-    public virtual void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange)
+    public virtual void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fAccuracy = 0.99f)
     {
         fAttackWaitTimeCounter -= Time.deltaTime;
+        if(!bIsAttacking && !bIsInvulnerable)
+            HelpUtils.RotateTowards(transform, targetPlayer.transform.position, fROTATE_SPEED / 3f);
+
         // Out of Range
         if ((transform.position - targetPlayer.transform.position).sqrMagnitude >= _fTargetFollowRange)
         {
-            if (!bIsInvulnerable && bTargetFound)
-            {
-                ResetBools();
-            }
+            ResetBools();
         }
         // In Attack Range
         else if ((transform.position - targetPlayer.transform.position).sqrMagnitude <= _fAttackRange)
         {
             bCanFollow = false;
             moveScr.SetIsMoving(false);
-            if (!bIsInvulnerable)
+
+            if (fAttackWaitTimeCounter <= 0)
             {
-                if (fAttackWaitTimeCounter <= 0)
+                Vector3 dir = (targetPlayer.transform.position - transform.position).normalized;
+                float dot = Vector3.Dot(dir, transform.forward);
+                if (dot > _fAccuracy)  // if the enemy is facing the target
                 {
-                    Vector3 dir = (targetPlayer.transform.position - transform.position).normalized;
-                    float dot = Vector3.Dot(dir, transform.forward);
-                    if (dot > 0.99f)  // if the enemy is facing the target
-                    {
-                        bInAttackRange = true;
-                    }
-                    else
-                    {
-                        bInAttackRange = false;
-                        HelpUtils.RotateTowards(transform, targetPlayer.transform.position, fROTATE_SPEED / 3f);
-                    }
+                    bInAttackRange = true;
+                }
+                else
+                {
+                    bInAttackRange = false;
                 }
             }
+
         }
         // In Non Attack Range
         else
@@ -183,6 +182,8 @@ public class Enemy : MonoBehaviour, IHittable
         if (!bIsInvulnerable)
         {
             bTargetFound = true;
+            bIsAttacking = false;
+            bInAttackRange = false;
             moveScr.SetMovementActive(false);
             Vector3 pushForce = transform.position - _sourcePosition;
             pushForce.y = 0;

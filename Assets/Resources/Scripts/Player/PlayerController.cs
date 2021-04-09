@@ -463,6 +463,9 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         {
             fCurrentStamina -= _pushForce * 1.5f;
             OnStaminaChangeUI.Invoke();
+            bIsAttacking = false;
+            pEquimentManager.SetAttackBool(0);
+            pEquimentManager.slash.SetActive(false);
             Vector3 pushForce = transform.position - _sourcePosition;
             pushForce.y = 0;
             //transform.forward = -pushForce.normalized;

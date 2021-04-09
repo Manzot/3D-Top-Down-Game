@@ -26,16 +26,20 @@ public class Scorpion : Enemy
 
         if (bIsAlive)
         {
-            if (!bTargetFound)
+            if (!bIsInvulnerable)
             {
-                FindingTarget();
+                if (!bTargetFound)
+                {
+                    FindingTarget();
+                }
+                else
+                {
+                    CheckTargetInRange(fAttackRange, fFollowRange);
+                    CheckWalkingArea(startPosition);
+                }
             }
             else
-            {
-                CheckTargetInRange(fAttackRange, fFollowRange);
-                CheckWalkingArea(startPosition);
-            }
-            CalculateInvulnerability(fSTUN_TIME);
+                CalculateInvulnerability(fSTUN_TIME);
         }
         else
         {
@@ -45,20 +49,24 @@ public class Scorpion : Enemy
     private void FixedUpdate()
     {
         base.FixedRefresh();
+
         if (bIsAlive)
         {
-            if (bTargetFound)
+            if (!bIsInvulnerable)
             {
-                if (!bInAttackRange)
+                if (bTargetFound)
                 {
-                    if (bCanFollow && !bIsAttacking)
+                    if (!bInAttackRange)
                     {
-                        moveScr.FollowTarget(targetPlayer.transform.position);
+                        if (bCanFollow && !bIsAttacking)
+                        {
+                            moveScr.FollowTarget(targetPlayer.transform.position);
+                        }
                     }
-                }
-                else
-                {
-                    AttackMove();
+                    else
+                    {
+                        AttackMove();
+                    }
                 }
             }
         }

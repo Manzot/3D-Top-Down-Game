@@ -102,7 +102,7 @@ public class Spikey : Enemy
             fAttackWaitTimeCounter = fAttackWaitTime;
         }
     }
-    public override void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange)
+    public override void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fAccuracy = 0.99f)
     {
         float _fDistance = (transform.position - targetPlayer.transform.position).sqrMagnitude;
 
@@ -148,6 +148,7 @@ public class Spikey : Enemy
                 moveScr.LookTowards(targetPlayer.transform.position, fROTATE_SPEED);
                 bIsHidden = true;
                 bInAttackRange = false;
+                bIsAttacking = false;
             }
         }
         else
@@ -172,7 +173,6 @@ public class Spikey : Enemy
     public void Tackle(Vector3 _direction, float _fTackleSpeed)
     {
         rotateAngle = Quaternion.AngleAxis(30, Vector3.up) * rotateAngle;
-        //rotateAngle.y += fROTATE_SPEED * 3 * Time.deltaTime;
 
         if (bSpeedingUp)
             rbody.MovePosition(transform.position + _direction * _fTackleSpeed * Time.fixedDeltaTime);
@@ -184,7 +184,7 @@ public class Spikey : Enemy
     }
     public void CollisionCheck()
     {
-        if (HelpUtils.CheckAheadForColi(transform.position, rotateAngle, 0.7f, true))
+        if (HelpUtils.CheckAheadForColi(transform.position, rotateAngle, 0.7f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player"), true))
         {
             if(bSpeedingUp)
                 KnockedUpsideDown();
@@ -197,6 +197,7 @@ public class Spikey : Enemy
         bIsInvulnerable = false;
         bInAttackRange = false;
         StartCoroutine(DoKnockupReset(fSTUN_TIME));
+        ApplyKnockback(transform.position + transform.forward, 4f);
     }
     public override void ApplyKnockback(Vector3 _sourcePosition, float _pushForce)
     {

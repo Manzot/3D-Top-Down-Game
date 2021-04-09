@@ -12,15 +12,17 @@ public static class HelpUtils
             Debug.DrawRay(_transform.position, _transform.forward * _distance);
         return Physics.Raycast(_transform.position + new Vector3(0, 0.2f, 0), _transform.forward, _distance);
     }
-    public static bool CheckAheadForColi(Transform _transform, float _distance, string _layerName)
-    {
-        return Physics.Raycast(_transform.position + new Vector3(0, 0.5f, 0), _transform.forward, _distance, LayerMask.GetMask(_layerName));
-    }
     public static bool CheckAheadForColi(Vector3 _position, Vector3 _direction, float _distance, bool _bDrawRay = false)
     {
         if (_bDrawRay)
             Debug.DrawRay(_position, _direction * _distance);
         return Physics.Raycast(_position + new Vector3(0, 0.2f, 0), _direction, _distance);
+    }
+    public static bool CheckAheadForColi(Vector3 _position, Vector3 _direction, float _distance, LayerMask _maskLayers, bool _bDrawRay = false)
+    {
+        if (_bDrawRay)
+            Debug.DrawRay(_position, _direction * _distance);
+        return Physics.Raycast(_position + new Vector3(0, 0.2f, 0), _direction, _distance, _maskLayers);
     }
     public static bool Grounded(Transform _transform, float _distanceToGround)
     {
