@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour, IHittable
         fAttackWaitTimeCounter = 0;
         bIsAlive = true;
         startPosition = transform.position;
+        rndrMaterial = GetComponentInChildren<Renderer>().material;
         // Just Randomiaing the stats a bit
     }
     public void Refresh()
@@ -91,7 +92,7 @@ public class Enemy : MonoBehaviour, IHittable
     {
         return Physics.Raycast(_transform.position + new Vector3(0, 0.2f, 0), Vector3.down, _distanceToGround);
     }
-    public void FindingTarget()
+    public void FindTarget()
     {
         RaycastHit hit;
         //Debug.DrawRay(transform.position + new Vector3(0, 0.3f, 0), transform.forward * fVISION_RANGE, Color.red);
@@ -106,13 +107,14 @@ public class Enemy : MonoBehaviour, IHittable
             }
         }
     }
-    public void FindingTarget(float _fVisionRadius, float _fVisionDistance)
+    public void FindTarget(float _fVisionRadius, float _fVisionDistance)
     {
         RaycastHit _hit;
         if (Physics.BoxCast(transform.position, transform.localScale * _fVisionRadius, transform.forward, out _hit, Quaternion.identity, _fVisionDistance))
         {
             if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
+                Debug.Log(_hit.collider.gameObject.name);
                 bTargetFound = true;
                 bCanFollow = true;
                 moveScr.SetMovementActive(false);
@@ -214,6 +216,11 @@ public class Enemy : MonoBehaviour, IHittable
         if (moveScr)
             moveScr.SetMovementActive(false);
         StartCoroutine(HelpUtils.WaitForSeconds(OnDeathStuff, 1f));
+    }
+    public void DissolveOnDeath(float _fDissolveSpeed)
+    {
+        fMatDissolveAlpha += _fDissolveSpeed * Time.deltaTime;
+        rndrMaterial.SetFloat("_alpha", fMatDissolveAlpha);
     }
     public void DestroyEnemy()
     {

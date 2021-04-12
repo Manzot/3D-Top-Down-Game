@@ -19,7 +19,7 @@ MonoBehaviour:
 
     Damage: 15'
   eType: 1
-  fEffectValue: 1
+  fEffectValue: 5
   fWeaponKnockback: 5
   iPrice: 15
   itemIcon: {fileID: 21300000, guid: 922e50dfe50ea1948ad212b359eb4b78, type: 3}

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SunflowerFairy : Enemy
 {
-
+    private float fVisionRadius = 2.2f;
+    private float fVisionDistance = 4f;
     float fINVULNERABILITY_TIME = 0f;
     float fTARGET_FOLLOW_RANGE = 120f;
 
@@ -13,7 +14,7 @@ public class SunflowerFairy : Enemy
     private void Start()
     {
         base.Initialize();
-        fAttackRange = 80f;
+        fAttackRange = 50f;
         projectileThrower = GetComponent<ProjectileThrower>();
     }
 
@@ -21,7 +22,7 @@ public class SunflowerFairy : Enemy
     {
         base.Refresh();
 
-        //SetAnimations(); // Make function to set basic animations
+        SetAnimations(); // Make function to set basic animations
 
         if (bIsAlive)
         {
@@ -29,7 +30,7 @@ public class SunflowerFairy : Enemy
             {
                 if (!bTargetFound)
                 {
-                    FindingTarget();
+                    FindTarget(fVisionRadius, fVisionDistance);
                 }
                 else
                 {
@@ -37,6 +38,10 @@ public class SunflowerFairy : Enemy
                 }
             }
             CalculateInvulnerability(fINVULNERABILITY_TIME);
+        }
+        else
+        {
+            DissolveOnDeath(0.6f);
         }
     }
     private void FixedUpdate()
@@ -61,12 +66,32 @@ public class SunflowerFairy : Enemy
         if (fAttackWaitTimeCounter <= 0)
         {
             bCanFollow = false;
-            projectileThrower.InitializeProjectile();
-            // anim.SetTrigger("StabAttack"); set attack animation here
+           // projectileThrower.InitializeProjectile();
+            anim.SetTrigger("attack");
             StartCoroutine(HelpUtils.ChangeBoolAfter((bool b) => { fAttackWaitTimeCounter = fAttackWaitTime; bCanFollow = true; /* bCanRotate = true; */}, false, fAttackWaitTime)); //anim.GetCurrentAnimatorStateInfo(0).length));
             fAttackWaitTimeCounter = fAttackWaitTime;
           //  bCanRotate = true;
         }
     }
 
+    void SetAnimations()
+    {
+        if (bIsAlive)
+        {
+            anim.SetBool("isMoving", moveScr.IsMoving());
+            if (bIsHit)
+            {
+                anim.SetTrigger("isHit");
+                bIsHit = false;
+            }
+        }
+        else
+        {
+            anim.SetTrigger("isDead");
+        }
+    }
+    public void ThrowProjectile()
+    {
+        projectileThrower.InitializeProjectile();
+    }
 }

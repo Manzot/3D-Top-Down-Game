@@ -14,7 +14,6 @@ public class Scorpion : Enemy
         base.Initialize();
         fAttackRange = 2.5f;
         fFollowRange = 120f;
-        rndrMaterial = GetComponentInChildren<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -30,7 +29,7 @@ public class Scorpion : Enemy
             {
                 if (!bTargetFound)
                 {
-                    FindingTarget();
+                    FindTarget();
                 }
                 else
                 {
@@ -104,9 +103,5 @@ public class Scorpion : Enemy
         }
 
     }
-    void DissolveOnDeath(float _fDissolveSpeed)
-    {
-        fMatDissolveAlpha += _fDissolveSpeed * Time.deltaTime;
-        rndrMaterial.SetFloat("_alpha", fMatDissolveAlpha);
-    }
+  
 }

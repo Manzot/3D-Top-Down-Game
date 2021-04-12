@@ -22,7 +22,6 @@ public class Spikey : Enemy
         fAttackRange = 31f;
         fFollowRange = 80f;
         bIsInvulnerable = true;
-        rndrMaterial = GetComponentInChildren<Renderer>().material;
         vfxEffect.Stop();
     }
     public void Update()
@@ -35,7 +34,7 @@ public class Spikey : Enemy
             if (bIsInvulnerable)
             {
                 if (!bTargetFound)
-                    FindingTarget(fVisionRadius, fVisionDistance);
+                    FindTarget(fVisionRadius, fVisionDistance);
                 else
                 {
                     if (!bIsAttacking)
@@ -184,7 +183,7 @@ public class Spikey : Enemy
     }
     public void CollisionCheck()
     {
-        if (HelpUtils.CheckAheadForColi(transform.position, rotateAngle, 0.7f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player"), true))
+        if (HelpUtils.CheckAheadForColi(transform.position, rotateAngle, 0.7f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player", "Tree"), true))
         {
             if(bSpeedingUp)
                 KnockedUpsideDown();

@@ -99,15 +99,18 @@ public class PlayerEquipmentManager : MonoBehaviour
     }
     public void SetAttackBool(int _bSetAttack)
     {
-        if(_bSetAttack == 1)
+        if (primaryWeapon)
         {
-            //player.SetIsAttacking(true);
-            primaryWeapon.WeaponColiSetActive(true);
-        }
-        else
-        {
-           // player.SetIsAttacking(false);
-            primaryWeapon.WeaponColiSetActive(false);
+            if(_bSetAttack == 1)
+            {
+                //player.SetIsAttacking(true);
+                primaryWeapon.WeaponColiSetActive(true);
+            }
+            else
+            {
+               // player.SetIsAttacking(false);
+                primaryWeapon.WeaponColiSetActive(false);
+            }
         }
     }
 

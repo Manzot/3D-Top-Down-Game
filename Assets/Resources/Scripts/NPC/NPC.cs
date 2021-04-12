@@ -143,9 +143,12 @@ public class NPC : MonoBehaviour
             
         }
         bIsInteracting = false;
+
         if (moveScr)
             moveScr.SetMovementActive(true);
+
         bDialogCheck = false;
+
         return false;
     }
     public void SetQuestDialogToUse()
