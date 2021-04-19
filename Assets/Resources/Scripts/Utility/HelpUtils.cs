@@ -6,23 +6,23 @@ using System.Linq;
 
 public static class HelpUtils 
 {
-    public static bool CheckAheadForColi(Transform _transform, float _distance, bool _bDrawRay = false)
+    public static bool CheckAheadForColi(Transform _transform, Vector3 _tOffset, float _distance, bool _bDrawRay = false)
     {
         if (_bDrawRay)
             Debug.DrawRay(_transform.position, _transform.forward * _distance);
-        return Physics.Raycast(_transform.position + new Vector3(0, 0.2f, 0), _transform.forward, _distance);
+        return Physics.Raycast(_transform.position + _tOffset /*+ new Vector3(0, 0.2f, 0)*/, _transform.forward, _distance);
     }
     public static bool CheckAheadForColi(Vector3 _position, Vector3 _direction, float _distance, bool _bDrawRay = false)
     {
         if (_bDrawRay)
             Debug.DrawRay(_position, _direction * _distance);
-        return Physics.Raycast(_position + new Vector3(0, 0.2f, 0), _direction, _distance);
+        return Physics.Raycast(_position /*+ new Vector3(0, 0.2f, 0)*/, _direction, _distance);
     }
     public static bool CheckAheadForColi(Vector3 _position, Vector3 _direction, float _distance, LayerMask _maskLayers, bool _bDrawRay = false)
     {
         if (_bDrawRay)
             Debug.DrawRay(_position, _direction * _distance);
-        return Physics.Raycast(_position + new Vector3(0, 0.2f, 0), _direction, _distance, _maskLayers);
+        return Physics.Raycast(_position /*+ new Vector3(0, 0.2f, 0)*/, _direction, _distance, _maskLayers);
     }
     public static bool Grounded(Transform _transform, float _distanceToGround)
     {

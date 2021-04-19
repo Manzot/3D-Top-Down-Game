@@ -99,7 +99,7 @@ public class MainMenuPopup : Popup
             else if (iSelectedElement == 0)
                 SetSelected(lstButtonsElement[1]);
         }
-        if (Input.GetButtonDown("Interact"))
+        if (Input.GetButtonDown("Submit"))
         {
             if (selectedButtonElement != null)
             {

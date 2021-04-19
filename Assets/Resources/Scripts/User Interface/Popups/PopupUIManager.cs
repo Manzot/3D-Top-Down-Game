@@ -37,7 +37,7 @@ public class PopupUIManager : MonoBehaviour
     }
 	void EscapeButtonFunction()
     {
-		if (Input.GetButtonDown("Escape"))
+		if (Input.GetButtonDown("Cancel"))
 		{
             if (GameController.inPlayMode)
             {
@@ -46,6 +46,8 @@ public class PopupUIManager : MonoBehaviour
             else
             {
                 menuBarPopup.CloseAllPopups();
+				shopPopup.close();
+				subMenuPopup.close();
             }
         }
 	} // Escape for Closing any open popup and opening pause menu

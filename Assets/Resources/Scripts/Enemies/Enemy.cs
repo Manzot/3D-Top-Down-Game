@@ -34,7 +34,6 @@ public class Enemy : MonoBehaviour, IHittable
     public float fAttackWaitTime = 1f;
     protected float fAttackWaitTimeCounter;
     public float fOnCollisionKnockBackForce = 5f;
-    public Vector3 tHeadOffset = new Vector3(0, 0.5f, 0);
     protected Vector3 startPosition;
 
     protected Movement moveScr;

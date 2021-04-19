@@ -290,7 +290,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     void WaitForAttack()
     {
         fWaitTime += Time.deltaTime;
-        if(fWaitTime >= 0.4f)
+        if(fWaitTime >= 0.6f)
         {
             bIsAttacking = false;
             fWaitTime = 0;
@@ -599,7 +599,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
             }
             bShieldPressed = Input.GetButton("Shield");
             bAttackPressed = Input.GetButtonDown("Attack");
-            bInteractPressed = Input.GetButtonDown("Interact");
+            bInteractPressed = Input.GetButtonDown("Submit");
         
             if(Input.GetKeyDown(KeyCode.Space))
                 bJumpPressed = true;

@@ -24,7 +24,7 @@ public class DialogBoxPopup : Popup
     {
         if (container.gameObject.activeSelf)
         {
-            if(Input.GetButtonDown("Interact"))
+            if(Input.GetButtonDown("Submit"))
             {
                 if (!bResponseSelecting)
                 {

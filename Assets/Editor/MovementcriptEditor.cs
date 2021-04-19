@@ -64,6 +64,7 @@ public class MovementcriptEditor : Editor
                     script.fMaxWalkingDistance = EditorGUILayout.FloatField("Max Walking Distance", script.fMaxWalkingDistance);
                     break;
             }
+            script.tHeadOffset = EditorGUILayout.Vector3Field("Head Offset", script.tHeadOffset);
         }
 
         targetObject.ApplyModifiedProperties();

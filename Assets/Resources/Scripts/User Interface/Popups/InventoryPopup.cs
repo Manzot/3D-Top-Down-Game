@@ -158,7 +158,7 @@ public class InventoryPopup : Popup
             if(iSelectedSlot - _iSlotsInOneRow >= 0)
                 SetSelected(lstInventorySlots[iSelectedSlot - _iSlotsInOneRow]);
         }
-        else if (Input.GetButtonDown("Interact"))
+        else if (Input.GetButtonDown("Submit"))
         {
             if (selectedSlot != null)
             {

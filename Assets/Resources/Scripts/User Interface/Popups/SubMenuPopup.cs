@@ -30,7 +30,6 @@ public class SubMenuPopup : Popup
         lstPopupButtonElement = new List<PopupButtonElement>();
         rtTransform = GetComponent<RectTransform>();
         containerAll.gameObject.SetActive(false);
-        
     }
     private void Update()
     {
@@ -169,7 +168,7 @@ public class SubMenuPopup : Popup
                     SetSelected(lstPopupButtonElement[1]);
             }
         }
-        if (Input.GetButtonDown("Interact"))
+        if (Input.GetButtonDown("Submit"))
         {
             if (selectedButtonElement != null)
             {

@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
     private int iPatrolPos = 0;
 
     private bool bActive;
-
+    public Vector3 tHeadOffset = new Vector3(0, 0.25f, 0);
     // Walk Area Variables
     public float fMaxWalkingDistance = 60;
     Vector3 startPosition;
@@ -113,7 +113,7 @@ public class Movement : MonoBehaviour
             {
                 if (bIsMoving)
                 {
-                    if (HelpUtils.CheckAheadForColi(transform, fDISTANCE_TO_COLIS))
+                    if (HelpUtils.CheckAheadForColi(transform, tHeadOffset, fDISTANCE_TO_COLIS))
                     {
                         bIsMoving = false;
                     }

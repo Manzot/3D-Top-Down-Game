@@ -162,14 +162,24 @@ public class ShopPopup : Popup
     const int iHeightMerchant = 10;
     bool bSwitchToMerchant = false;
     public override void MenuKeysInput()
-    {
+    {     
+        if (Input.GetButtonDown("PreviousMenu"))
+        {
+            if(bSwitchToMerchant)
+                ClickPlayerInventory();
+        }
+        if (Input.GetButtonDown("NextMenu"))
+        {
+            if(!bSwitchToMerchant)
+                ClickMerchantInventory();
+        }
+
         if (Input.GetAxisRaw("Horizontal") < 0f && Input.anyKeyDown) // going left
         {
             if (bSwitchToMerchant)
             {
                 if (iSelectedSlot == 0 || iSelectedSlot % iWidthMerchant == 0)
                 {
-                    bSwitchToMerchant = false;
                     ClickPlayerInventory();
                 }
                 else if (iSelectedSlot > 0)
@@ -182,7 +192,6 @@ public class ShopPopup : Popup
             {
                 if (iSelectedSlot == 0 || iSelectedSlot % iWidthPlayer == 0)
                 {
-                    bSwitchToMerchant = true;
                     ClickMerchantInventory();
                 }
                 else if (iSelectedSlot > 0)
@@ -198,7 +207,6 @@ public class ShopPopup : Popup
             {
                 if ((iSelectedSlot + 1) % iWidthMerchant == 0)
                 {
-                    bSwitchToMerchant = false;
                     ClickPlayerInventory();
                 }
                 else if (iSelectedSlot >= 0)
@@ -213,7 +221,6 @@ public class ShopPopup : Popup
             {
                 if ((iSelectedSlot + 1) % iWidthPlayer == 0)
                 {
-                    bSwitchToMerchant = true;
                     ClickMerchantInventory();
                 }
                 else if (iSelectedSlot >= 0)
@@ -253,7 +260,7 @@ public class ShopPopup : Popup
                     SetSelected(playerInventorySlotsLst[iSelectedSlot - iWidthPlayer]);
             }
         }
-        else if (Input.GetButtonDown("Interact"))
+        else if (Input.GetButtonDown("Submit"))
         {
             if (selectedSlot != null)
             {
@@ -335,12 +342,14 @@ public class ShopPopup : Popup
     }
     public void ClickPlayerInventory()
     {
+        bSwitchToMerchant = false;
         merchantInventoryButton.SetSelectedElement(false);
         playerInventoryButton.SetSelectedElement(true);
         SetSelected(playerInventorySlotsLst[0]);
     }
     public void ClickMerchantInventory()
     {
+        bSwitchToMerchant = true;
         playerInventoryButton.SetSelectedElement(false);
         merchantInventoryButton.SetSelectedElement(true);
         SetSelected(merchantInventorySlotsLst[0]);

@@ -491,6 +491,7 @@ MonoBehaviour:
   bReverseDirection: 0
   bRandomizePoints: 0
   fRotateSpeed: 4
+  tHeadOffset: {x: 0, y: 0.25, z: 0}
   fMaxWalkingDistance: 80
 --- !u!114 &2168450436321716923
 MonoBehaviour:
@@ -508,7 +509,7 @@ MonoBehaviour:
   iCollisionDamage: 5
   fAttackWaitTime: 1
   fOnCollisionKnockBackForce: 4
-  tHeadOffset: {x: 0, y: 0.25, z: 0}
+  tHeadOffset: {x: 0, y: 0.35, z: 0}
   fTackleSpeed: 6
   vfxEffect: {fileID: 825807516987865482}
 --- !u!114 &2168450436321716925

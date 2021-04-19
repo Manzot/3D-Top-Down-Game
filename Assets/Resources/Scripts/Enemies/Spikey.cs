@@ -48,6 +48,10 @@ public class Spikey : Enemy
                         if (!bIsHidden)
                             fAttackWaitTimeCounter -= Time.deltaTime;
                     }
+                    else
+                    {
+                        CollisionCheck();
+                    }
                 }
             }
         }
@@ -74,7 +78,6 @@ public class Spikey : Enemy
                 if (bIsAttacking)
                 {
                     Tackle(attackDirection, fTackleSpeed);
-                    CollisionCheck();
                 }
             }
         }
@@ -183,7 +186,7 @@ public class Spikey : Enemy
     }
     public void CollisionCheck()
     {
-        if (HelpUtils.CheckAheadForColi(transform.position, rotateAngle, 0.7f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player", "Tree"), true))
+        if (HelpUtils.CheckAheadForColi(transform.position + moveScr.tHeadOffset, rotateAngle, 0.7f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player", "Tree"), true))
         {
             if(bSpeedingUp)
                 KnockedUpsideDown();
