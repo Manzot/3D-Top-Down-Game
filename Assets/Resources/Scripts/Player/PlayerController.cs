@@ -172,25 +172,20 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
 
                 lastFacinDirection = new Vector3(horizontal, 0, vertical);
 
-                if (!bIsAttacking)
+                if (!bIsAttacking) // && !bIsShielding) It is for keeping the direction while shielding
                 {
                     if (lastFacinDirection != Vector3.zero)
                     {
-                        transform.forward = lastFacinDirection;
+                        //  transform.forward = lastFacinDirection;
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 14 * Time.fixedDeltaTime);
                     }
                 }
 
-                //It is for keeping the direction while shielding
-                //if (!bIsShielding)
-                //{
-                //    if (Mathf.Abs(horizontal) > 0.2f || Mathf.Abs(vertical) > 0.2f)
-                //        lastFacinDirection = new Vector3(horizontal, 0f, vertical);
-                //}
                 ////// mOVEMENT cONTROLLER //////////////////////////
 
                 movementVector = new Vector3(horizontal, 0, vertical).normalized;
 
-                if (movementVector != Vector3.zero)
+                if (movementVector != Vector3.zero && !bIsAttacking)
                 {
                     if (bIsSprinting)
                         rbody.velocity = (movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody); //rbody.AddForce(movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime, ForceMode.VelocityChange); ////;
@@ -263,7 +258,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
 
         bPrimaryWeaponEquipped = false;
         bIsAttacking = false;
-        iAttackCombo = -1;
+        iAttackCombo = 0;
     }
     void SwordAttacks()
     {
@@ -271,18 +266,21 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         {
             if (bAttackPressed)
             {
-                iAttackCombo++;
-                if (iAttackCombo >= 0 && !bIsAttacking && fCurrentStamina > fATTACK_STAMINA_COST)
+                if (!bIsAttacking)
                 {
-                    bIsAttacking = true;
-                    bSprintPressed = false;
-                    fWaitTime = 0;
-                    fCurrentStamina -= fATTACK_STAMINA_COST;
-                    anim.SetTrigger("attack1");
+                    if (iAttackCombo == 0 && fCurrentStamina > fATTACK_STAMINA_COST)
+                    {
+                        iAttackCombo++;
+                        bIsAttacking = true;
+                        bSprintPressed = false;
+                        fWaitTime = 0;
+                        fCurrentStamina -= fATTACK_STAMINA_COST;
+                        anim.SetTrigger("attack1");
+                    }
                 }
 
             }
-            if(iAttackCombo >= 0)
+            if(iAttackCombo > 0)
                 WaitForAttack();
         }
     }
@@ -294,7 +292,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         {
             bIsAttacking = false;
             fWaitTime = 0;
-            iAttackCombo = -1;
+            iAttackCombo = 0;
         }
     }
     public void Jump()
@@ -608,6 +606,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     public void PlayerAnimations()
     {
         anim.SetBool("isSprinting", bIsSprinting);
+        anim.SetBool("isAttacking", bIsAttacking);
         anim.SetBool("shield_equipped", bIsShielding);
         anim.SetBool("weapon_equipped", bPrimaryWeaponEquipped);
         anim.SetFloat("moveVelocity", rbody.velocity.sqrMagnitude);

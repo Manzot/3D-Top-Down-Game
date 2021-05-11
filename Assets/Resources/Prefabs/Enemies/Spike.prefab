@@ -232,11 +232,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825807516949333023}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3188496, y: 0.44580412, z: 1.3209039}
-  m_Center: {x: -0.00480932, y: 0.2770969, z: -0.03869032}
+  m_Size: {x: 1.3414127, y: 0.44580412, z: 1.4610373}
+  m_Center: {x: 0.0025398144, y: 0.2770969, z: -0.05279436}
 --- !u!1 &825807516987865480
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +509,6 @@ MonoBehaviour:
   iCollisionDamage: 5
   fAttackWaitTime: 1
   fOnCollisionKnockBackForce: 4
-  tHeadOffset: {x: 0, y: 0.35, z: 0}
   fTackleSpeed: 6
   vfxEffect: {fileID: 825807516987865482}
 --- !u!114 &2168450436321716925

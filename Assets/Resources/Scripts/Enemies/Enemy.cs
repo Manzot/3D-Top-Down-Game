@@ -113,7 +113,6 @@ public class Enemy : MonoBehaviour, IHittable
         {
             if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                Debug.Log(_hit.collider.gameObject.name);
                 bTargetFound = true;
                 bCanFollow = true;
                 moveScr.SetMovementActive(false);

@@ -16,9 +16,13 @@ public class PlayerEquipmentManager : MonoBehaviour
     public Transform phPrimaryWeaponUnEquipped;
     public Transform phSecondaryWeaponUnEquipped;
     //  Assigned Weapons and Shiled Itself
+   // [HideInInspector]
     public Shield shield;
+   // [HideInInspector]
     public Weapon primaryWeapon;
+    [HideInInspector]
     public Weapon secondaryWeapon;
+
     public GameObject playerHead;
     public GameObject playerHair;
     public GameObject playerBody;
@@ -35,8 +39,9 @@ public class PlayerEquipmentManager : MonoBehaviour
     Material defaultHeadMaterial;
     Material defaultHairMaterial;
     Material defaultBodyMaterial;
-    
-    
+    Material defaultPriWeaponMaterial;
+    Material defaultShieldMaterial;
+    Material defaultSecWeaponMaterial;
 
     ParticleSystem trialEffectPrimaryWeapon;
     //public GameObject swordSlashParticles;
@@ -128,6 +133,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         if (_primaryWeaponToSet != null)
         {
             primaryWeapon = _primaryWeaponToSet.GetComponent<Weapon>();
+            defaultPriWeaponMaterial = primaryWeapon.GetComponent<Renderer>().material;
             trialEffectPrimaryWeapon = primaryWeapon.weaponTrialEffect;
         }
         else
@@ -141,6 +147,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         if (_secondaryWeaponToSet != null)
         {
             secondaryWeapon = _secondaryWeaponToSet.GetComponent<Weapon>();
+            defaultSecWeaponMaterial = secondaryWeapon.GetComponent<Renderer>().material;
         }
         else
             secondaryWeapon = null;
@@ -153,6 +160,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         if (_shieldToSet != null)
         {
             shield = _shieldToSet.GetComponent<Shield>();
+            defaultShieldMaterial = shield.GetComponent<Renderer>().material;
         }
         else
             shield = null;
@@ -162,12 +170,21 @@ public class PlayerEquipmentManager : MonoBehaviour
         headRenderer.material = highLightMaterial;
         hairRenderer.material = highLightMaterial;
         bodyRenderer.material = highLightMaterial;
+
+        if (primaryWeapon)
+            primaryWeapon.GetComponent<Renderer>().material = highLightMaterial;
+        if (shield)
+            shield.GetComponent<Renderer>().material = highLightMaterial;
     }
     public void SetDefaultMaterials()
     {
         headRenderer.material = defaultHeadMaterial;
         hairRenderer.material = defaultHairMaterial;
         bodyRenderer.material = defaultBodyMaterial;
+        if(primaryWeapon)
+            primaryWeapon.GetComponent<Renderer>().material = defaultPriWeaponMaterial;
+        if(shield)
+            shield.GetComponent<Renderer>().material = defaultShieldMaterial;
     }
     public Item GetPrimaryWeaponItem()
     {

@@ -27,6 +27,8 @@ public class ItemContainer : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        GetComponent<Collider>().isTrigger = false;
+
     }
     public void Update()
     {
