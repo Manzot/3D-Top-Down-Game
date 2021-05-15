@@ -7,7 +7,7 @@ public class Scorpion : Enemy
     //private bool bRotateAnims = true;
     // Material Dissolve Variables
    
-    float fSTUN_TIME = 0f; // this is extra time after the animation
+    float fSTUN_TIME = 0.5f; // this is extra time after the animation
 
     void Start()
     {

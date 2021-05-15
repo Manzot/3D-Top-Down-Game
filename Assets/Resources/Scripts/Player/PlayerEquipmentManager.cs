@@ -88,8 +88,9 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public void EnableSlashParticles()
     {
-        slash.SetActive(true);
-        StartCoroutine(HelpUtils.WaitForSeconds(delegate { slash.SetActive(false); }, 0.4f));
+        primaryWeapon.StartWeaponTrial();
+       // slash.SetActive(true);
+       // StartCoroutine(HelpUtils.WaitForSeconds(delegate { slash.SetActive(false); }, 0.4f));
         //trialEffectPrimaryWeapon.transform.parent = primaryWeapon.transform;
         //trialEffectPrimaryWeapon.transform.localPosition = new Vector3(0, -0.14f, 0);
         //trialEffectPrimaryWeapon.transform.localRotation = Quaternion.Euler( Vector3.zero);
@@ -97,6 +98,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     }
     public void DisableSlashParticles()
     {
+        primaryWeapon.StopWeaponTrial();
        // slash.SetActive(false);
         // trialEffectPrimaryWeapon.Stop();
         //trialEffectPrimaryWeapon.Clear();

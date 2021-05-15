@@ -6,7 +6,7 @@ public class SunflowerFairy : Enemy
 {
     private float fVisionRadius = 2.2f;
     private float fVisionDistance = 4f;
-    float fINVULNERABILITY_TIME = 0f;
+    float fStunTime = 0.2f;
     float fTARGET_FOLLOW_RANGE = 120f;
 
     ProjectileThrower projectileThrower;
@@ -37,7 +37,7 @@ public class SunflowerFairy : Enemy
                    CheckTargetInRange(fAttackRange, fTARGET_FOLLOW_RANGE, 0.95f);
                 }
             }
-            CalculateInvulnerability(fINVULNERABILITY_TIME);
+            CalculateInvulnerability(fStunTime);
         }
         else
         {

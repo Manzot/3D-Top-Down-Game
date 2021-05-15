@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     const float fNPC_DISTANCE_CHECK = 0.8f;
     const float fDISTANCE_TO_GROUND = 0.25f;
     const float fINVULNERABILITY_TIME = 2f;
-    const float fSTUN_TIME = 0.5f;
+    const float fSTUN_TIME = 0.2f;
     const float fSPRINT_STAMINA_COST = 10f; // is multipleid by deltaTime
     const float fATTACK_STAMINA_COST = 5f;
     const float fSHIELD_STAMINA_COST = 10f;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     private bool bIsStun;
     private bool bIsOnSlope;
     private bool bIsGrounded;
-    private bool bCanAttack;
+    private bool bLockDirection;
    
     //Keys Input
     private bool bJumpPressed;
@@ -88,9 +88,9 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         anim = GetComponent<Animator>();
         fCurrentHitPoints = fMaxHitPoints;
         fCurrentStamina = fMaxStamina;
-        bIsAlive = true;
         playerInventory = new Inventory(iStartInventorySize);
         pEquimentManager = GetComponent<PlayerEquipmentManager>();
+        bIsAlive = true;
         bCanSprint = true;
        // hightlightMat = rend.materials[1];
     }
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                     if (bIsGrounded)
                     {
                         CheckAheadForColliders();
-                        CheckOnSlope(); // this controlling players y velocity for now
+                  //enable this if there are slopes in the game   //   CheckOnSlope(); // this controlling players y velocity for now
                     }
                 }
             }
@@ -172,25 +172,25 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
 
                 lastFacinDirection = new Vector3(horizontal, 0, vertical);
 
-                if (!bIsAttacking) // && !bIsShielding) It is for keeping the direction while shielding
+                if (lastFacinDirection != Vector3.zero)
                 {
-                    if (lastFacinDirection != Vector3.zero)
-                    {
-                        //  transform.forward = lastFacinDirection;
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 14 * Time.fixedDeltaTime);
-                    }
+                    if(!bIsAttacking)
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 15 * Time.deltaTime);
+                    else
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 3 * Time.deltaTime);
                 }
 
                 ////// mOVEMENT cONTROLLER //////////////////////////
-
                 movementVector = new Vector3(horizontal, 0, vertical).normalized;
 
-                if (movementVector != Vector3.zero && !bIsAttacking)
+                if (movementVector != Vector3.zero)// && !bIsAttacking)
                 {
                     if (bIsSprinting)
                         rbody.velocity = (movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody); //rbody.AddForce(movementVector * fSpeed * fSpeedMultiplier * Time.fixedDeltaTime, ForceMode.VelocityChange); ////;
-                    else if (bIsShielding || bIsAttacking)
+                    else if (bIsShielding)
                         rbody.velocity = (movementVector * fSPEED_DIVISION * fSpeed * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody); //rbody.AddForce(movementVector * fSpeed * fSPEED_DIVISION * Time.fixedDeltaTime, ForceMode.VelocityChange); ////
+                    else if (bIsAttacking)
+                        rbody.velocity = (movementVector * 70 * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody); //rbody.AddForce(movementVector * fSpeed * fSPEED_DIVISION * Time.fixedDeltaTime, ForceMode.VelocityChange); ////
                     else
                         rbody.velocity = (movementVector * fSpeed * Time.fixedDeltaTime) + HelpUtils.VectorZeroWithY(rbody);// rbody.AddForce(movementVector * fSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
 
@@ -236,62 +236,87 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
             {
                 if (!bPrimaryWeaponEquipped)
                 {
-                   // if (bAttackPressed)
-                    {
-                        bPrimaryWeaponEquipped = true;
-                    }
+                    DrawWeapon();
                 }
             }
         }
         else if (bSheathWeaponPressed)
         {
-            if (bPrimaryWeaponEquipped)
-            {
-                SheathWeapon();
-            }
+            if(!bIsAttacking)
+                if (bPrimaryWeaponEquipped)
+                {
+                    SheathWeapon();
+                }
         }
     }
-    void SheathWeapon(bool _bIsRemoved = false)
+    void DrawWeapon()
     {
-        //anim.SetBool("weapon_equipped", bDrawPrimaryWeapon);
-        bPrimaryWeaponEquipped = _bIsRemoved;
-
+        anim.SetBool("weapon_equipped", true);
+        StartCoroutine(HelpUtils.WaitForSeconds(delegate { bPrimaryWeaponEquipped = true; }, 0.5f));// bPrimaryWeaponEquipped = true;
+         iAttackCombo = 0;
+    }
+    void SheathWeapon()
+    {
         bPrimaryWeaponEquipped = false;
-        bIsAttacking = false;
-        iAttackCombo = 0;
+        anim.SetBool("weapon_equipped", bPrimaryWeaponEquipped);
+         iAttackCombo = 0;
+        //  bPrimaryWeaponEquipped = false;
+        // bIsAttacking = false;
     }
     void SwordAttacks()
     {
         if (bPrimaryWeaponEquipped)
         {
-            if (bAttackPressed)
+           // if (bAttackPressed)
             {
                 if (!bIsAttacking)
                 {
-                    if (iAttackCombo == 0 && fCurrentStamina > fATTACK_STAMINA_COST)
-                    {
-                        iAttackCombo++;
-                        bIsAttacking = true;
-                        bSprintPressed = false;
-                        fWaitTime = 0;
-                        fCurrentStamina -= fATTACK_STAMINA_COST;
-                        anim.SetTrigger("attack1");
-                    }
+                    if (bAttackPressed)
+                        if (iAttackCombo == 0 && fCurrentStamina > fATTACK_STAMINA_COST)
+                        {
+                            anim.SetTrigger("attack1");
+                            iAttackCombo++;
+                            bAttackPressed = false;
+                            bIsAttacking = true;
+                            bSprintPressed = false;
+                            fCurrentStamina -= fATTACK_STAMINA_COST;
+                            fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.3f;
+                            fAttackWaitTimeCounter = 0;
+                        }
                 }
 
             }
             if(iAttackCombo > 0)
-                WaitForAttack();
+                WaitForAttack(); 
         }
     }
-    float fWaitTime = 0;
+    float fAttackWaitTimeCounter = 0;
+    float fAttackWaitTime = 0;
     void WaitForAttack()
     {
-        fWaitTime += Time.deltaTime;
-        if(fWaitTime >= 0.6f)
+        fAttackWaitTimeCounter += Time.deltaTime;
+       
+        if (fAttackWaitTimeCounter < fAttackWaitTime - 0.3f) // wait time to chain next attack
         {
+            if (bAttackPressed)
+            {
+                    if (iAttackCombo < 2) // change it with max attack combo lenght
+                    {
+                        anim.SetTrigger("attack2");
+                        bLockDirection = true;
+                        bIsAttacking = true;
+                        iAttackCombo++;
+                        // fCurrentStamina -= fATTACK_STAMINA_COST;
+                        fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length;
+                        fAttackWaitTimeCounter = 0; ;
+                    }
+            }
+        }
+        if (fAttackWaitTimeCounter > fAttackWaitTime - 0.1f) // time to reset the combo chain
+        {
+            //StartCoroutine(HelpUtils.WaitForSeconds(delegate { bLockDirection = false; }, 0.3f));
             bIsAttacking = false;
-            fWaitTime = 0;
+            fAttackWaitTimeCounter = fAttackWaitTime;
             iAttackCombo = 0;
         }
     }
@@ -492,7 +517,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         bIsAlive = false;
         rbody.isKinematic = true;
         //GetComponent<Collider>().isTrigger = true;
-        //TODO: Add a beath animation and remove collisions
+        //TODO: Add a Death animation and remove collisions
         //gameObject.SetActive(false); // deactivating it or destroying can coz some loading bugs
     }
     public void HealthCheck()
@@ -581,7 +606,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     {
        // if (!bIsAttacking)
         {
-            if (bIsGrounded && !bIsAttacking)
+            if (bIsGrounded)// && !bIsAttacking)
             {
                 horizontal = Input.GetAxis("Horizontal");
                 vertical = Input.GetAxis("Vertical");
@@ -608,7 +633,8 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         anim.SetBool("isSprinting", bIsSprinting);
         anim.SetBool("isAttacking", bIsAttacking);
         anim.SetBool("shield_equipped", bIsShielding);
-        anim.SetBool("weapon_equipped", bPrimaryWeaponEquipped);
+
+        //anim.SetBool("weapon_equipped", bPrimaryWeaponEquipped);
         anim.SetFloat("moveVelocity", rbody.velocity.sqrMagnitude);
     }
     public bool IsInteracting()
@@ -640,14 +666,14 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         // TODO: Set player animtaion to deafult on changing new weapon or place the new weapon in its hand according to drawWeaponBool
         if (_swordToEquip != null)
         {
-            SheathWeapon(true);
+            SheathWeapon();
             ItemContainer _newWeapon = Instantiate(_swordToEquip.GetItemPrefab(), pEquimentManager.phPrimaryWeaponUnEquipped);
             _newWeapon.SetItemEquipable();
             pEquimentManager.SetPrimaryWeapon(_newWeapon.gameObject);
         }
         else // when there is no weapon equipped
         {
-            SheathWeapon(true);
+            SheathWeapon();
             pEquimentManager.SetPrimaryWeapon(null);
         }
     }

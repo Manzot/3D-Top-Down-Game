@@ -125,13 +125,15 @@ public class Enemy : MonoBehaviour, IHittable
         {
             fInvulnerableCounter += Time.deltaTime;
 
-            if (fInvulnerableCounter >= anim.GetCurrentAnimatorStateInfo(0).length + _fStunTime)
+            if (fInvulnerableCounter > anim.GetCurrentAnimatorStateInfo(0).length)
             {
                 bIsInvulnerable = false;
-                bIsHit = false;
-                bCanFollow = true;
-                bInAttackRange = false;
                 fInvulnerableCounter = 0;
+                StartCoroutine(HelpUtils.WaitForSeconds(delegate
+                {
+                    bCanFollow = true;
+                    bInAttackRange = false;
+                }, _fStunTime));
             }
         }
     }

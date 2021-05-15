@@ -23,5 +23,15 @@ public class Weapon : MonoBehaviour
     {
         coli.enabled = _bToEnable;
     }
+    public void StopWeaponTrial()
+    {
+        weaponTrialEffect.gameObject.SetActive(false);
+        weaponTrialEffect.Stop();
+    } 
+    public void StartWeaponTrial()
+    {
+        weaponTrialEffect.gameObject.SetActive(true);
+        weaponTrialEffect.Play();
+    }
 
 }

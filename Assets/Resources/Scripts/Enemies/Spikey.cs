@@ -174,7 +174,7 @@ public class Spikey : Enemy
     Vector3 rotateAngle = new Vector3(0,0,0);
     public void Tackle(Vector3 _direction, float _fTackleSpeed)
     {
-        rotateAngle = Quaternion.AngleAxis(60, Vector3.up) * rotateAngle;
+        rotateAngle = Quaternion.AngleAxis(70, Vector3.up) * rotateAngle;
 
         if (bSpeedingUp)
             rbody.MovePosition(transform.position + _direction * _fTackleSpeed * Time.fixedDeltaTime);
@@ -186,7 +186,7 @@ public class Spikey : Enemy
     }
     public void CollisionCheck()
     {
-        if (HelpUtils.CheckAheadForColi(transform.position + moveScr.tHeadOffset, rotateAngle, 0.8f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player", "Tree"), true))
+        if (HelpUtils.CheckAheadForColi(transform.position + moveScr.tHeadOffset, rotateAngle, 0.82f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player", "Tree"), true))
         {
             if(bSpeedingUp)
                 KnockedUpsideDown();
