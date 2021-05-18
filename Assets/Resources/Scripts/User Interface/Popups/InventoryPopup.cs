@@ -16,6 +16,7 @@ public class InventoryPopup : Popup
     RectTransform panelRectTransform;
 
     InventorySlot selectedSlot;
+    InventorySlot tempSlot;
 
     public Sprite lockImage;
 
@@ -125,7 +126,6 @@ public class InventoryPopup : Popup
         {
             selectedSlot.SetSelectedElement(true);
         }
-        
     }
 
     public override void MenuKeysInput()
@@ -160,11 +160,18 @@ public class InventoryPopup : Popup
         }
         else if (Input.GetButtonDown("Submit"))
         {
+
             if (selectedSlot != null)
             {
+                tempSlot = selectedSlot;
                 selectedSlot.OpenItemMenu();
                 selectedSlot = null;
             }
+        }
+
+        if (Input.GetButtonUp("Submit")){
+            Debug.Log("I ran");
+            selectedSlot = tempSlot;
         }
     }
     public void SetItemMenuOpenBool(bool _setBool)

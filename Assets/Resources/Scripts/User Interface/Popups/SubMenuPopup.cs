@@ -88,6 +88,7 @@ public class SubMenuPopup : Popup
         }
 
         selectedButtonElement = null;
+        SetSelected(lstPopupButtonElement[0]);
     }
     public void openMenu(List<structSubMenu> _lstSubMenu, Vector2 _position, bool _bDisabelContainerAll = false)
     {
@@ -113,11 +114,13 @@ public class SubMenuPopup : Popup
 
             lstPopupButtonElement.Add(_buttonElement);
         }
-        selectedButtonElement = null;
         if (_bDisabelContainerAll)
         {
             containerAll.gameObject.SetActive(false);
         }
+
+        selectedButtonElement = null;
+        SetSelected(lstPopupButtonElement[0]);
     }
     public void SetSelected(PopupButtonElement _element)
     {

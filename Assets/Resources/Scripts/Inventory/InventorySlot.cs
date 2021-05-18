@@ -324,6 +324,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     }
     public void ClickSell()
     {
-        PopupUIManager.Instance.shopPopup.SellItem(item, iSlotNumber);
+        if (!item.bIsEquipped)
+            PopupUIManager.Instance.shopPopup.SellItem(item, iSlotNumber);
+        else
+            PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Can't sell equipped items");
     }
 }

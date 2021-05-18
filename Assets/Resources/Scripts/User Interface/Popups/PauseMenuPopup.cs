@@ -58,8 +58,12 @@ public class PauseMenuPopup : Popup
     public void SaveGameButton()
     {
         GameController.Instance.SaveGame();
+        if(PlayerController.Instance.IsAlive())
+            PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Game Saved....");
+        else
+            PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Can't save when dead.");
+
         close();
-        PopupUIManager.Instance.msgBoxPopup.ShowMessageDirectly("Game Saved....");
     }
     public void LoadGameButton()
     {

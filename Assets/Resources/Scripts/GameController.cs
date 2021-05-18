@@ -72,7 +72,11 @@ public class GameController : MonoBehaviour
 	}
 	public void SaveGame()
     {
-		SaveGameManager.SaveGame(saveablesList);
+		if (PlayerController.Instance.IsAlive())
+			SaveGameManager.SaveGame(saveablesList);
+		else
+			Debug.Log("Can't save when dead");
+		
 	}
 	public void LoadGame()
     {

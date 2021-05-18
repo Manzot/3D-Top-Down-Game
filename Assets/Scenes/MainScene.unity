@@ -33175,6 +33175,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1837566293}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1842359078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7334448685906200508, guid: 0be8da676cf61a0419a90842f118efc4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7334448685134508599}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1845377445
 GameObject:
   m_ObjectHideFlags: 0
@@ -59621,7 +59627,7 @@ PrefabInstance:
     - target: {fileID: 4185601837462471062, guid: a9f723d960da7414cb6e567593b126fa,
         type: 3}
       propertyPath: field of view
-      value: 30
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 4185601837462471062, guid: a9f723d960da7414cb6e567593b126fa,
         type: 3}
@@ -63606,11 +63612,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 7933318094899060224}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334448684759623404, guid: 0be8da676cf61a0419a90842f118efc4,
+        type: 3}
+      propertyPath: m_ComponentOwner
+      value: 
+      objectReference: {fileID: 1842359078}
     - target: {fileID: 7334448684759623404, guid: 0be8da676cf61a0419a90842f118efc4,
         type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 30
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 7334448684759623404, guid: 0be8da676cf61a0419a90842f118efc4,
         type: 3}

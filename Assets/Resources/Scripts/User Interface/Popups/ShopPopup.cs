@@ -21,6 +21,7 @@ public class ShopPopup : Popup
 
     private ButtonElement selectedButtonElement;
     private InventorySlot selectedSlot;
+    InventorySlot tempSlot;
 
     InventorySlot [] playerInventorySlotsLst;
     InventorySlot [] merchantInventorySlotsLst;
@@ -178,11 +179,12 @@ public class ShopPopup : Popup
         {
             if (bSwitchToMerchant)
             {
-                if (iSelectedSlot == 0 || iSelectedSlot % iWidthMerchant == 0)
-                {
-                    ClickPlayerInventory();
-                }
-                else if (iSelectedSlot > 0)
+                //if (iSelectedSlot == 0 || iSelectedSlot % iWidthMerchant == 0)
+                //{
+                //    ClickPlayerInventory();
+                //}
+                //else 
+                if (iSelectedSlot > 0)
                 {
                     SetSelected(merchantInventorySlotsLst[iSelectedSlot - 1]);
                 }
@@ -190,11 +192,12 @@ public class ShopPopup : Popup
             }
             else
             {
-                if (iSelectedSlot == 0 || iSelectedSlot % iWidthPlayer == 0)
-                {
-                    ClickMerchantInventory();
-                }
-                else if (iSelectedSlot > 0)
+                //if (iSelectedSlot == 0 || iSelectedSlot % iWidthPlayer == 0)
+                //{
+                //    ClickMerchantInventory();
+                //}
+                //else
+                if (iSelectedSlot > 0)
                 {
                     SetSelected(playerInventorySlotsLst[iSelectedSlot - 1]);
                 }
@@ -205,11 +208,12 @@ public class ShopPopup : Popup
         {
             if (bSwitchToMerchant)
             {
-                if ((iSelectedSlot + 1) % iWidthMerchant == 0)
-                {
-                    ClickPlayerInventory();
-                }
-                else if (iSelectedSlot >= 0)
+                //if ((iSelectedSlot + 1) % iWidthMerchant == 0)
+                //{
+                //    ClickPlayerInventory();
+                //}
+                //else 
+                if (iSelectedSlot >= 0 && iSelectedSlot < merchantInventorySlotsLst.Length)
                 {
                     if(merchantInventorySlotsLst[iSelectedSlot + 1].gameObject.activeSelf)
                     {
@@ -219,11 +223,12 @@ public class ShopPopup : Popup
             }
             else
             {
-                if ((iSelectedSlot + 1) % iWidthPlayer == 0)
-                {
-                    ClickMerchantInventory();
-                }
-                else if (iSelectedSlot >= 0)
+                //if ((iSelectedSlot + 1) % iWidthPlayer == 0)
+                //{
+                //    ClickMerchantInventory();
+                //}
+                //else 
+                if (iSelectedSlot >= 0 && iSelectedSlot < playerInventorySlotsLst.Length)
                 {
                     SetSelected(playerInventorySlotsLst[iSelectedSlot + 1]);
                 }
@@ -264,9 +269,14 @@ public class ShopPopup : Popup
         {
             if (selectedSlot != null)
             {
+                tempSlot = selectedSlot;
                 selectedSlot.OpenItemMenu();
                 selectedSlot = null;
             }
+        }
+        if (Input.GetButtonUp("Submit"))
+        {
+            selectedSlot = tempSlot;
         }
     }
     public void SetSelected(InventorySlot _iSlot, bool _bOnPointerEnter = false)

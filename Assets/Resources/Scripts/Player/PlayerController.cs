@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     const float fNPC_DISTANCE_CHECK = 0.8f;
     const float fDISTANCE_TO_GROUND = 0.25f;
     const float fINVULNERABILITY_TIME = 2f;
-    const float fSTUN_TIME = 0.2f;
+    const float fSTUN_TIME = 0.05f;
     const float fSPRINT_STAMINA_COST = 10f; // is multipleid by deltaTime
     const float fATTACK_STAMINA_COST = 5f;
     const float fSHIELD_STAMINA_COST = 10f;
@@ -175,9 +175,9 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                 if (lastFacinDirection != Vector3.zero)
                 {
                     if(!bIsAttacking)
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 15 * Time.deltaTime);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 18 * Time.deltaTime);
                     else
-                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 3 * Time.deltaTime);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lastFacinDirection), 4 * Time.deltaTime);
                 }
 
                 ////// mOVEMENT cONTROLLER //////////////////////////
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                             bIsAttacking = true;
                             bSprintPressed = false;
                             fCurrentStamina -= fATTACK_STAMINA_COST;
-                            fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.3f;
+                            fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.4f;
                             fAttackWaitTimeCounter = 0;
                         }
                 }
@@ -307,7 +307,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                         bIsAttacking = true;
                         iAttackCombo++;
                         // fCurrentStamina -= fATTACK_STAMINA_COST;
-                        fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length;
+                        fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.1f;
                         fAttackWaitTimeCounter = 0; ;
                     }
             }
