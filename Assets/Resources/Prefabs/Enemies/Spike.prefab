@@ -485,13 +485,13 @@ MonoBehaviour:
   movementType: 2
   fSpeed: 1
   fWalkTime: 2
-  fWaitTime: 6
+  fWaitTime: 5
   fRandomizeDirAfter: 0
   tPatrolPoints: []
   bReverseDirection: 0
   bRandomizePoints: 0
-  fRotateSpeed: 4
-  tHeadOffset: {x: 0, y: 0.25, z: 0}
+  fRotateSpeed: 80
+  tHeadOffset: {x: 0, y: 0.35, z: 0}
   fMaxWalkingDistance: 80
 --- !u!114 &2168450436321716923
 MonoBehaviour:
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702cff01c9508fd44a2f00f9a448b975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fMaxHitPoints: 30
+  fMaxHitPoints: 20
   iCollisionDamage: 5
   fAttackWaitTime: 1
   fOnCollisionKnockBackForce: 4

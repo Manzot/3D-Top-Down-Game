@@ -8,7 +8,9 @@ public class MovementcriptEditor : Editor
 {
     SerializedObject targetObject;
     SerializedProperty movementType;
+    SerializedProperty headOffset;
     SerializedProperty patrolPointsArray;
+  //  SerializedProperty rotateSpeed;
     Movement script;
 
     public void OnEnable()
@@ -17,18 +19,20 @@ public class MovementcriptEditor : Editor
         script = (Movement)target;
             
         movementType = targetObject.FindProperty("movementType");
+        headOffset = targetObject.FindProperty("tHeadOffset");
         patrolPointsArray = targetObject.FindProperty("tPatrolPoints");
     }
     public override void OnInspectorGUI()
     {
         //  base.OnInspectorGUI();
-        serializedObject.Update();
+        //serializedObject.Update();
 
         GUI.enabled = false;
-        EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((Movement)target), typeof(Movement), false);
+        EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((Movement)target), typeof(Movement), true);
         GUI.enabled = true;
-
+        // change all fields to property fields or find am other way to save these variables
         EditorGUILayout.PropertyField(movementType);
+       // EditorGUILayout.PropertyField(headOffset);
 
         script.fRotateSpeed = EditorGUILayout.FloatField("Rotate Speed", script.fRotateSpeed);
 
@@ -68,7 +72,12 @@ public class MovementcriptEditor : Editor
             }
             script.tHeadOffset = EditorGUILayout.Vector3Field("Head Offset", script.tHeadOffset);
         }
-
+        
         targetObject.ApplyModifiedProperties();
+
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(target);
+        }
     }
 }

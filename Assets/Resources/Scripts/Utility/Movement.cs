@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour
     public bool bReverseDirection; // it is to enable or disable reverse direction
     public bool bRandomizePoints;
 
-    public float fRotateSpeed = 60f;
+    public float fRotateSpeed;
 
     private bool bDirReversing; // it is actually reversing direction if the npc reaches the end point
     private int iPatrolPos = 0;

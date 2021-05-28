@@ -1409,7 +1409,6 @@ MonoBehaviour:
   iCollisionDamage: 1
   fAttackWaitTime: 2
   fOnCollisionKnockBackForce: 2
-  tHeadOffset: {x: 0, y: 0.5, z: 0}
 --- !u!114 &2081995174192866199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,14 +1442,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementType: 2
   fSpeed: 1.2
-  fWalkTime: 1
+  fWalkTime: 1.5
   fWaitTime: 3
   fRandomizeDirAfter: 0
   tPatrolPoints: []
   bReverseDirection: 0
   bRandomizePoints: 0
-  fRotateSpeed: 60
-  fMaxWalkingDistance: 80
+  fRotateSpeed: 120
+  tHeadOffset: {x: 0, y: 0.3, z: 0}
+  fMaxWalkingDistance: 90
 --- !u!1 &2081995174192866241
 GameObject:
   m_ObjectHideFlags: 0

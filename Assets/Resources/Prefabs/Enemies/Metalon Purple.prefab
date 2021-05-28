@@ -843,7 +843,6 @@ MonoBehaviour:
   iCollisionDamage: 5
   fAttackWaitTime: 1.3
   fOnCollisionKnockBackForce: 4
-  tHeadOffset: {x: 0, y: 0.5, z: 0}
 --- !u!114 &2016155963780243019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,7 +879,8 @@ MonoBehaviour:
   tPatrolPoints: []
   bReverseDirection: 0
   bRandomizePoints: 0
-  fRotateSpeed: 60
+  fRotateSpeed: 90
+  tHeadOffset: {x: 0, y: 0.3, z: 0}
   fMaxWalkingDistance: 60
 --- !u!114 &1921199360
 MonoBehaviour:
