@@ -104,7 +104,7 @@ public class Spikey : Enemy
             fAttackWaitTimeCounter = fAttackWaitTime;
         }
     }
-    public override void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fRotateSpeed = 60, float _fAccuracy = 0.99f)
+    public override void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fRotateSpeed = 160, float _fAccuracy = 0.99f)
     {
         float _fDistance = (transform.position - targetPlayer.transform.position).sqrMagnitude;
 
@@ -174,7 +174,7 @@ public class Spikey : Enemy
     Vector3 rotateAngle = new Vector3(0,0,0);
     public void Tackle(Vector3 _direction, float _fTackleSpeed)
     {
-        rotateAngle = Quaternion.AngleAxis(70, Vector3.up) * rotateAngle;
+        rotateAngle = Quaternion.AngleAxis(120, Vector3.up) * rotateAngle;
 
         if (bSpeedingUp)
             rbody.MovePosition(transform.position + _direction * _fTackleSpeed * Time.fixedDeltaTime);
@@ -186,7 +186,7 @@ public class Spikey : Enemy
     }
     public void CollisionCheck()
     {
-        if (HelpUtils.CheckAheadForColi(transform.position + moveScr.tHeadOffset, rotateAngle, 0.82f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player", "Tree"), true))
+        if (HelpUtils.CheckAheadForColi(transform.position + moveScr.tHeadOffset, rotateAngle, 0.85f, LayerMask.GetMask("Default", "Ground", "Weapon", "Player", "Tree"), true))
         {
             if(bSpeedingUp)
                 KnockedUpsideDown();
