@@ -6,15 +6,16 @@ public class SunflowerFairy : Enemy
 {
     private float fVisionRadius = 2.2f;
     private float fVisionDistance = 4f;
-    float fStunTime = 0.2f;
-    float fTARGET_FOLLOW_RANGE = 120f;
+    float fStunTime = 0.6f;
+    float fInvulnerableTime = 0.5f;
+    float fTARGET_FOLLOW_RANGE = 100f;
 
     ProjectileThrower projectileThrower;
 
     private void Start()
     {
         base.Initialize();
-        fAttackRange = 50f;
+        fAttackRange = 75f;
         projectileThrower = GetComponent<ProjectileThrower>();
     }
 
@@ -26,7 +27,7 @@ public class SunflowerFairy : Enemy
 
         if (bIsAlive)
         {
-           // if (bIsGrounded)
+            if (!bIsStun)
             {
                 if (!bTargetFound)
                 {
@@ -34,10 +35,12 @@ public class SunflowerFairy : Enemy
                 }
                 else
                 {
-                   CheckTargetInRange(fAttackRange, fTARGET_FOLLOW_RANGE, 0.95f);
+                   CheckTargetInRange(fAttackRange, fTARGET_FOLLOW_RANGE, 150f, 0.95f);
                 }
             }
-            CalculateInvulnerability(fStunTime);
+
+            CalculateInvulnerability(fInvulnerableTime);
+            CalculateStun(fStunTime);
         }
         else
         {
@@ -47,9 +50,10 @@ public class SunflowerFairy : Enemy
     private void FixedUpdate()
     {
         base.FixedRefresh();
+
         if (bIsAlive)
         {
-          //  if (HelpUtils.Grounded(transform, 0.2f))
+            if (!bIsStun)
             {
                 if (bTargetFound)
                 {

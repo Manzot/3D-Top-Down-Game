@@ -15,11 +15,11 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
     const float fDISTANCE_TO_GROUND = 0.25f;
     const float fINVULNERABILITY_TIME = 2f;
     const float fSTUN_TIME = 0.05f;
-    const float fSPRINT_STAMINA_COST = 10f; // is multipleid by deltaTime
-    const float fATTACK_STAMINA_COST = 5f;
-    const float fSHIELD_STAMINA_COST = 10f;
-    const float fSTAMINA_RECOVER_START_TIME = 0.1f;
-    const float fSTAMINA_RECOVERY_RATE = 25f; // is multipleid by deltaTime
+    const float fSPRINT_STAMINA_COST = 8f; // is multipleid by deltaTime
+    const float fATTACK_STAMINA_COST = 3f;
+    const float fSHIELD_STAMINA_COST = 8f;
+    const float fSTAMINA_RECOVER_START_TIME = 0.6f;
+    const float fSTAMINA_RECOVERY_RATE = 20f; // is multipleid by deltaTime
     const float fSPEED_DIVISION = 0.6f;
 
     Rigidbody rbody;
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                             bIsAttacking = true;
                             bSprintPressed = false;
                             fCurrentStamina -= fATTACK_STAMINA_COST;
-                            fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.4f;
+                            fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.2f;
                             fAttackWaitTimeCounter = 0;
                         }
                 }
@@ -306,13 +306,13 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                         bLockDirection = true;
                         bIsAttacking = true;
                         iAttackCombo++;
-                        // fCurrentStamina -= fATTACK_STAMINA_COST;
-                        fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.1f;
+                    // fCurrentStamina -= fATTACK_STAMINA_COST;
+                        fAttackWaitTime = anim.GetCurrentAnimatorClipInfo(0).Length - 0.4f;
                         fAttackWaitTimeCounter = 0; ;
                     }
             }
         }
-        if (fAttackWaitTimeCounter > fAttackWaitTime - 0.1f) // time to reset the combo chain
+        if (fAttackWaitTimeCounter > fAttackWaitTime - 0.2f) // time to reset the combo chain
         {
             //StartCoroutine(HelpUtils.WaitForSeconds(delegate { bLockDirection = false; }, 0.3f));
             bIsAttacking = false;
@@ -342,7 +342,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
                     bJumpPressed = false;
                 }
             }
-            fCurrentStamina -= 10f;
+            fCurrentStamina -= 5f;
         }
         bJumpPressed = false;
     }
@@ -484,7 +484,7 @@ public class PlayerController : MonoBehaviour, IHittable, ISaveable
         Stun();
         if (!bIsInvulnerable)
         {
-            fCurrentStamina -= _pushForce * 1.5f;
+            fCurrentStamina -= _pushForce * 1.2f;
             OnStaminaChangeUI.Invoke();
             bIsAttacking = false;
             pEquimentManager.SetAttackBool(0);

@@ -19,8 +19,8 @@ public class Spikey : Enemy
     private void Start()
     {
         base.Initialize();
-        fAttackRange = 31f;
-        fFollowRange = 80f;
+        fAttackRange = 65f;
+        fFollowRange = 100f;
         bIsInvulnerable = true;
         vfxEffect.Stop();
     }
@@ -104,7 +104,7 @@ public class Spikey : Enemy
             fAttackWaitTimeCounter = fAttackWaitTime;
         }
     }
-    public override void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fAccuracy = 0.99f)
+    public override void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fRotateSpeed = 60, float _fAccuracy = 0.99f)
     {
         float _fDistance = (transform.position - targetPlayer.transform.position).sqrMagnitude;
 
@@ -136,7 +136,7 @@ public class Spikey : Enemy
                     else
                     {
                         bInAttackRange = false;
-                        HelpUtils.RotateTowards(transform, targetPlayer.transform.position, fROTATE_SPEED / 3f);
+                        HelpUtils.RotateTowards(transform, targetPlayer.transform.position, _fRotateSpeed);
                     }
                 }
             }

@@ -5,7 +5,8 @@ using UnityEngine;
 public enum EnemyType { METALON = 0, PLANT = 1 }
 public class Enemy : MonoBehaviour, IHittable
 {
-    float fInvulnerableCounter;
+    float fInvulnerableTimeCounter;
+    float fStunTimeCounter;
 
     //const float fDISTANCE_TO_GROUND = 0.1f;
     const float fDISTANCE_TO_COLIS = 1.6f;
@@ -23,7 +24,7 @@ public class Enemy : MonoBehaviour, IHittable
     protected static PlayerController targetPlayer;
 
     protected bool bIsAlive;
-
+    protected bool bIsStun;
     protected bool bIsAttacking;
     protected bool bIsInvulnerable;
     protected bool bIsHit;
@@ -119,29 +120,41 @@ public class Enemy : MonoBehaviour, IHittable
             }
         }
     }
-    public void CalculateInvulnerability(float _fStunTime)
+    // Make different Stun and invelnerability counter
+    public void CalculateStun(float _fStunTime)
     {
-        if (bIsInvulnerable)
+        if (bIsStun)
         {
-            fInvulnerableCounter += Time.deltaTime;
+            fStunTimeCounter += Time.deltaTime;
 
-            if (fInvulnerableCounter > anim.GetCurrentAnimatorStateInfo(0).length)
+            if (fStunTimeCounter > _fStunTime)
             {
-                bIsInvulnerable = false;
-                fInvulnerableCounter = 0;
-                StartCoroutine(HelpUtils.WaitForSeconds(delegate
-                {
-                    bCanFollow = true;
-                    bInAttackRange = false;
-                }, _fStunTime));
+                fStunTimeCounter = 0;
+                bIsStun = false;
+                bCanFollow = true;
+                bInAttackRange = false;
             }
         }
     }
-    public virtual void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fAccuracy = 0.99f)
+    public void CalculateInvulnerability(float _fInvulnerableTime)
+    {
+        if (bIsInvulnerable)
+        {
+            fInvulnerableTimeCounter += Time.deltaTime;
+
+            if (fInvulnerableTimeCounter > _fInvulnerableTime)
+            {
+                bIsInvulnerable = false;
+                fInvulnerableTimeCounter = 0;
+            }
+        }
+    }
+    public virtual void CheckTargetInRange(float _fAttackRange, float _fTargetFollowRange, float _fRotateSpeed = 120f, float _fAccuracy = 0.99f)
     {
         fAttackWaitTimeCounter -= Time.deltaTime;
+
         if(!bIsAttacking && !bIsInvulnerable)
-            HelpUtils.RotateTowards(transform, targetPlayer.transform.position, fROTATE_SPEED / 3f);
+            HelpUtils.RotateTowards(transform, targetPlayer.transform.position, _fRotateSpeed);
 
         // Out of Range
         if ((transform.position - targetPlayer.transform.position).sqrMagnitude >= _fTargetFollowRange)
@@ -197,6 +210,7 @@ public class Enemy : MonoBehaviour, IHittable
         if (!bIsInvulnerable)
         {
             bIsInvulnerable = true;
+            bIsStun = true;
             bIsHit = true;
             bCanFollow = false;
             fCurrentHitPoints -= _damage;

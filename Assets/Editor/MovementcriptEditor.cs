@@ -30,6 +30,8 @@ public class MovementcriptEditor : Editor
 
         EditorGUILayout.PropertyField(movementType);
 
+        script.fRotateSpeed = EditorGUILayout.FloatField("Rotate Speed", script.fRotateSpeed);
+
         if (script.movementType != MovementType.IDLE)
         {
             script.fSpeed = EditorGUILayout.FloatField("Speed", script.fSpeed);
@@ -56,7 +58,7 @@ public class MovementcriptEditor : Editor
                     script.bReverseDirection = EditorGUILayout.Toggle("Reverse Direction", script.bReverseDirection);
                     script.bRandomizePoints = EditorGUILayout.Toggle("Randomize Directions", script.bRandomizePoints);
                     script.fRandomizeDirAfter = EditorGUILayout.FloatField("Randomize After (Range from 1 to )", script.fRandomizeDirAfter);
-                    script.fRotateSpeed = EditorGUILayout.FloatField("Rotate Speed", script.fRotateSpeed);
+                  //  script.fRotateSpeed = EditorGUILayout.FloatField("Rotate Speed", script.fRotateSpeed);
                  //   EditorGUIUtility.labelWidth = 60f;
                     script.fWalkTime = EditorGUILayout.FloatField("Walk Time", script.fWalkTime);
                   //  EditorGUIUtility.labelWidth = 60f;

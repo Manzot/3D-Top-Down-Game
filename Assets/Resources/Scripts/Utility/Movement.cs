@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
 {
     const float fDISTANCE_TO_GROUND = 0.2f;
     const float fDISTANCE_TO_COLIS = 1f;
-    const float fROTATE_SPEED = 240f;
+    //const float fROTATE_SPEED = 240f;
 
     Rigidbody rbody;
     public MovementType movementType;
@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
     private int iPatrolPos = 0;
 
     private bool bActive;
-    public Vector3 tHeadOffset = new Vector3(0, 0.25f, 0);
+    public Vector3 tHeadOffset;
     // Walk Area Variables
     public float fMaxWalkingDistance = 60;
     Vector3 startPosition;
@@ -99,7 +99,7 @@ public class Movement : MonoBehaviour
     {
         if (CheckWalkingArea())
         {
-            FollowTarget(startPosition);
+            FollowTarget(startPosition, fRotateSpeed);
         }
         else
         {
@@ -124,7 +124,7 @@ public class Movement : MonoBehaviour
                 {
                     if (bCanRotate)
                     {
-                        LookTowards(randomPosition, fROTATE_SPEED);
+                        LookTowards(randomPosition, fRotateSpeed);
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class Movement : MonoBehaviour
     {
         if (CheckWalkingArea(4))
         {
-            LookTowards(startPosition, fROTATE_SPEED);
+            LookTowards(startPosition, fRotateSpeed);
             rbody.MovePosition(transform.position + transform.forward * fSpeed * Time.fixedDeltaTime);
         }
         else
@@ -248,7 +248,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            HelpUtils.RotateTowards(transform, tPatrolPoints[iPatrolPos].position, fROTATE_SPEED);
+            HelpUtils.RotateTowards(transform, tPatrolPoints[iPatrolPos].position, fRotateSpeed);
         }
     }
 
@@ -274,10 +274,10 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(fWaitTime / 3);
         bCanMove = false;
     }
-    public void FollowTarget(Vector3 _target, float _fRotSpeed = fROTATE_SPEED)
+    public void FollowTarget(Vector3 _target, float _fRotSpeed = 180)
     {
         bIsMoving = true;
-        LookTowards(_target, fROTATE_SPEED);
+        LookTowards(_target, fRotateSpeed);
         Seek(_target);
     }
     public void Seek(Vector3 _target)

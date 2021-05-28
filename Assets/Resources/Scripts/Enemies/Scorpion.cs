@@ -7,7 +7,8 @@ public class Scorpion : Enemy
     //private bool bRotateAnims = true;
     // Material Dissolve Variables
    
-    float fSTUN_TIME = 0.5f; // this is extra time after the animation
+    float fStunTime = 1f;
+    float fInvulnerableTime = 0.4f;
 
     void Start()
     {
@@ -25,7 +26,7 @@ public class Scorpion : Enemy
 
         if (bIsAlive)
         {
-            if (!bIsInvulnerable)
+            if (!bIsStun)
             {
                 if (!bTargetFound)
                 {
@@ -33,12 +34,13 @@ public class Scorpion : Enemy
                 }
                 else
                 {
-                    CheckTargetInRange(fAttackRange, fFollowRange);
+                    CheckTargetInRange(fAttackRange, fFollowRange, 100);
                     CheckWalkingArea(startPosition);
                 }
             }
-            else
-                CalculateInvulnerability(fSTUN_TIME);
+
+            CalculateInvulnerability(fInvulnerableTime);
+            CalculateStun(fStunTime);
         }
         else
         {
@@ -51,7 +53,7 @@ public class Scorpion : Enemy
 
         if (bIsAlive)
         {
-            if (!bIsInvulnerable)
+            if (!bIsStun)
             {
                 if (bTargetFound)
                 {

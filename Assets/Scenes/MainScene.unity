@@ -59627,7 +59627,7 @@ PrefabInstance:
     - target: {fileID: 4185601837462471062, guid: a9f723d960da7414cb6e567593b126fa,
         type: 3}
       propertyPath: field of view
-      value: 38
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4185601837462471062, guid: a9f723d960da7414cb6e567593b126fa,
         type: 3}
@@ -63612,7 +63612,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Follow
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7933318094899060224}
     - target: {fileID: 7334448684759623404, guid: 0be8da676cf61a0419a90842f118efc4,
         type: 3}
       propertyPath: m_ComponentOwner
@@ -63621,7 +63621,7 @@ PrefabInstance:
     - target: {fileID: 7334448684759623404, guid: 0be8da676cf61a0419a90842f118efc4,
         type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 38
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7334448684759623404, guid: 0be8da676cf61a0419a90842f118efc4,
         type: 3}
